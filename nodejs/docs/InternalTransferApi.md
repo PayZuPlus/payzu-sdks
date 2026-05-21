@@ -23,11 +23,11 @@ Retrieve an internal transfer by id or clientReference Use apenas um destes par�
 import {
   Configuration,
   InternalTransferApi,
-} from '@payzu/pix';
-import type { GetInternalTransferRequest } from '@payzu/pix';
+} from 'payzu-pix';
+import type { GetInternalTransferRequest } from 'payzu-pix';
 
 async function example() {
-  console.log("🚀 Testing @payzu/pix SDK...");
+  console.log("🚀 Testing payzu-pix SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: BearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -105,11 +105,11 @@ Send funds to another PayZu account using its 6-digit accountNumber. Settles ins
 import {
   Configuration,
   InternalTransferApi,
-} from '@payzu/pix';
-import type { PostInternalTransferOperationRequest } from '@payzu/pix';
+} from 'payzu-pix';
+import type { PostInternalTransferOperationRequest } from 'payzu-pix';
 
 async function example() {
-  console.log("🚀 Testing @payzu/pix SDK...");
+  console.log("🚀 Testing payzu-pix SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: BearerAuth
     accessToken: "YOUR BEARER TOKEN",

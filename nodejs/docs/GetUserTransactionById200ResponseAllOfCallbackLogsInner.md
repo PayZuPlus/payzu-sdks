@@ -1,5 +1,5 @@
 
-# GetUserTransactionById200ResponseAllOfInfractionInner
+# GetUserTransactionById200ResponseAllOfCallbackLogsInner
 
 
 ## Properties
@@ -7,22 +7,24 @@
 Name | Type
 ------------ | -------------
 `id` | string
-`status` | string
+`url` | string
+`status` | number
+`responseTime` | number
 `createdAt` | Date
-`updatedAt` | Date
 
 ## Example
 
 ```typescript
-import type { GetUserTransactionById200ResponseAllOfInfractionInner } from '@payzu/pix'
+import type { GetUserTransactionById200ResponseAllOfCallbackLogsInner } from 'payzu-pix'
 
 // TODO: Update the object below with actual values
 const example = {
   "id": null,
+  "url": null,
   "status": null,
+  "responseTime": null,
   "createdAt": null,
-  "updatedAt": null,
-} satisfies GetUserTransactionById200ResponseAllOfInfractionInner
+} satisfies GetUserTransactionById200ResponseAllOfCallbackLogsInner
 
 console.log(example)
 
@@ -31,7 +33,7 @@ const exampleJSON: string = JSON.stringify(example)
 console.log(exampleJSON)
 
 // Parse the JSON string back to an object
-const exampleParsed = JSON.parse(exampleJSON) as GetUserTransactionById200ResponseAllOfInfractionInner
+const exampleParsed = JSON.parse(exampleJSON) as GetUserTransactionById200ResponseAllOfCallbackLogsInner
 console.log(exampleParsed)
 ```
 

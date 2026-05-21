@@ -12,7 +12,7 @@ Name | Type
 ## Example
 
 ```typescript
-import type { ResendUserCallbacks200Response } from '@payzu/pix'
+import type { ResendUserCallbacks200Response } from 'payzu-pix'
 
 // TODO: Update the object below with actual values
 const example = {

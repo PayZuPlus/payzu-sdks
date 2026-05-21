@@ -17,7 +17,7 @@ Name | Type
 ## Example
 
 ```typescript
-import type { PostWithdrawRequest } from '@payzu/pix'
+import type { PostWithdrawRequest } from 'payzu-pix'
 
 // TODO: Update the object below with actual values
 const example = {

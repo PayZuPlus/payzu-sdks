@@ -13,7 +13,7 @@ Name | Type
 ## Example
 
 ```typescript
-import type { ListUserReports200Response } from '@payzu/pix'
+import type { ListUserReports200Response } from 'payzu-pix'
 
 // TODO: Update the object below with actual values
 const example = {

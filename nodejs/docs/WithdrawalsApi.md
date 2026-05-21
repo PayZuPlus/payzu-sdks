@@ -27,11 +27,11 @@ Query the DICT (Diretório de Identificadores de Contas Transacionais) to retrie
 import {
   Configuration,
   WithdrawalsApi,
-} from '@payzu/pix';
-import type { GetPixKeyRequest } from '@payzu/pix';
+} from 'payzu-pix';
+import type { GetPixKeyRequest } from 'payzu-pix';
 
 async function example() {
-  console.log("🚀 Testing @payzu/pix SDK...");
+  console.log("🚀 Testing payzu-pix SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: BearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -103,11 +103,11 @@ Get the latest status and details for a **withdrawal**. You can provide any **on
 import {
   Configuration,
   WithdrawalsApi,
-} from '@payzu/pix';
-import type { GetWithdrawRequest } from '@payzu/pix';
+} from 'payzu-pix';
+import type { GetWithdrawRequest } from 'payzu-pix';
 
 async function example() {
-  console.log("🚀 Testing @payzu/pix SDK...");
+  console.log("🚀 Testing payzu-pix SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: BearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -189,11 +189,11 @@ Retorna o comprovante da transação como JSON com o campo &#x60;base64&#x60; (P
 import {
   Configuration,
   WithdrawalsApi,
-} from '@payzu/pix';
-import type { GetWithdrawProofRequest } from '@payzu/pix';
+} from 'payzu-pix';
+import type { GetWithdrawProofRequest } from 'payzu-pix';
 
 async function example() {
-  console.log("🚀 Testing @payzu/pix SDK...");
+  console.log("🚀 Testing payzu-pix SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: BearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -269,11 +269,11 @@ Decode and extract information from a Pix QR Code (EMV format) before making a p
 import {
   Configuration,
   WithdrawalsApi,
-} from '@payzu/pix';
-import type { PostPixQrcodeReadOperationRequest } from '@payzu/pix';
+} from 'payzu-pix';
+import type { PostPixQrcodeReadOperationRequest } from 'payzu-pix';
 
 async function example() {
-  console.log("🚀 Testing @payzu/pix SDK...");
+  console.log("🚀 Testing payzu-pix SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: BearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -341,11 +341,11 @@ Send a Pix **cash out** to the specified Pix key.
 import {
   Configuration,
   WithdrawalsApi,
-} from '@payzu/pix';
-import type { PostWithdrawOperationRequest } from '@payzu/pix';
+} from 'payzu-pix';
+import type { PostWithdrawOperationRequest } from 'payzu-pix';
 
 async function example() {
-  console.log("🚀 Testing @payzu/pix SDK...");
+  console.log("🚀 Testing payzu-pix SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: BearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -414,11 +414,11 @@ Cash out using a **Pix QR Code** (static/dynamic). If &#x60;amount&#x60; is not 
 import {
   Configuration,
   WithdrawalsApi,
-} from '@payzu/pix';
-import type { PostWithdrawQrcodeOperationRequest } from '@payzu/pix';
+} from 'payzu-pix';
+import type { PostWithdrawQrcodeOperationRequest } from 'payzu-pix';
 
 async function example() {
-  console.log("🚀 Testing @payzu/pix SDK...");
+  console.log("🚀 Testing payzu-pix SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: BearerAuth
     accessToken: "YOUR BEARER TOKEN",

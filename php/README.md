@@ -2,6 +2,16 @@
 
 REST API for Pix operations on the PayZu platform, deposits, withdrawals, internal transfers, infractions, reports, and callback inspection. All amounts are in BRL (reais) unless explicitly noted. Authentication uses a Bearer token issued during onboarding.
 
+## SDKs oficiais
+
+- Node.js: `npm install @payzu/pix`
+- Python: `pip install payzu-pix`
+- Go: `go get github.com/PayZuPlus/payzu-sdks/go`
+- PHP: `composer require payzu/pix`
+
+Repo: https://github.com/PayZuPlus/payzu-sdks
+
+
 For more information, please visit [https://suporte.payzu.com.br](https://suporte.payzu.com.br).
 
 ## Installation & Usage
@@ -123,8 +133,8 @@ Class | Method | HTTP request | Description
 - [GetUser200ResponseServiceFee](docs/Model/GetUser200ResponseServiceFee.md)
 - [GetUserBalance200Response](docs/Model/GetUserBalance200Response.md)
 - [GetUserTransactionById200Response](docs/Model/GetUserTransactionById200Response.md)
-- [GetUserTransactionById200ResponseAllOfCallbackLogInner](docs/Model/GetUserTransactionById200ResponseAllOfCallbackLogInner.md)
-- [GetUserTransactionById200ResponseAllOfInfractionInner](docs/Model/GetUserTransactionById200ResponseAllOfInfractionInner.md)
+- [GetUserTransactionById200ResponseAllOfCallbackLogsInner](docs/Model/GetUserTransactionById200ResponseAllOfCallbackLogsInner.md)
+- [GetUserTransactionById200ResponseAllOfInfractionsInner](docs/Model/GetUserTransactionById200ResponseAllOfInfractionsInner.md)
 - [GetUserTransactions200Response](docs/Model/GetUserTransactions200Response.md)
 - [InfractionDetail](docs/Model/InfractionDetail.md)
 - [InfractionDetailTransaction](docs/Model/InfractionDetailTransaction.md)

@@ -1,7 +1,7 @@
 /*
 PayZu Pix API
 
-REST API for Pix operations on the PayZu platform, deposits, withdrawals, internal transfers, infractions, reports, and callback inspection. All amounts are in BRL (reais) unless explicitly noted. Authentication uses a Bearer token issued during onboarding.
+REST API for Pix operations on the PayZu platform, deposits, withdrawals, internal transfers, infractions, reports, and callback inspection. All amounts are in BRL (reais) unless explicitly noted. Authentication uses a Bearer token issued during onboarding.  ## SDKs oficiais  - Node.js: `npm install @payzu/pix` - Python: `pip install payzu-pix` - Go: `go get github.com/PayZuPlus/payzu-sdks/go` - PHP: `composer require payzu/pix`  Repo: https://github.com/PayZuPlus/payzu-sdks 
 
 API version: 1.5.0
 */
@@ -20,7 +20,7 @@ var _ MappedNullable = &GetUser200ResponseDailyWithdrawLimit{}
 
 // GetUser200ResponseDailyWithdrawLimit struct for GetUser200ResponseDailyWithdrawLimit
 type GetUser200ResponseDailyWithdrawLimit struct {
-	Limit *float32 `json:"limit,omitempty"`
+	Limit *int32 `json:"limit,omitempty"`
 	Used *float32 `json:"used,omitempty"`
 	UpdatedAt *time.Time `json:"updatedAt,omitempty"`
 	LastReset *time.Time `json:"lastReset,omitempty"`
@@ -44,9 +44,9 @@ func NewGetUser200ResponseDailyWithdrawLimitWithDefaults() *GetUser200ResponseDa
 }
 
 // GetLimit returns the Limit field value if set, zero value otherwise.
-func (o *GetUser200ResponseDailyWithdrawLimit) GetLimit() float32 {
+func (o *GetUser200ResponseDailyWithdrawLimit) GetLimit() int32 {
 	if o == nil || IsNil(o.Limit) {
-		var ret float32
+		var ret int32
 		return ret
 	}
 	return *o.Limit
@@ -54,7 +54,7 @@ func (o *GetUser200ResponseDailyWithdrawLimit) GetLimit() float32 {
 
 // GetLimitOk returns a tuple with the Limit field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *GetUser200ResponseDailyWithdrawLimit) GetLimitOk() (*float32, bool) {
+func (o *GetUser200ResponseDailyWithdrawLimit) GetLimitOk() (*int32, bool) {
 	if o == nil || IsNil(o.Limit) {
 		return nil, false
 	}
@@ -70,8 +70,8 @@ func (o *GetUser200ResponseDailyWithdrawLimit) HasLimit() bool {
 	return false
 }
 
-// SetLimit gets a reference to the given float32 and assigns it to the Limit field.
-func (o *GetUser200ResponseDailyWithdrawLimit) SetLimit(v float32) {
+// SetLimit gets a reference to the given int32 and assigns it to the Limit field.
+func (o *GetUser200ResponseDailyWithdrawLimit) SetLimit(v int32) {
 	o.Limit = &v
 }
 

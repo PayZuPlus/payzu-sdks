@@ -26,8 +26,8 @@ docs/Model/GetUser200ResponseDailyWithdrawLimit.md
 docs/Model/GetUser200ResponseServiceFee.md
 docs/Model/GetUserBalance200Response.md
 docs/Model/GetUserTransactionById200Response.md
-docs/Model/GetUserTransactionById200ResponseAllOfCallbackLogInner.md
-docs/Model/GetUserTransactionById200ResponseAllOfInfractionInner.md
+docs/Model/GetUserTransactionById200ResponseAllOfCallbackLogsInner.md
+docs/Model/GetUserTransactionById200ResponseAllOfInfractionsInner.md
 docs/Model/GetUserTransactions200Response.md
 docs/Model/InfractionDetail.md
 docs/Model/InfractionDetailTransaction.md
@@ -77,8 +77,8 @@ lib/Model/GetUser200ResponseDailyWithdrawLimit.php
 lib/Model/GetUser200ResponseServiceFee.php
 lib/Model/GetUserBalance200Response.php
 lib/Model/GetUserTransactionById200Response.php
-lib/Model/GetUserTransactionById200ResponseAllOfCallbackLogInner.php
-lib/Model/GetUserTransactionById200ResponseAllOfInfractionInner.php
+lib/Model/GetUserTransactionById200ResponseAllOfCallbackLogsInner.php
+lib/Model/GetUserTransactionById200ResponseAllOfInfractionsInner.php
 lib/Model/GetUserTransactions200Response.php
 lib/Model/InfractionDetail.php
 lib/Model/InfractionDetailTransaction.php
@@ -125,8 +125,8 @@ test/Model/GetUser200ResponseDailyWithdrawLimitTest.php
 test/Model/GetUser200ResponseServiceFeeTest.php
 test/Model/GetUser200ResponseTest.php
 test/Model/GetUserBalance200ResponseTest.php
-test/Model/GetUserTransactionById200ResponseAllOfCallbackLogInnerTest.php
-test/Model/GetUserTransactionById200ResponseAllOfInfractionInnerTest.php
+test/Model/GetUserTransactionById200ResponseAllOfCallbackLogsInnerTest.php
+test/Model/GetUserTransactionById200ResponseAllOfInfractionsInnerTest.php
 test/Model/GetUserTransactionById200ResponseTest.php
 test/Model/GetUserTransactions200ResponseTest.php
 test/Model/InfractionDetailTest.php

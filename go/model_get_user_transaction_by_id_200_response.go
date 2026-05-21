@@ -1,7 +1,7 @@
 /*
 PayZu Pix API
 
-REST API for Pix operations on the PayZu platform, deposits, withdrawals, internal transfers, infractions, reports, and callback inspection. All amounts are in BRL (reais) unless explicitly noted. Authentication uses a Bearer token issued during onboarding.
+REST API for Pix operations on the PayZu platform, deposits, withdrawals, internal transfers, infractions, reports, and callback inspection. All amounts are in BRL (reais) unless explicitly noted. Authentication uses a Bearer token issued during onboarding.  ## SDKs oficiais  - Node.js: `npm install @payzu/pix` - Python: `pip install payzu-pix` - Go: `go get github.com/PayZuPlus/payzu-sdks/go` - PHP: `composer require payzu/pix`  Repo: https://github.com/PayZuPlus/payzu-sdks 
 
 API version: 1.5.0
 */
@@ -69,10 +69,10 @@ type GetUserTransactionById200Response struct {
 	Infraction *TransactionInfraction `json:"infraction,omitempty"`
 	// Subconta virtual informada na criação.
 	VirtualAccount *string `json:"virtualAccount,omitempty"`
+	// Histórico completo de infrações desta transação.
+	Infractions []GetUserTransactionById200ResponseAllOfInfractionsInner `json:"infractions,omitempty"`
 	// Webhook delivery attempts for this transaction (most recent first)
-	CallbackLog []GetUserTransactionById200ResponseAllOfCallbackLogInner `json:"CallbackLog,omitempty"`
-	// Infractions linked to this transaction
-	Infraction []GetUserTransactionById200ResponseAllOfInfractionInner `json:"Infraction,omitempty"`
+	CallbackLogs []GetUserTransactionById200ResponseAllOfCallbackLogsInner `json:"callbackLogs,omitempty"`
 }
 
 // NewGetUserTransactionById200Response instantiates a new GetUserTransactionById200Response object
@@ -1308,68 +1308,68 @@ func (o *GetUserTransactionById200Response) SetVirtualAccount(v string) {
 	o.VirtualAccount = &v
 }
 
-// GetCallbackLog returns the CallbackLog field value if set, zero value otherwise.
-func (o *GetUserTransactionById200Response) GetCallbackLog() []GetUserTransactionById200ResponseAllOfCallbackLogInner {
-	if o == nil || IsNil(o.CallbackLog) {
-		var ret []GetUserTransactionById200ResponseAllOfCallbackLogInner
+// GetInfractions returns the Infractions field value if set, zero value otherwise.
+func (o *GetUserTransactionById200Response) GetInfractions() []GetUserTransactionById200ResponseAllOfInfractionsInner {
+	if o == nil || IsNil(o.Infractions) {
+		var ret []GetUserTransactionById200ResponseAllOfInfractionsInner
 		return ret
 	}
-	return o.CallbackLog
+	return o.Infractions
 }
 
-// GetCallbackLogOk returns a tuple with the CallbackLog field value if set, nil otherwise
+// GetInfractionsOk returns a tuple with the Infractions field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *GetUserTransactionById200Response) GetCallbackLogOk() ([]GetUserTransactionById200ResponseAllOfCallbackLogInner, bool) {
-	if o == nil || IsNil(o.CallbackLog) {
+func (o *GetUserTransactionById200Response) GetInfractionsOk() ([]GetUserTransactionById200ResponseAllOfInfractionsInner, bool) {
+	if o == nil || IsNil(o.Infractions) {
 		return nil, false
 	}
-	return o.CallbackLog, true
+	return o.Infractions, true
 }
 
-// HasCallbackLog returns a boolean if a field has been set.
-func (o *GetUserTransactionById200Response) HasCallbackLog() bool {
-	if o != nil && !IsNil(o.CallbackLog) {
+// HasInfractions returns a boolean if a field has been set.
+func (o *GetUserTransactionById200Response) HasInfractions() bool {
+	if o != nil && !IsNil(o.Infractions) {
 		return true
 	}
 
 	return false
 }
 
-// SetCallbackLog gets a reference to the given []GetUserTransactionById200ResponseAllOfCallbackLogInner and assigns it to the CallbackLog field.
-func (o *GetUserTransactionById200Response) SetCallbackLog(v []GetUserTransactionById200ResponseAllOfCallbackLogInner) {
-	o.CallbackLog = v
+// SetInfractions gets a reference to the given []GetUserTransactionById200ResponseAllOfInfractionsInner and assigns it to the Infractions field.
+func (o *GetUserTransactionById200Response) SetInfractions(v []GetUserTransactionById200ResponseAllOfInfractionsInner) {
+	o.Infractions = v
 }
 
-// GetInfraction returns the Infraction field value if set, zero value otherwise.
-func (o *GetUserTransactionById200Response) GetInfraction() []GetUserTransactionById200ResponseAllOfInfractionInner {
-	if o == nil || IsNil(o.Infraction) {
-		var ret []GetUserTransactionById200ResponseAllOfInfractionInner
+// GetCallbackLogs returns the CallbackLogs field value if set, zero value otherwise.
+func (o *GetUserTransactionById200Response) GetCallbackLogs() []GetUserTransactionById200ResponseAllOfCallbackLogsInner {
+	if o == nil || IsNil(o.CallbackLogs) {
+		var ret []GetUserTransactionById200ResponseAllOfCallbackLogsInner
 		return ret
 	}
-	return o.Infraction
+	return o.CallbackLogs
 }
 
-// GetInfractionOk returns a tuple with the Infraction field value if set, nil otherwise
+// GetCallbackLogsOk returns a tuple with the CallbackLogs field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *GetUserTransactionById200Response) GetInfractionOk() ([]GetUserTransactionById200ResponseAllOfInfractionInner, bool) {
-	if o == nil || IsNil(o.Infraction) {
+func (o *GetUserTransactionById200Response) GetCallbackLogsOk() ([]GetUserTransactionById200ResponseAllOfCallbackLogsInner, bool) {
+	if o == nil || IsNil(o.CallbackLogs) {
 		return nil, false
 	}
-	return o.Infraction, true
+	return o.CallbackLogs, true
 }
 
-// HasInfraction returns a boolean if a field has been set.
-func (o *GetUserTransactionById200Response) HasInfraction() bool {
-	if o != nil && !IsNil(o.Infraction) {
+// HasCallbackLogs returns a boolean if a field has been set.
+func (o *GetUserTransactionById200Response) HasCallbackLogs() bool {
+	if o != nil && !IsNil(o.CallbackLogs) {
 		return true
 	}
 
 	return false
 }
 
-// SetInfraction gets a reference to the given []GetUserTransactionById200ResponseAllOfInfractionInner and assigns it to the Infraction field.
-func (o *GetUserTransactionById200Response) SetInfraction(v []GetUserTransactionById200ResponseAllOfInfractionInner) {
-	o.Infraction = v
+// SetCallbackLogs gets a reference to the given []GetUserTransactionById200ResponseAllOfCallbackLogsInner and assigns it to the CallbackLogs field.
+func (o *GetUserTransactionById200Response) SetCallbackLogs(v []GetUserTransactionById200ResponseAllOfCallbackLogsInner) {
+	o.CallbackLogs = v
 }
 
 func (o GetUserTransactionById200Response) MarshalJSON() ([]byte, error) {
@@ -1496,11 +1496,11 @@ func (o GetUserTransactionById200Response) ToMap() (map[string]interface{}, erro
 	if !IsNil(o.VirtualAccount) {
 		toSerialize["virtualAccount"] = o.VirtualAccount
 	}
-	if !IsNil(o.CallbackLog) {
-		toSerialize["CallbackLog"] = o.CallbackLog
+	if !IsNil(o.Infractions) {
+		toSerialize["infractions"] = o.Infractions
 	}
-	if !IsNil(o.Infraction) {
-		toSerialize["Infraction"] = o.Infraction
+	if !IsNil(o.CallbackLogs) {
+		toSerialize["callbackLogs"] = o.CallbackLogs
 	}
 	return toSerialize, nil
 }

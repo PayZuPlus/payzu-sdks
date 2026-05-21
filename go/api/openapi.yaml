@@ -3,10 +3,17 @@ info:
   contact:
     name: Suporte PayZu
     url: https://suporte.payzu.com.br
-  description: "REST API for Pix operations on the PayZu platform, deposits, withdrawals,\
-    \ internal transfers, infractions, reports, and callback inspection. All amounts\
-    \ are in BRL (reais) unless explicitly noted. Authentication uses a Bearer token\
-    \ issued during onboarding."
+  description: |
+    REST API for Pix operations on the PayZu platform, deposits, withdrawals, internal transfers, infractions, reports, and callback inspection. All amounts are in BRL (reais) unless explicitly noted. Authentication uses a Bearer token issued during onboarding.
+
+    ## SDKs oficiais
+
+    - Node.js: `npm install @payzu/pix`
+    - Python: `pip install payzu-pix`
+    - Go: `go get github.com/PayZuPlus/payzu-sdks/go`
+    - PHP: `composer require payzu/pix`
+
+    Repo: https://github.com/PayZuPlus/payzu-sdks
   title: PayZu Pix API
   version: 1.5.0
 externalDocs:
@@ -3364,11 +3371,11 @@ components:
           infractionId: infractionId
           defense: defense
           files:
-          - size: 6.027456183070403
+          - size: 6
             name: name
             mimeType: mimeType
             url: url
-          - size: 6.027456183070403
+          - size: 6
             name: name
             mimeType: mimeType
             url: url
@@ -3379,11 +3386,11 @@ components:
           infractionId: infractionId
           defense: defense
           files:
-          - size: 6.027456183070403
+          - size: 6
             name: name
             mimeType: mimeType
             url: url
-          - size: 6.027456183070403
+          - size: 6
             name: name
             mimeType: mimeType
             url: url
@@ -3470,11 +3477,11 @@ components:
         infractionId: infractionId
         defense: defense
         files:
-        - size: 6.027456183070403
+        - size: 6
           name: name
           mimeType: mimeType
           url: url
-        - size: 6.027456183070403
+        - size: 6
           name: name
           mimeType: mimeType
           url: url
@@ -3508,10 +3515,10 @@ components:
     InfractionListResponse:
       example:
         pagination:
-          totalItems: 5.637376656633329
-          limit: 5.962133916683182
-          totalPages: 2.3021358869347655
-          page: 1.4658129805029452
+          totalItems: 5
+          limit: 5
+          totalPages: 2
+          page: 1
         infractions:
         - reportedAt: 2000-01-23T04:56:07.000+00:00
           analysisDetails: analysisDetails
@@ -3521,11 +3528,11 @@ components:
             infractionId: infractionId
             defense: defense
             files:
-            - size: 6.027456183070403
+            - size: 6
               name: name
               mimeType: mimeType
               url: url
-            - size: 6.027456183070403
+            - size: 6
               name: name
               mimeType: mimeType
               url: url
@@ -3536,11 +3543,11 @@ components:
             infractionId: infractionId
             defense: defense
             files:
-            - size: 6.027456183070403
+            - size: 6
               name: name
               mimeType: mimeType
               url: url
-            - size: 6.027456183070403
+            - size: 6
               name: name
               mimeType: mimeType
               url: url
@@ -3572,11 +3579,11 @@ components:
             infractionId: infractionId
             defense: defense
             files:
-            - size: 6.027456183070403
+            - size: 6
               name: name
               mimeType: mimeType
               url: url
-            - size: 6.027456183070403
+            - size: 6
               name: name
               mimeType: mimeType
               url: url
@@ -3587,11 +3594,11 @@ components:
             infractionId: infractionId
             defense: defense
             files:
-            - size: 6.027456183070403
+            - size: 6
               name: name
               mimeType: mimeType
               url: url
-            - size: 6.027456183070403
+            - size: 6
               name: name
               mimeType: mimeType
               url: url
@@ -3667,8 +3674,8 @@ components:
       example:
         pagination:
           hasNextPage: true
-          limit: 6.027456183070403
-          page: 0.8008281904610115
+          limit: 6
+          page: 0
         callbacks:
         - createdAt: 2000-01-23T04:56:07.000+00:00
           responseBody: responseBody
@@ -3939,13 +3946,14 @@ components:
           type: number
     get_user_200_response_DailyWithdrawLimit:
       example:
-        limit: 1.2315135367772556
+        limit: 1
         used: 1.0246457001441578
         lastReset: 2000-01-23T04:56:07.000+00:00
         updatedAt: 2000-01-23T04:56:07.000+00:00
       properties:
         limit:
-          type: number
+          format: int32
+          type: integer
         used:
           type: number
         updatedAt:
@@ -3975,7 +3983,7 @@ components:
           cashInPercent: 3.616076749251911
         name: name
         DailyWithdrawLimit:
-          limit: 1.2315135367772556
+          limit: 1
           used: 1.0246457001441578
           lastReset: 2000-01-23T04:56:07.000+00:00
           updatedAt: 2000-01-23T04:56:07.000+00:00
@@ -4033,8 +4041,8 @@ components:
           type: number
     get_user_transactions_200_response:
       example:
-        total: 0.8008281904610115
-        pages: 6.027456183070403
+        total: 0
+        pages: 6
         transactions:
         - qrCodeBase64: qrCodeBase64
           receiverDocument: receiverDocument
@@ -4138,9 +4146,11 @@ components:
           payerInstitutionName: payerInstitutionName
       properties:
         total:
-          type: number
+          format: int32
+          type: integer
         pages:
-          type: number
+          format: int32
+          type: integer
         transactions:
           items:
             $ref: "#/components/schemas/Transaction"
@@ -4201,7 +4211,24 @@ components:
       - amount
       - payerAccountNumber
       - receiverAccountNumber
-    get_user_transaction_by_id_200_response_allOf_CallbackLog_inner:
+    get_user_transaction_by_id_200_response_allOf_infractions_inner:
+      example:
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        id: id
+        status: status
+        updatedAt: 2000-01-23T04:56:07.000+00:00
+      properties:
+        id:
+          type: string
+        status:
+          type: string
+        createdAt:
+          format: date-time
+          type: string
+        updatedAt:
+          format: date-time
+          type: string
+    get_user_transaction_by_id_200_response_allOf_callbackLogs_inner:
       example:
         createdAt: 2000-01-23T04:56:07.000+00:00
         responseTime: 5.962133916683182
@@ -4222,63 +4249,46 @@ components:
         createdAt:
           format: date-time
           type: string
-    get_user_transaction_by_id_200_response_allOf_Infraction_inner:
-      example:
-        createdAt: 2000-01-23T04:56:07.000+00:00
-        id: id
-        status: status
-        updatedAt: 2000-01-23T04:56:07.000+00:00
-      properties:
-        id:
-          type: string
-        status:
-          type: string
-        createdAt:
-          format: date-time
-          type: string
-        updatedAt:
-          format: date-time
-          type: string
     get_user_transaction_by_id_200_response:
       allOf:
       - $ref: "#/components/schemas/Transaction"
       - properties:
-          CallbackLog:
+          infractions:
+            description: Histórico completo de infrações desta transação.
+            items:
+              $ref: "#/components/schemas/get_user_transaction_by_id_200_response_allOf_infractions_inner"
+            type: array
+          callbackLogs:
             description: Webhook delivery attempts for this transaction (most recent
               first)
             items:
-              $ref: "#/components/schemas/get_user_transaction_by_id_200_response_allOf_CallbackLog_inner"
-            type: array
-          Infraction:
-            description: Infractions linked to this transaction
-            items:
-              $ref: "#/components/schemas/get_user_transaction_by_id_200_response_allOf_Infraction_inner"
+              $ref: "#/components/schemas/get_user_transaction_by_id_200_response_allOf_callbackLogs_inner"
             type: array
       example:
         qrCodeBase64: qrCodeBase64
-        Infraction:
-        - createdAt: 2000-01-23T04:56:07.000+00:00
-          id: id
-          status: status
-          updatedAt: 2000-01-23T04:56:07.000+00:00
-        - createdAt: 2000-01-23T04:56:07.000+00:00
-          id: id
-          status: status
-          updatedAt: 2000-01-23T04:56:07.000+00:00
-        CallbackLog:
-        - createdAt: 2000-01-23T04:56:07.000+00:00
-          responseTime: 5.962133916683182
-          id: id
-          url: url
-          status: 1
-        - createdAt: 2000-01-23T04:56:07.000+00:00
-          responseTime: 5.962133916683182
-          id: id
-          url: url
-          status: 1
         receiverDocument: receiverDocument
+        callbackLogs:
+        - createdAt: 2000-01-23T04:56:07.000+00:00
+          responseTime: 5.962133916683182
+          id: id
+          url: url
+          status: 1
+        - createdAt: 2000-01-23T04:56:07.000+00:00
+          responseTime: 5.962133916683182
+          id: id
+          url: url
+          status: 1
         withdrawPixType: withdrawPixType
         refundStatus: refundStatus
+        infractions:
+        - createdAt: 2000-01-23T04:56:07.000+00:00
+          id: id
+          status: status
+          updatedAt: 2000-01-23T04:56:07.000+00:00
+        - createdAt: 2000-01-23T04:56:07.000+00:00
+          id: id
+          status: status
+          updatedAt: 2000-01-23T04:56:07.000+00:00
         type: type
         endToEndId: endToEndId
         generatedName: generatedName
@@ -4544,7 +4554,7 @@ components:
           type: string
     Defense_files_inner:
       example:
-        size: 6.027456183070403
+        size: 6
         name: name
         mimeType: mimeType
         url: url
@@ -4554,37 +4564,44 @@ components:
         mimeType:
           type: string
         size:
-          type: number
+          format: int32
+          type: integer
         url:
           description: Signed URL for download (expires in 9 minutes)
           type: string
     InfractionListResponse_pagination:
       example:
-        totalItems: 5.637376656633329
-        limit: 5.962133916683182
-        totalPages: 2.3021358869347655
-        page: 1.4658129805029452
+        totalItems: 5
+        limit: 5
+        totalPages: 2
+        page: 1
       properties:
         page:
-          type: number
+          format: int32
+          type: integer
         limit:
-          type: number
+          format: int32
+          type: integer
         totalItems:
-          type: number
+          format: int32
+          type: integer
         totalPages:
-          type: number
+          format: int32
+          type: integer
     CallbackListResponse_pagination:
       example:
         hasNextPage: true
-        limit: 6.027456183070403
-        page: 0.8008281904610115
+        limit: 6
+        page: 0
       properties:
         page:
           description: Current page
-          type: number
+          format: int32
+          type: integer
         limit:
           description: Items per page
-          type: number
+          format: int32
+          type: integer
         hasNextPage:
           description: Indicates if there is a next page
           type: boolean

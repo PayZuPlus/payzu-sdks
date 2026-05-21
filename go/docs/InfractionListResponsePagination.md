@@ -4,10 +4,10 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Page** | Pointer to **float32** |  | [optional] 
-**Limit** | Pointer to **float32** |  | [optional] 
-**TotalItems** | Pointer to **float32** |  | [optional] 
-**TotalPages** | Pointer to **float32** |  | [optional] 
+**Page** | Pointer to **int32** |  | [optional] 
+**Limit** | Pointer to **int32** |  | [optional] 
+**TotalItems** | Pointer to **int32** |  | [optional] 
+**TotalPages** | Pointer to **int32** |  | [optional] 
 
 ## Methods
 
@@ -30,20 +30,20 @@ but it doesn't guarantee that properties required by API are set
 
 ### GetPage
 
-`func (o *InfractionListResponsePagination) GetPage() float32`
+`func (o *InfractionListResponsePagination) GetPage() int32`
 
 GetPage returns the Page field if non-nil, zero value otherwise.
 
 ### GetPageOk
 
-`func (o *InfractionListResponsePagination) GetPageOk() (*float32, bool)`
+`func (o *InfractionListResponsePagination) GetPageOk() (*int32, bool)`
 
 GetPageOk returns a tuple with the Page field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetPage
 
-`func (o *InfractionListResponsePagination) SetPage(v float32)`
+`func (o *InfractionListResponsePagination) SetPage(v int32)`
 
 SetPage sets Page field to given value.
 
@@ -55,20 +55,20 @@ HasPage returns a boolean if a field has been set.
 
 ### GetLimit
 
-`func (o *InfractionListResponsePagination) GetLimit() float32`
+`func (o *InfractionListResponsePagination) GetLimit() int32`
 
 GetLimit returns the Limit field if non-nil, zero value otherwise.
 
 ### GetLimitOk
 
-`func (o *InfractionListResponsePagination) GetLimitOk() (*float32, bool)`
+`func (o *InfractionListResponsePagination) GetLimitOk() (*int32, bool)`
 
 GetLimitOk returns a tuple with the Limit field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetLimit
 
-`func (o *InfractionListResponsePagination) SetLimit(v float32)`
+`func (o *InfractionListResponsePagination) SetLimit(v int32)`
 
 SetLimit sets Limit field to given value.
 
@@ -80,20 +80,20 @@ HasLimit returns a boolean if a field has been set.
 
 ### GetTotalItems
 
-`func (o *InfractionListResponsePagination) GetTotalItems() float32`
+`func (o *InfractionListResponsePagination) GetTotalItems() int32`
 
 GetTotalItems returns the TotalItems field if non-nil, zero value otherwise.
 
 ### GetTotalItemsOk
 
-`func (o *InfractionListResponsePagination) GetTotalItemsOk() (*float32, bool)`
+`func (o *InfractionListResponsePagination) GetTotalItemsOk() (*int32, bool)`
 
 GetTotalItemsOk returns a tuple with the TotalItems field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetTotalItems
 
-`func (o *InfractionListResponsePagination) SetTotalItems(v float32)`
+`func (o *InfractionListResponsePagination) SetTotalItems(v int32)`
 
 SetTotalItems sets TotalItems field to given value.
 
@@ -105,20 +105,20 @@ HasTotalItems returns a boolean if a field has been set.
 
 ### GetTotalPages
 
-`func (o *InfractionListResponsePagination) GetTotalPages() float32`
+`func (o *InfractionListResponsePagination) GetTotalPages() int32`
 
 GetTotalPages returns the TotalPages field if non-nil, zero value otherwise.
 
 ### GetTotalPagesOk
 
-`func (o *InfractionListResponsePagination) GetTotalPagesOk() (*float32, bool)`
+`func (o *InfractionListResponsePagination) GetTotalPagesOk() (*int32, bool)`
 
 GetTotalPagesOk returns a tuple with the TotalPages field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetTotalPages
 
-`func (o *InfractionListResponsePagination) SetTotalPages(v float32)`
+`func (o *InfractionListResponsePagination) SetTotalPages(v int32)`
 
 SetTotalPages sets TotalPages field to given value.
 

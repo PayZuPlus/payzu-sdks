@@ -23,11 +23,11 @@ Account profile, permissions, limits and fee rules.
 import {
   Configuration,
   AccountApi,
-} from '@payzu/pix';
-import type { GetUserRequest } from '@payzu/pix';
+} from 'payzu-pix';
+import type { GetUserRequest } from 'payzu-pix';
 
 async function example() {
-  console.log("🚀 Testing @payzu/pix SDK...");
+  console.log("🚀 Testing payzu-pix SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: BearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -96,11 +96,11 @@ Available and blocked balances.
 import {
   Configuration,
   AccountApi,
-} from '@payzu/pix';
-import type { GetUserBalanceRequest } from '@payzu/pix';
+} from 'payzu-pix';
+import type { GetUserBalanceRequest } from 'payzu-pix';
 
 async function example() {
-  console.log("🚀 Testing @payzu/pix SDK...");
+  console.log("🚀 Testing payzu-pix SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: BearerAuth
     accessToken: "YOUR BEARER TOKEN",

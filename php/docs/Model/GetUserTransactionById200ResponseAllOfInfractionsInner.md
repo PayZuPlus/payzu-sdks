@@ -1,4 +1,4 @@
-# GetUserTransactionById200ResponseAllOfInfractionInner
+# GetUserTransactionById200ResponseAllOfInfractionsInner
 
 ## Properties
 

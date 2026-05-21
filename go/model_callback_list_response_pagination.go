@@ -1,7 +1,7 @@
 /*
 PayZu Pix API
 
-REST API for Pix operations on the PayZu platform, deposits, withdrawals, internal transfers, infractions, reports, and callback inspection. All amounts are in BRL (reais) unless explicitly noted. Authentication uses a Bearer token issued during onboarding.
+REST API for Pix operations on the PayZu platform, deposits, withdrawals, internal transfers, infractions, reports, and callback inspection. All amounts are in BRL (reais) unless explicitly noted. Authentication uses a Bearer token issued during onboarding.  ## SDKs oficiais  - Node.js: `npm install @payzu/pix` - Python: `pip install payzu-pix` - Go: `go get github.com/PayZuPlus/payzu-sdks/go` - PHP: `composer require payzu/pix`  Repo: https://github.com/PayZuPlus/payzu-sdks 
 
 API version: 1.5.0
 */
@@ -20,9 +20,9 @@ var _ MappedNullable = &CallbackListResponsePagination{}
 // CallbackListResponsePagination struct for CallbackListResponsePagination
 type CallbackListResponsePagination struct {
 	// Current page
-	Page *float32 `json:"page,omitempty"`
+	Page *int32 `json:"page,omitempty"`
 	// Items per page
-	Limit *float32 `json:"limit,omitempty"`
+	Limit *int32 `json:"limit,omitempty"`
 	// Indicates if there is a next page
 	HasNextPage *bool `json:"hasNextPage,omitempty"`
 }
@@ -45,9 +45,9 @@ func NewCallbackListResponsePaginationWithDefaults() *CallbackListResponsePagina
 }
 
 // GetPage returns the Page field value if set, zero value otherwise.
-func (o *CallbackListResponsePagination) GetPage() float32 {
+func (o *CallbackListResponsePagination) GetPage() int32 {
 	if o == nil || IsNil(o.Page) {
-		var ret float32
+		var ret int32
 		return ret
 	}
 	return *o.Page
@@ -55,7 +55,7 @@ func (o *CallbackListResponsePagination) GetPage() float32 {
 
 // GetPageOk returns a tuple with the Page field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *CallbackListResponsePagination) GetPageOk() (*float32, bool) {
+func (o *CallbackListResponsePagination) GetPageOk() (*int32, bool) {
 	if o == nil || IsNil(o.Page) {
 		return nil, false
 	}
@@ -71,15 +71,15 @@ func (o *CallbackListResponsePagination) HasPage() bool {
 	return false
 }
 
-// SetPage gets a reference to the given float32 and assigns it to the Page field.
-func (o *CallbackListResponsePagination) SetPage(v float32) {
+// SetPage gets a reference to the given int32 and assigns it to the Page field.
+func (o *CallbackListResponsePagination) SetPage(v int32) {
 	o.Page = &v
 }
 
 // GetLimit returns the Limit field value if set, zero value otherwise.
-func (o *CallbackListResponsePagination) GetLimit() float32 {
+func (o *CallbackListResponsePagination) GetLimit() int32 {
 	if o == nil || IsNil(o.Limit) {
-		var ret float32
+		var ret int32
 		return ret
 	}
 	return *o.Limit
@@ -87,7 +87,7 @@ func (o *CallbackListResponsePagination) GetLimit() float32 {
 
 // GetLimitOk returns a tuple with the Limit field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *CallbackListResponsePagination) GetLimitOk() (*float32, bool) {
+func (o *CallbackListResponsePagination) GetLimitOk() (*int32, bool) {
 	if o == nil || IsNil(o.Limit) {
 		return nil, false
 	}
@@ -103,8 +103,8 @@ func (o *CallbackListResponsePagination) HasLimit() bool {
 	return false
 }
 
-// SetLimit gets a reference to the given float32 and assigns it to the Limit field.
-func (o *CallbackListResponsePagination) SetLimit(v float32) {
+// SetLimit gets a reference to the given int32 and assigns it to the Limit field.
+func (o *CallbackListResponsePagination) SetLimit(v int32) {
 	o.Limit = &v
 }
 

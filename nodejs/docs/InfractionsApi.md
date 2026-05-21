@@ -26,11 +26,11 @@ List all infractions for the authenticated user with pagination and filters.
 import {
   Configuration,
   InfractionsApi,
-} from '@payzu/pix';
-import type { GetInfractionsRequest } from '@payzu/pix';
+} from 'payzu-pix';
+import type { GetInfractionsRequest } from 'payzu-pix';
 
 async function example() {
-  console.log("🚀 Testing @payzu/pix SDK...");
+  console.log("🚀 Testing payzu-pix SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: BearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -136,11 +136,11 @@ Get a specific infraction by ID.
 import {
   Configuration,
   InfractionsApi,
-} from '@payzu/pix';
-import type { GetInfractionsByIdRequest } from '@payzu/pix';
+} from 'payzu-pix';
+import type { GetInfractionsByIdRequest } from 'payzu-pix';
 
 async function example() {
-  console.log("🚀 Testing @payzu/pix SDK...");
+  console.log("🚀 Testing payzu-pix SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: BearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -211,11 +211,11 @@ Get a specific defense for an infraction. **Requires support privileges**.
 import {
   Configuration,
   InfractionsApi,
-} from '@payzu/pix';
-import type { GetInfractionsDefenseByIdRequest } from '@payzu/pix';
+} from 'payzu-pix';
+import type { GetInfractionsDefenseByIdRequest } from 'payzu-pix';
 
 async function example() {
-  console.log("🚀 Testing @payzu/pix SDK...");
+  console.log("🚀 Testing payzu-pix SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: BearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -289,11 +289,11 @@ List all defenses for a specific infraction. **Requires support privileges**.
 import {
   Configuration,
   InfractionsApi,
-} from '@payzu/pix';
-import type { GetInfractionsDefensesRequest } from '@payzu/pix';
+} from 'payzu-pix';
+import type { GetInfractionsDefensesRequest } from 'payzu-pix';
 
 async function example() {
-  console.log("🚀 Testing @payzu/pix SDK...");
+  console.log("🚀 Testing payzu-pix SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: BearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -366,11 +366,11 @@ Create a defense for a specific infraction.
 import {
   Configuration,
   InfractionsApi,
-} from '@payzu/pix';
-import type { PostInfractionsDefenseRequest } from '@payzu/pix';
+} from 'payzu-pix';
+import type { PostInfractionsDefenseRequest } from 'payzu-pix';
 
 async function example() {
-  console.log("🚀 Testing @payzu/pix SDK...");
+  console.log("🚀 Testing payzu-pix SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: BearerAuth
     accessToken: "YOUR BEARER TOKEN",

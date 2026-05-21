@@ -17,7 +17,7 @@ Name | Type
 ## Example
 
 ```typescript
-import type { PostInternalTransferRequest } from '@payzu/pix'
+import type { PostInternalTransferRequest } from 'payzu-pix'
 
 // TODO: Update the object below with actual values
 const example = {

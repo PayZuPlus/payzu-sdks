@@ -43,8 +43,8 @@ Name | Type | Description | Notes
 **cancellation_reason** | **str** | Reason for cancellation (if cancelled) | [optional] 
 **infraction** | [**TransactionInfraction**](TransactionInfraction.md) |  | [optional] 
 **virtual_account** | **str** | Subconta virtual informada na criação. | [optional] 
-**callback_log** | [**List[GetUserTransactionById200ResponseAllOfCallbackLogInner]**](GetUserTransactionById200ResponseAllOfCallbackLogInner.md) | Webhook delivery attempts for this transaction (most recent first) | [optional] 
-**infraction** | [**List[GetUserTransactionById200ResponseAllOfInfractionInner]**](GetUserTransactionById200ResponseAllOfInfractionInner.md) | Infractions linked to this transaction | [optional] 
+**infractions** | [**List[GetUserTransactionById200ResponseAllOfInfractionsInner]**](GetUserTransactionById200ResponseAllOfInfractionsInner.md) | Histórico completo de infrações desta transação. | [optional] 
+**callback_logs** | [**List[GetUserTransactionById200ResponseAllOfCallbackLogsInner]**](GetUserTransactionById200ResponseAllOfCallbackLogsInner.md) | Webhook delivery attempts for this transaction (most recent first) | [optional] 
 
 ## Example
 
