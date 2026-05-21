@@ -42,8 +42,8 @@ Name | Type | Description | Notes
 **CancellationReason** | Pointer to **string** | Reason for cancellation (if cancelled) | [optional] 
 **Infraction** | Pointer to [**TransactionInfraction**](TransactionInfraction.md) |  | [optional] 
 **VirtualAccount** | Pointer to **string** | Subconta virtual informada na criação. | [optional] 
-**CallbackLog** | Pointer to [**[]GetUserTransactionById200ResponseAllOfCallbackLogInner**](GetUserTransactionById200ResponseAllOfCallbackLogInner.md) | Webhook delivery attempts for this transaction (most recent first) | [optional] 
-**Infraction** | Pointer to [**[]GetUserTransactionById200ResponseAllOfInfractionInner**](GetUserTransactionById200ResponseAllOfInfractionInner.md) | Infractions linked to this transaction | [optional] 
+**Infractions** | Pointer to [**[]GetUserTransactionById200ResponseAllOfInfractionsInner**](GetUserTransactionById200ResponseAllOfInfractionsInner.md) | Histórico completo de infrações desta transação. | [optional] 
+**CallbackLogs** | Pointer to [**[]GetUserTransactionById200ResponseAllOfCallbackLogsInner**](GetUserTransactionById200ResponseAllOfCallbackLogsInner.md) | Webhook delivery attempts for this transaction (most recent first) | [optional] 
 
 ## Methods
 
@@ -1014,55 +1014,55 @@ SetVirtualAccount sets VirtualAccount field to given value.
 
 HasVirtualAccount returns a boolean if a field has been set.
 
-### GetCallbackLog
+### GetInfractions
 
-`func (o *GetUserTransactionById200Response) GetCallbackLog() []GetUserTransactionById200ResponseAllOfCallbackLogInner`
+`func (o *GetUserTransactionById200Response) GetInfractions() []GetUserTransactionById200ResponseAllOfInfractionsInner`
 
-GetCallbackLog returns the CallbackLog field if non-nil, zero value otherwise.
+GetInfractions returns the Infractions field if non-nil, zero value otherwise.
 
-### GetCallbackLogOk
+### GetInfractionsOk
 
-`func (o *GetUserTransactionById200Response) GetCallbackLogOk() (*[]GetUserTransactionById200ResponseAllOfCallbackLogInner, bool)`
+`func (o *GetUserTransactionById200Response) GetInfractionsOk() (*[]GetUserTransactionById200ResponseAllOfInfractionsInner, bool)`
 
-GetCallbackLogOk returns a tuple with the CallbackLog field if it's non-nil, zero value otherwise
+GetInfractionsOk returns a tuple with the Infractions field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetCallbackLog
+### SetInfractions
 
-`func (o *GetUserTransactionById200Response) SetCallbackLog(v []GetUserTransactionById200ResponseAllOfCallbackLogInner)`
+`func (o *GetUserTransactionById200Response) SetInfractions(v []GetUserTransactionById200ResponseAllOfInfractionsInner)`
 
-SetCallbackLog sets CallbackLog field to given value.
+SetInfractions sets Infractions field to given value.
 
-### HasCallbackLog
+### HasInfractions
 
-`func (o *GetUserTransactionById200Response) HasCallbackLog() bool`
+`func (o *GetUserTransactionById200Response) HasInfractions() bool`
 
-HasCallbackLog returns a boolean if a field has been set.
+HasInfractions returns a boolean if a field has been set.
 
-### GetInfraction
+### GetCallbackLogs
 
-`func (o *GetUserTransactionById200Response) GetInfraction() []GetUserTransactionById200ResponseAllOfInfractionInner`
+`func (o *GetUserTransactionById200Response) GetCallbackLogs() []GetUserTransactionById200ResponseAllOfCallbackLogsInner`
 
-GetInfraction returns the Infraction field if non-nil, zero value otherwise.
+GetCallbackLogs returns the CallbackLogs field if non-nil, zero value otherwise.
 
-### GetInfractionOk
+### GetCallbackLogsOk
 
-`func (o *GetUserTransactionById200Response) GetInfractionOk() (*[]GetUserTransactionById200ResponseAllOfInfractionInner, bool)`
+`func (o *GetUserTransactionById200Response) GetCallbackLogsOk() (*[]GetUserTransactionById200ResponseAllOfCallbackLogsInner, bool)`
 
-GetInfractionOk returns a tuple with the Infraction field if it's non-nil, zero value otherwise
+GetCallbackLogsOk returns a tuple with the CallbackLogs field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetInfraction
+### SetCallbackLogs
 
-`func (o *GetUserTransactionById200Response) SetInfraction(v []GetUserTransactionById200ResponseAllOfInfractionInner)`
+`func (o *GetUserTransactionById200Response) SetCallbackLogs(v []GetUserTransactionById200ResponseAllOfCallbackLogsInner)`
 
-SetInfraction sets Infraction field to given value.
+SetCallbackLogs sets CallbackLogs field to given value.
 
-### HasInfraction
+### HasCallbackLogs
 
-`func (o *GetUserTransactionById200Response) HasInfraction() bool`
+`func (o *GetUserTransactionById200Response) HasCallbackLogs() bool`
 
-HasInfraction returns a boolean if a field has been set.
+HasCallbackLogs returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

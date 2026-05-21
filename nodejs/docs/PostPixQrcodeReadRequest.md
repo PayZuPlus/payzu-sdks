@@ -11,7 +11,7 @@ Name | Type
 ## Example
 
 ```typescript
-import type { PostPixQrcodeReadRequest } from '@payzu/pix'
+import type { PostPixQrcodeReadRequest } from 'payzu-pix'
 
 // TODO: Update the object below with actual values
 const example = {

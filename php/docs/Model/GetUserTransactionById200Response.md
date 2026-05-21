@@ -42,7 +42,7 @@ Name | Type | Description | Notes
 **cancellation_reason** | **string** | Reason for cancellation (if cancelled) | [optional]
 **infraction** | [**\OpenAPI\Client\Model\TransactionInfraction**](TransactionInfraction.md) |  | [optional]
 **virtual_account** | **string** | Subconta virtual informada na criação. | [optional]
-**callback_log** | [**\OpenAPI\Client\Model\GetUserTransactionById200ResponseAllOfCallbackLogInner[]**](GetUserTransactionById200ResponseAllOfCallbackLogInner.md) | Webhook delivery attempts for this transaction (most recent first) | [optional]
-**infraction** | [**\OpenAPI\Client\Model\GetUserTransactionById200ResponseAllOfInfractionInner[]**](GetUserTransactionById200ResponseAllOfInfractionInner.md) | Infractions linked to this transaction | [optional]
+**infractions** | [**\OpenAPI\Client\Model\GetUserTransactionById200ResponseAllOfInfractionsInner[]**](GetUserTransactionById200ResponseAllOfInfractionsInner.md) | Histórico completo de infrações desta transação. | [optional]
+**callback_logs** | [**\OpenAPI\Client\Model\GetUserTransactionById200ResponseAllOfCallbackLogsInner[]**](GetUserTransactionById200ResponseAllOfCallbackLogsInner.md) | Webhook delivery attempts for this transaction (most recent first) | [optional]
 
 [[Back to Model list]](../../README.md#models) [[Back to API list]](../../README.md#endpoints) [[Back to README]](../../README.md)

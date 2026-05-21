@@ -19,8 +19,8 @@ docs/GetUser200ResponseDailyWithdrawLimit.md
 docs/GetUser200ResponseServiceFee.md
 docs/GetUserBalance200Response.md
 docs/GetUserTransactionById200Response.md
-docs/GetUserTransactionById200ResponseAllOfCallbackLogInner.md
-docs/GetUserTransactionById200ResponseAllOfInfractionInner.md
+docs/GetUserTransactionById200ResponseAllOfCallbackLogsInner.md
+docs/GetUserTransactionById200ResponseAllOfInfractionsInner.md
 docs/GetUserTransactions200Response.md
 docs/InfractionDetail.md
 docs/InfractionDetailTransaction.md
@@ -73,8 +73,8 @@ src/models/GetUser200ResponseDailyWithdrawLimit.ts
 src/models/GetUser200ResponseServiceFee.ts
 src/models/GetUserBalance200Response.ts
 src/models/GetUserTransactionById200Response.ts
-src/models/GetUserTransactionById200ResponseAllOfCallbackLogInner.ts
-src/models/GetUserTransactionById200ResponseAllOfInfractionInner.ts
+src/models/GetUserTransactionById200ResponseAllOfCallbackLogsInner.ts
+src/models/GetUserTransactionById200ResponseAllOfInfractionsInner.ts
 src/models/GetUserTransactions200Response.ts
 src/models/InfractionDetail.ts
 src/models/InfractionDetailTransaction.ts

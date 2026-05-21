@@ -27,11 +27,11 @@ Returns a short-lived signed URL to download the CSV file.
 import {
   Configuration,
   ReportsApi,
-} from '@payzu/pix';
-import type { DownloadUserReportRequest } from '@payzu/pix';
+} from 'payzu-pix';
+import type { DownloadUserReportRequest } from 'payzu-pix';
 
 async function example() {
-  console.log("🚀 Testing @payzu/pix SDK...");
+  console.log("🚀 Testing payzu-pix SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: BearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -104,11 +104,11 @@ List report jobs created by the authenticated user.
 import {
   Configuration,
   ReportsApi,
-} from '@payzu/pix';
-import type { GetUserReportRequest } from '@payzu/pix';
+} from 'payzu-pix';
+import type { GetUserReportRequest } from 'payzu-pix';
 
 async function example() {
-  console.log("🚀 Testing @payzu/pix SDK...");
+  console.log("🚀 Testing payzu-pix SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: BearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -179,11 +179,11 @@ Retrieve a single transaction with its callback log and linked infractions.
 import {
   Configuration,
   ReportsApi,
-} from '@payzu/pix';
-import type { GetUserTransactionByIdRequest } from '@payzu/pix';
+} from 'payzu-pix';
+import type { GetUserTransactionByIdRequest } from 'payzu-pix';
 
 async function example() {
-  console.log("🚀 Testing @payzu/pix SDK...");
+  console.log("🚀 Testing payzu-pix SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: BearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -254,11 +254,11 @@ Paginated list of account transactions with filters.
 import {
   Configuration,
   ReportsApi,
-} from '@payzu/pix';
-import type { GetUserTransactionsRequest } from '@payzu/pix';
+} from 'payzu-pix';
+import type { GetUserTransactionsRequest } from 'payzu-pix';
 
 async function example() {
-  console.log("🚀 Testing @payzu/pix SDK...");
+  console.log("🚀 Testing payzu-pix SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: BearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -373,11 +373,11 @@ List report jobs created by the authenticated user.
 import {
   Configuration,
   ReportsApi,
-} from '@payzu/pix';
-import type { ListUserReportsRequest } from '@payzu/pix';
+} from 'payzu-pix';
+import type { ListUserReportsRequest } from 'payzu-pix';
 
 async function example() {
-  console.log("🚀 Testing @payzu/pix SDK...");
+  console.log("🚀 Testing payzu-pix SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: BearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -456,11 +456,11 @@ Queue an asynchronous job that generates a CSV report of transactions for the gi
 import {
   Configuration,
   ReportsApi,
-} from '@payzu/pix';
-import type { PostUserReportOperationRequest } from '@payzu/pix';
+} from 'payzu-pix';
+import type { PostUserReportOperationRequest } from 'payzu-pix';
 
 async function example() {
-  console.log("🚀 Testing @payzu/pix SDK...");
+  console.log("🚀 Testing payzu-pix SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: BearerAuth
     accessToken: "YOUR BEARER TOKEN",

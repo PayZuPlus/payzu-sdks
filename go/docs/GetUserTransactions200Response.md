@@ -4,8 +4,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Total** | Pointer to **float32** |  | [optional] 
-**Pages** | Pointer to **float32** |  | [optional] 
+**Total** | Pointer to **int32** |  | [optional] 
+**Pages** | Pointer to **int32** |  | [optional] 
 **Transactions** | Pointer to [**[]Transaction**](Transaction.md) |  | [optional] 
 
 ## Methods
@@ -29,20 +29,20 @@ but it doesn't guarantee that properties required by API are set
 
 ### GetTotal
 
-`func (o *GetUserTransactions200Response) GetTotal() float32`
+`func (o *GetUserTransactions200Response) GetTotal() int32`
 
 GetTotal returns the Total field if non-nil, zero value otherwise.
 
 ### GetTotalOk
 
-`func (o *GetUserTransactions200Response) GetTotalOk() (*float32, bool)`
+`func (o *GetUserTransactions200Response) GetTotalOk() (*int32, bool)`
 
 GetTotalOk returns a tuple with the Total field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetTotal
 
-`func (o *GetUserTransactions200Response) SetTotal(v float32)`
+`func (o *GetUserTransactions200Response) SetTotal(v int32)`
 
 SetTotal sets Total field to given value.
 
@@ -54,20 +54,20 @@ HasTotal returns a boolean if a field has been set.
 
 ### GetPages
 
-`func (o *GetUserTransactions200Response) GetPages() float32`
+`func (o *GetUserTransactions200Response) GetPages() int32`
 
 GetPages returns the Pages field if non-nil, zero value otherwise.
 
 ### GetPagesOk
 
-`func (o *GetUserTransactions200Response) GetPagesOk() (*float32, bool)`
+`func (o *GetUserTransactions200Response) GetPagesOk() (*int32, bool)`
 
 GetPagesOk returns a tuple with the Pages field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetPages
 
-`func (o *GetUserTransactions200Response) SetPages(v float32)`
+`func (o *GetUserTransactions200Response) SetPages(v int32)`
 
 SetPages sets Pages field to given value.
 

@@ -1,4 +1,4 @@
-# @payzu/pix@0.1.0
+# payzu-pix@0.1.0
 
 A TypeScript SDK client for the api.payzu.processamento.com API.
 
@@ -7,7 +7,7 @@ A TypeScript SDK client for the api.payzu.processamento.com API.
 First, install the SDK from npm.
 
 ```bash
-npm install @payzu/pix --save
+npm install payzu-pix --save
 ```
 
 Next, try it out.
@@ -17,11 +17,11 @@ Next, try it out.
 import {
   Configuration,
   AccountApi,
-} from '@payzu/pix';
-import type { GetUserRequest } from '@payzu/pix';
+} from 'payzu-pix';
+import type { GetUserRequest } from 'payzu-pix';
 
 async function example() {
-  console.log("🚀 Testing @payzu/pix SDK...");
+  console.log("🚀 Testing payzu-pix SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: BearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -102,8 +102,8 @@ All URIs are relative to *https://api.payzu.processamento.com/v1*
 - [GetUser200ResponseServiceFee](docs/GetUser200ResponseServiceFee.md)
 - [GetUserBalance200Response](docs/GetUserBalance200Response.md)
 - [GetUserTransactionById200Response](docs/GetUserTransactionById200Response.md)
-- [GetUserTransactionById200ResponseAllOfCallbackLogInner](docs/GetUserTransactionById200ResponseAllOfCallbackLogInner.md)
-- [GetUserTransactionById200ResponseAllOfInfractionInner](docs/GetUserTransactionById200ResponseAllOfInfractionInner.md)
+- [GetUserTransactionById200ResponseAllOfCallbackLogsInner](docs/GetUserTransactionById200ResponseAllOfCallbackLogsInner.md)
+- [GetUserTransactionById200ResponseAllOfInfractionsInner](docs/GetUserTransactionById200ResponseAllOfInfractionsInner.md)
 - [GetUserTransactions200Response](docs/GetUserTransactions200Response.md)
 - [InfractionDetail](docs/InfractionDetail.md)
 - [InfractionDetailTransaction](docs/InfractionDetailTransaction.md)

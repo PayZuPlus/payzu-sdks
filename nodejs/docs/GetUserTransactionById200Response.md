@@ -44,13 +44,13 @@ Name | Type
 `cancellationReason` | string
 `infraction` | [TransactionInfraction](TransactionInfraction.md)
 `virtualAccount` | string
-`callbackLog` | [Array&lt;GetUserTransactionById200ResponseAllOfCallbackLogInner&gt;](GetUserTransactionById200ResponseAllOfCallbackLogInner.md)
-`infraction` | [Array&lt;GetUserTransactionById200ResponseAllOfInfractionInner&gt;](GetUserTransactionById200ResponseAllOfInfractionInner.md)
+`infractions` | [Array&lt;GetUserTransactionById200ResponseAllOfInfractionsInner&gt;](GetUserTransactionById200ResponseAllOfInfractionsInner.md)
+`callbackLogs` | [Array&lt;GetUserTransactionById200ResponseAllOfCallbackLogsInner&gt;](GetUserTransactionById200ResponseAllOfCallbackLogsInner.md)
 
 ## Example
 
 ```typescript
-import type { GetUserTransactionById200Response } from '@payzu/pix'
+import type { GetUserTransactionById200Response } from 'payzu-pix'
 
 // TODO: Update the object below with actual values
 const example = {
@@ -92,8 +92,8 @@ const example = {
   "cancellationReason": null,
   "infraction": null,
   "virtualAccount": null,
-  "callbackLog": null,
-  "infraction": null,
+  "infractions": null,
+  "callbackLogs": null,
 } satisfies GetUserTransactionById200Response
 
 console.log(example)

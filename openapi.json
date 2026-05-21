@@ -3,7 +3,7 @@
   "info": {
     "version": "1.5.0",
     "title": "PayZu Pix API",
-    "description": "REST API for Pix operations on the PayZu platform, deposits, withdrawals, internal transfers, infractions, reports, and callback inspection. All amounts are in BRL (reais) unless explicitly noted. Authentication uses a Bearer token issued during onboarding.",
+    "description": "REST API for Pix operations on the PayZu platform, deposits, withdrawals, internal transfers, infractions, reports, and callback inspection. All amounts are in BRL (reais) unless explicitly noted. Authentication uses a Bearer token issued during onboarding.\n\n## SDKs oficiais\n\n- Node.js: `npm install @payzu/pix`\n- Python: `pip install payzu-pix`\n- Go: `go get github.com/PayZuPlus/payzu-sdks/go`\n- PHP: `composer require payzu/pix`\n\nRepo: https://github.com/PayZuPlus/payzu-sdks\n",
     "contact": {
       "name": "Suporte PayZu",
       "url": "https://suporte.payzu.com.br"
@@ -1913,7 +1913,8 @@
                       "type": "object",
                       "properties": {
                         "limit": {
-                          "type": "number"
+                          "type": "integer",
+                          "format": "int32"
                         },
                         "used": {
                           "type": "number"
@@ -2343,10 +2344,12 @@
                   "type": "object",
                   "properties": {
                     "total": {
-                      "type": "number"
+                      "type": "integer",
+                      "format": "int32"
                     },
                     "pages": {
-                      "type": "number"
+                      "type": "integer",
+                      "format": "int32"
                     },
                     "transactions": {
                       "type": "array",
@@ -4283,7 +4286,30 @@
                     {
                       "type": "object",
                       "properties": {
-                        "CallbackLog": {
+                        "infractions": {
+                          "type": "array",
+                          "description": "Histórico completo de infrações desta transação.",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string"
+                              },
+                              "status": {
+                                "type": "string"
+                              },
+                              "createdAt": {
+                                "type": "string",
+                                "format": "date-time"
+                              },
+                              "updatedAt": {
+                                "type": "string",
+                                "format": "date-time"
+                              }
+                            }
+                          }
+                        },
+                        "callbackLogs": {
                           "type": "array",
                           "description": "Webhook delivery attempts for this transaction (most recent first)",
                           "items": {
@@ -4304,29 +4330,6 @@
                                 "description": "Round-trip time in ms"
                               },
                               "createdAt": {
-                                "type": "string",
-                                "format": "date-time"
-                              }
-                            }
-                          }
-                        },
-                        "Infraction": {
-                          "type": "array",
-                          "description": "Infractions linked to this transaction",
-                          "items": {
-                            "type": "object",
-                            "properties": {
-                              "id": {
-                                "type": "string"
-                              },
-                              "status": {
-                                "type": "string"
-                              },
-                              "createdAt": {
-                                "type": "string",
-                                "format": "date-time"
-                              },
-                              "updatedAt": {
                                 "type": "string",
                                 "format": "date-time"
                               }
@@ -5912,7 +5915,8 @@
                   "type": "string"
                 },
                 "size": {
-                  "type": "number"
+                  "type": "integer",
+                  "format": "int32"
                 },
                 "url": {
                   "type": "string",
@@ -5936,16 +5940,20 @@
             "type": "object",
             "properties": {
               "page": {
-                "type": "number"
+                "type": "integer",
+                "format": "int32"
               },
               "limit": {
-                "type": "number"
+                "type": "integer",
+                "format": "int32"
               },
               "totalItems": {
-                "type": "number"
+                "type": "integer",
+                "format": "int32"
               },
               "totalPages": {
-                "type": "number"
+                "type": "integer",
+                "format": "int32"
               }
             }
           }
@@ -6001,12 +6009,14 @@
             "type": "object",
             "properties": {
               "page": {
-                "type": "number",
-                "description": "Current page"
+                "type": "integer",
+                "description": "Current page",
+                "format": "int32"
               },
               "limit": {
-                "type": "number",
-                "description": "Items per page"
+                "type": "integer",
+                "description": "Items per page",
+                "format": "int32"
               },
               "hasNextPage": {
                 "type": "boolean",

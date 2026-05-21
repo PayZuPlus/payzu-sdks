@@ -1,7 +1,7 @@
 /*
 PayZu Pix API
 
-REST API for Pix operations on the PayZu platform, deposits, withdrawals, internal transfers, infractions, reports, and callback inspection. All amounts are in BRL (reais) unless explicitly noted. Authentication uses a Bearer token issued during onboarding.
+REST API for Pix operations on the PayZu platform, deposits, withdrawals, internal transfers, infractions, reports, and callback inspection. All amounts are in BRL (reais) unless explicitly noted. Authentication uses a Bearer token issued during onboarding.  ## SDKs oficiais  - Node.js: `npm install @payzu/pix` - Python: `pip install payzu-pix` - Go: `go get github.com/PayZuPlus/payzu-sdks/go` - PHP: `composer require payzu/pix`  Repo: https://github.com/PayZuPlus/payzu-sdks 
 
 API version: 1.5.0
 */
@@ -19,8 +19,8 @@ var _ MappedNullable = &GetUserTransactions200Response{}
 
 // GetUserTransactions200Response struct for GetUserTransactions200Response
 type GetUserTransactions200Response struct {
-	Total *float32 `json:"total,omitempty"`
-	Pages *float32 `json:"pages,omitempty"`
+	Total *int32 `json:"total,omitempty"`
+	Pages *int32 `json:"pages,omitempty"`
 	Transactions []Transaction `json:"transactions,omitempty"`
 }
 
@@ -42,9 +42,9 @@ func NewGetUserTransactions200ResponseWithDefaults() *GetUserTransactions200Resp
 }
 
 // GetTotal returns the Total field value if set, zero value otherwise.
-func (o *GetUserTransactions200Response) GetTotal() float32 {
+func (o *GetUserTransactions200Response) GetTotal() int32 {
 	if o == nil || IsNil(o.Total) {
-		var ret float32
+		var ret int32
 		return ret
 	}
 	return *o.Total
@@ -52,7 +52,7 @@ func (o *GetUserTransactions200Response) GetTotal() float32 {
 
 // GetTotalOk returns a tuple with the Total field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *GetUserTransactions200Response) GetTotalOk() (*float32, bool) {
+func (o *GetUserTransactions200Response) GetTotalOk() (*int32, bool) {
 	if o == nil || IsNil(o.Total) {
 		return nil, false
 	}
@@ -68,15 +68,15 @@ func (o *GetUserTransactions200Response) HasTotal() bool {
 	return false
 }
 
-// SetTotal gets a reference to the given float32 and assigns it to the Total field.
-func (o *GetUserTransactions200Response) SetTotal(v float32) {
+// SetTotal gets a reference to the given int32 and assigns it to the Total field.
+func (o *GetUserTransactions200Response) SetTotal(v int32) {
 	o.Total = &v
 }
 
 // GetPages returns the Pages field value if set, zero value otherwise.
-func (o *GetUserTransactions200Response) GetPages() float32 {
+func (o *GetUserTransactions200Response) GetPages() int32 {
 	if o == nil || IsNil(o.Pages) {
-		var ret float32
+		var ret int32
 		return ret
 	}
 	return *o.Pages
@@ -84,7 +84,7 @@ func (o *GetUserTransactions200Response) GetPages() float32 {
 
 // GetPagesOk returns a tuple with the Pages field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *GetUserTransactions200Response) GetPagesOk() (*float32, bool) {
+func (o *GetUserTransactions200Response) GetPagesOk() (*int32, bool) {
 	if o == nil || IsNil(o.Pages) {
 		return nil, false
 	}
@@ -100,8 +100,8 @@ func (o *GetUserTransactions200Response) HasPages() bool {
 	return false
 }
 
-// SetPages gets a reference to the given float32 and assigns it to the Pages field.
-func (o *GetUserTransactions200Response) SetPages(v float32) {
+// SetPages gets a reference to the given int32 and assigns it to the Pages field.
+func (o *GetUserTransactions200Response) SetPages(v int32) {
 	o.Pages = &v
 }
 

@@ -24,7 +24,7 @@ Name | Type
 ## Example
 
 ```typescript
-import type { InfractionDetail } from '@payzu/pix'
+import type { InfractionDetail } from 'payzu-pix'
 
 // TODO: Update the object below with actual values
 const example = {

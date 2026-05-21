@@ -23,7 +23,7 @@ Name | Type
 ## Example
 
 ```typescript
-import type { TransactionInfraction } from '@payzu/pix'
+import type { TransactionInfraction } from 'payzu-pix'
 
 // TODO: Update the object below with actual values
 const example = {

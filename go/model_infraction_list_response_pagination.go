@@ -1,7 +1,7 @@
 /*
 PayZu Pix API
 
-REST API for Pix operations on the PayZu platform, deposits, withdrawals, internal transfers, infractions, reports, and callback inspection. All amounts are in BRL (reais) unless explicitly noted. Authentication uses a Bearer token issued during onboarding.
+REST API for Pix operations on the PayZu platform, deposits, withdrawals, internal transfers, infractions, reports, and callback inspection. All amounts are in BRL (reais) unless explicitly noted. Authentication uses a Bearer token issued during onboarding.  ## SDKs oficiais  - Node.js: `npm install @payzu/pix` - Python: `pip install payzu-pix` - Go: `go get github.com/PayZuPlus/payzu-sdks/go` - PHP: `composer require payzu/pix`  Repo: https://github.com/PayZuPlus/payzu-sdks 
 
 API version: 1.5.0
 */
@@ -19,10 +19,10 @@ var _ MappedNullable = &InfractionListResponsePagination{}
 
 // InfractionListResponsePagination struct for InfractionListResponsePagination
 type InfractionListResponsePagination struct {
-	Page *float32 `json:"page,omitempty"`
-	Limit *float32 `json:"limit,omitempty"`
-	TotalItems *float32 `json:"totalItems,omitempty"`
-	TotalPages *float32 `json:"totalPages,omitempty"`
+	Page *int32 `json:"page,omitempty"`
+	Limit *int32 `json:"limit,omitempty"`
+	TotalItems *int32 `json:"totalItems,omitempty"`
+	TotalPages *int32 `json:"totalPages,omitempty"`
 }
 
 // NewInfractionListResponsePagination instantiates a new InfractionListResponsePagination object
@@ -43,9 +43,9 @@ func NewInfractionListResponsePaginationWithDefaults() *InfractionListResponsePa
 }
 
 // GetPage returns the Page field value if set, zero value otherwise.
-func (o *InfractionListResponsePagination) GetPage() float32 {
+func (o *InfractionListResponsePagination) GetPage() int32 {
 	if o == nil || IsNil(o.Page) {
-		var ret float32
+		var ret int32
 		return ret
 	}
 	return *o.Page
@@ -53,7 +53,7 @@ func (o *InfractionListResponsePagination) GetPage() float32 {
 
 // GetPageOk returns a tuple with the Page field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *InfractionListResponsePagination) GetPageOk() (*float32, bool) {
+func (o *InfractionListResponsePagination) GetPageOk() (*int32, bool) {
 	if o == nil || IsNil(o.Page) {
 		return nil, false
 	}
@@ -69,15 +69,15 @@ func (o *InfractionListResponsePagination) HasPage() bool {
 	return false
 }
 
-// SetPage gets a reference to the given float32 and assigns it to the Page field.
-func (o *InfractionListResponsePagination) SetPage(v float32) {
+// SetPage gets a reference to the given int32 and assigns it to the Page field.
+func (o *InfractionListResponsePagination) SetPage(v int32) {
 	o.Page = &v
 }
 
 // GetLimit returns the Limit field value if set, zero value otherwise.
-func (o *InfractionListResponsePagination) GetLimit() float32 {
+func (o *InfractionListResponsePagination) GetLimit() int32 {
 	if o == nil || IsNil(o.Limit) {
-		var ret float32
+		var ret int32
 		return ret
 	}
 	return *o.Limit
@@ -85,7 +85,7 @@ func (o *InfractionListResponsePagination) GetLimit() float32 {
 
 // GetLimitOk returns a tuple with the Limit field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *InfractionListResponsePagination) GetLimitOk() (*float32, bool) {
+func (o *InfractionListResponsePagination) GetLimitOk() (*int32, bool) {
 	if o == nil || IsNil(o.Limit) {
 		return nil, false
 	}
@@ -101,15 +101,15 @@ func (o *InfractionListResponsePagination) HasLimit() bool {
 	return false
 }
 
-// SetLimit gets a reference to the given float32 and assigns it to the Limit field.
-func (o *InfractionListResponsePagination) SetLimit(v float32) {
+// SetLimit gets a reference to the given int32 and assigns it to the Limit field.
+func (o *InfractionListResponsePagination) SetLimit(v int32) {
 	o.Limit = &v
 }
 
 // GetTotalItems returns the TotalItems field value if set, zero value otherwise.
-func (o *InfractionListResponsePagination) GetTotalItems() float32 {
+func (o *InfractionListResponsePagination) GetTotalItems() int32 {
 	if o == nil || IsNil(o.TotalItems) {
-		var ret float32
+		var ret int32
 		return ret
 	}
 	return *o.TotalItems
@@ -117,7 +117,7 @@ func (o *InfractionListResponsePagination) GetTotalItems() float32 {
 
 // GetTotalItemsOk returns a tuple with the TotalItems field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *InfractionListResponsePagination) GetTotalItemsOk() (*float32, bool) {
+func (o *InfractionListResponsePagination) GetTotalItemsOk() (*int32, bool) {
 	if o == nil || IsNil(o.TotalItems) {
 		return nil, false
 	}
@@ -133,15 +133,15 @@ func (o *InfractionListResponsePagination) HasTotalItems() bool {
 	return false
 }
 
-// SetTotalItems gets a reference to the given float32 and assigns it to the TotalItems field.
-func (o *InfractionListResponsePagination) SetTotalItems(v float32) {
+// SetTotalItems gets a reference to the given int32 and assigns it to the TotalItems field.
+func (o *InfractionListResponsePagination) SetTotalItems(v int32) {
 	o.TotalItems = &v
 }
 
 // GetTotalPages returns the TotalPages field value if set, zero value otherwise.
-func (o *InfractionListResponsePagination) GetTotalPages() float32 {
+func (o *InfractionListResponsePagination) GetTotalPages() int32 {
 	if o == nil || IsNil(o.TotalPages) {
-		var ret float32
+		var ret int32
 		return ret
 	}
 	return *o.TotalPages
@@ -149,7 +149,7 @@ func (o *InfractionListResponsePagination) GetTotalPages() float32 {
 
 // GetTotalPagesOk returns a tuple with the TotalPages field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *InfractionListResponsePagination) GetTotalPagesOk() (*float32, bool) {
+func (o *InfractionListResponsePagination) GetTotalPagesOk() (*int32, bool) {
 	if o == nil || IsNil(o.TotalPages) {
 		return nil, false
 	}
@@ -165,8 +165,8 @@ func (o *InfractionListResponsePagination) HasTotalPages() bool {
 	return false
 }
 
-// SetTotalPages gets a reference to the given float32 and assigns it to the TotalPages field.
-func (o *InfractionListResponsePagination) SetTotalPages(v float32) {
+// SetTotalPages gets a reference to the given int32 and assigns it to the TotalPages field.
+func (o *InfractionListResponsePagination) SetTotalPages(v int32) {
 	o.TotalPages = &v
 }
 

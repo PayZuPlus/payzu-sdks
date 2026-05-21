@@ -4,8 +4,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Page** | Pointer to **float32** | Current page | [optional] 
-**Limit** | Pointer to **float32** | Items per page | [optional] 
+**Page** | Pointer to **int32** | Current page | [optional] 
+**Limit** | Pointer to **int32** | Items per page | [optional] 
 **HasNextPage** | Pointer to **bool** | Indicates if there is a next page | [optional] 
 
 ## Methods
@@ -29,20 +29,20 @@ but it doesn't guarantee that properties required by API are set
 
 ### GetPage
 
-`func (o *CallbackListResponsePagination) GetPage() float32`
+`func (o *CallbackListResponsePagination) GetPage() int32`
 
 GetPage returns the Page field if non-nil, zero value otherwise.
 
 ### GetPageOk
 
-`func (o *CallbackListResponsePagination) GetPageOk() (*float32, bool)`
+`func (o *CallbackListResponsePagination) GetPageOk() (*int32, bool)`
 
 GetPageOk returns a tuple with the Page field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetPage
 
-`func (o *CallbackListResponsePagination) SetPage(v float32)`
+`func (o *CallbackListResponsePagination) SetPage(v int32)`
 
 SetPage sets Page field to given value.
 
@@ -54,20 +54,20 @@ HasPage returns a boolean if a field has been set.
 
 ### GetLimit
 
-`func (o *CallbackListResponsePagination) GetLimit() float32`
+`func (o *CallbackListResponsePagination) GetLimit() int32`
 
 GetLimit returns the Limit field if non-nil, zero value otherwise.
 
 ### GetLimitOk
 
-`func (o *CallbackListResponsePagination) GetLimitOk() (*float32, bool)`
+`func (o *CallbackListResponsePagination) GetLimitOk() (*int32, bool)`
 
 GetLimitOk returns a tuple with the Limit field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetLimit
 
-`func (o *CallbackListResponsePagination) SetLimit(v float32)`
+`func (o *CallbackListResponsePagination) SetLimit(v int32)`
 
 SetLimit sets Limit field to given value.
 

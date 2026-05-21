@@ -25,11 +25,11 @@ Get the latest status and details for a Pix **deposit (charge)**. Provide **one*
 import {
   Configuration,
   PixOperationsApi,
-} from '@payzu/pix';
-import type { GetPixRequest } from '@payzu/pix';
+} from 'payzu-pix';
+import type { GetPixRequest } from 'payzu-pix';
 
 async function example() {
-  console.log("🚀 Testing @payzu/pix SDK...");
+  console.log("🚀 Testing payzu-pix SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: BearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -111,11 +111,11 @@ Render the Pix QR Code of a deposit as a binary PNG image
 import {
   Configuration,
   PixOperationsApi,
-} from '@payzu/pix';
-import type { GetPixQrcodeRequest } from '@payzu/pix';
+} from 'payzu-pix';
+import type { GetPixQrcodeRequest } from 'payzu-pix';
 
 async function example() {
-  console.log("🚀 Testing @payzu/pix SDK...");
+  console.log("🚀 Testing payzu-pix SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: BearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -187,11 +187,11 @@ Retorna o comprovante da transação como JSON com o campo &#x60;base64&#x60; (P
 import {
   Configuration,
   PixOperationsApi,
-} from '@payzu/pix';
-import type { GetProofRequest } from '@payzu/pix';
+} from 'payzu-pix';
+import type { GetProofRequest } from 'payzu-pix';
 
 async function example() {
-  console.log("🚀 Testing @payzu/pix SDK...");
+  console.log("🚀 Testing payzu-pix SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: BearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -267,11 +267,11 @@ Create a new Pix **deposit** (charge). Returns QR Code and transaction details.
 import {
   Configuration,
   PixOperationsApi,
-} from '@payzu/pix';
-import type { PostPixOperationRequest } from '@payzu/pix';
+} from 'payzu-pix';
+import type { PostPixOperationRequest } from 'payzu-pix';
 
 async function example() {
-  console.log("🚀 Testing @payzu/pix SDK...");
+  console.log("🚀 Testing payzu-pix SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: BearerAuth
     accessToken: "YOUR BEARER TOKEN",

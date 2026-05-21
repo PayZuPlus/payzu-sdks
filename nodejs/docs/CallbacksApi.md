@@ -25,11 +25,11 @@ Returns the details of a specific callback log.
 import {
   Configuration,
   CallbacksApi,
-} from '@payzu/pix';
-import type { GetUserCallbackByIdRequest } from '@payzu/pix';
+} from 'payzu-pix';
+import type { GetUserCallbackByIdRequest } from 'payzu-pix';
 
 async function example() {
-  console.log("🚀 Testing @payzu/pix SDK...");
+  console.log("🚀 Testing payzu-pix SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: BearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -100,11 +100,11 @@ Returns a paginated list of webhook callback logs for the user\&#39;s transactio
 import {
   Configuration,
   CallbacksApi,
-} from '@payzu/pix';
-import type { GetUserCallbacksRequest } from '@payzu/pix';
+} from 'payzu-pix';
+import type { GetUserCallbacksRequest } from 'payzu-pix';
 
 async function example() {
-  console.log("🚀 Testing @payzu/pix SDK...");
+  console.log("🚀 Testing payzu-pix SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: BearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -207,11 +207,11 @@ Resend the callback of a single transaction.
 import {
   Configuration,
   CallbacksApi,
-} from '@payzu/pix';
-import type { ResendUserCallbackSingleRequest } from '@payzu/pix';
+} from 'payzu-pix';
+import type { ResendUserCallbackSingleRequest } from 'payzu-pix';
 
 async function example() {
-  console.log("🚀 Testing @payzu/pix SDK...");
+  console.log("🚀 Testing payzu-pix SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: BearerAuth
     accessToken: "YOUR BEARER TOKEN",
@@ -283,11 +283,11 @@ Resend callbacks in bulk for transactions matching the given filters.
 import {
   Configuration,
   CallbacksApi,
-} from '@payzu/pix';
-import type { ResendUserCallbacksOperationRequest } from '@payzu/pix';
+} from 'payzu-pix';
+import type { ResendUserCallbacksOperationRequest } from 'payzu-pix';
 
 async function example() {
-  console.log("🚀 Testing @payzu/pix SDK...");
+  console.log("🚀 Testing payzu-pix SDK...");
   const config = new Configuration({ 
     // Configure HTTP bearer authorization: BearerAuth
     accessToken: "YOUR BEARER TOKEN",

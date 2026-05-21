@@ -5,8 +5,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**total** | **float** |  | [optional] 
-**pages** | **float** |  | [optional] 
+**total** | **int** |  | [optional] 
+**pages** | **int** |  | [optional] 
 **transactions** | [**List[Transaction]**](Transaction.md) |  | [optional] 
 
 ## Example

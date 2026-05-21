@@ -13,7 +13,7 @@ Name | Type
 ## Example
 
 ```typescript
-import type { CallbackListResponsePagination } from '@payzu/pix'
+import type { CallbackListResponsePagination } from 'payzu-pix'
 
 // TODO: Update the object below with actual values
 const example = {

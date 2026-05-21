@@ -5,10 +5,10 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**page** | **float** |  | [optional] 
-**limit** | **float** |  | [optional] 
-**total_items** | **float** |  | [optional] 
-**total_pages** | **float** |  | [optional] 
+**page** | **int** |  | [optional] 
+**limit** | **int** |  | [optional] 
+**total_items** | **int** |  | [optional] 
+**total_pages** | **int** |  | [optional] 
 
 ## Example
 

@@ -15,7 +15,7 @@ Name | Type
 ## Example
 
 ```typescript
-import type { ReportJob } from '@payzu/pix'
+import type { ReportJob } from 'payzu-pix'
 
 // TODO: Update the object below with actual values
 const example = {

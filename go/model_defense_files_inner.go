@@ -1,7 +1,7 @@
 /*
 PayZu Pix API
 
-REST API for Pix operations on the PayZu platform, deposits, withdrawals, internal transfers, infractions, reports, and callback inspection. All amounts are in BRL (reais) unless explicitly noted. Authentication uses a Bearer token issued during onboarding.
+REST API for Pix operations on the PayZu platform, deposits, withdrawals, internal transfers, infractions, reports, and callback inspection. All amounts are in BRL (reais) unless explicitly noted. Authentication uses a Bearer token issued during onboarding.  ## SDKs oficiais  - Node.js: `npm install @payzu/pix` - Python: `pip install payzu-pix` - Go: `go get github.com/PayZuPlus/payzu-sdks/go` - PHP: `composer require payzu/pix`  Repo: https://github.com/PayZuPlus/payzu-sdks 
 
 API version: 1.5.0
 */
@@ -21,7 +21,7 @@ var _ MappedNullable = &DefenseFilesInner{}
 type DefenseFilesInner struct {
 	Name *string `json:"name,omitempty"`
 	MimeType *string `json:"mimeType,omitempty"`
-	Size *float32 `json:"size,omitempty"`
+	Size *int32 `json:"size,omitempty"`
 	// Signed URL for download (expires in 9 minutes)
 	Url *string `json:"url,omitempty"`
 }
@@ -108,9 +108,9 @@ func (o *DefenseFilesInner) SetMimeType(v string) {
 }
 
 // GetSize returns the Size field value if set, zero value otherwise.
-func (o *DefenseFilesInner) GetSize() float32 {
+func (o *DefenseFilesInner) GetSize() int32 {
 	if o == nil || IsNil(o.Size) {
-		var ret float32
+		var ret int32
 		return ret
 	}
 	return *o.Size
@@ -118,7 +118,7 @@ func (o *DefenseFilesInner) GetSize() float32 {
 
 // GetSizeOk returns a tuple with the Size field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *DefenseFilesInner) GetSizeOk() (*float32, bool) {
+func (o *DefenseFilesInner) GetSizeOk() (*int32, bool) {
 	if o == nil || IsNil(o.Size) {
 		return nil, false
 	}
@@ -134,8 +134,8 @@ func (o *DefenseFilesInner) HasSize() bool {
 	return false
 }
 
-// SetSize gets a reference to the given float32 and assigns it to the Size field.
-func (o *DefenseFilesInner) SetSize(v float32) {
+// SetSize gets a reference to the given int32 and assigns it to the Size field.
+func (o *DefenseFilesInner) SetSize(v int32) {
 	o.Size = &v
 }
 

@@ -2,7 +2,7 @@
 /* eslint-disable */
 /**
  * PayZu Pix API
- * REST API for Pix operations on the PayZu platform, deposits, withdrawals, internal transfers, infractions, reports, and callback inspection. All amounts are in BRL (reais) unless explicitly noted. Authentication uses a Bearer token issued during onboarding.
+ * REST API for Pix operations on the PayZu platform, deposits, withdrawals, internal transfers, infractions, reports, and callback inspection. All amounts are in BRL (reais) unless explicitly noted. Authentication uses a Bearer token issued during onboarding.  ## SDKs oficiais  - Node.js: `npm install @payzu/pix` - Python: `pip install payzu-pix` - Go: `go get github.com/PayZuPlus/payzu-sdks/go` - PHP: `composer require payzu/pix`  Repo: https://github.com/PayZuPlus/payzu-sdks 
  *
  * The version of the OpenAPI document: 1.5.0
  * 
@@ -13,13 +13,13 @@
  */
 
 import { mapValues } from '../runtime';
-import type { GetUserTransactionById200ResponseAllOfInfractionInner } from './GetUserTransactionById200ResponseAllOfInfractionInner';
+import type { GetUserTransactionById200ResponseAllOfCallbackLogsInner } from './GetUserTransactionById200ResponseAllOfCallbackLogsInner';
 import {
-    GetUserTransactionById200ResponseAllOfInfractionInnerFromJSON,
-    GetUserTransactionById200ResponseAllOfInfractionInnerFromJSONTyped,
-    GetUserTransactionById200ResponseAllOfInfractionInnerToJSON,
-    GetUserTransactionById200ResponseAllOfInfractionInnerToJSONTyped,
-} from './GetUserTransactionById200ResponseAllOfInfractionInner';
+    GetUserTransactionById200ResponseAllOfCallbackLogsInnerFromJSON,
+    GetUserTransactionById200ResponseAllOfCallbackLogsInnerFromJSONTyped,
+    GetUserTransactionById200ResponseAllOfCallbackLogsInnerToJSON,
+    GetUserTransactionById200ResponseAllOfCallbackLogsInnerToJSONTyped,
+} from './GetUserTransactionById200ResponseAllOfCallbackLogsInner';
 import type { TransactionInfraction } from './TransactionInfraction';
 import {
     TransactionInfractionFromJSON,
@@ -27,13 +27,13 @@ import {
     TransactionInfractionToJSON,
     TransactionInfractionToJSONTyped,
 } from './TransactionInfraction';
-import type { GetUserTransactionById200ResponseAllOfCallbackLogInner } from './GetUserTransactionById200ResponseAllOfCallbackLogInner';
+import type { GetUserTransactionById200ResponseAllOfInfractionsInner } from './GetUserTransactionById200ResponseAllOfInfractionsInner';
 import {
-    GetUserTransactionById200ResponseAllOfCallbackLogInnerFromJSON,
-    GetUserTransactionById200ResponseAllOfCallbackLogInnerFromJSONTyped,
-    GetUserTransactionById200ResponseAllOfCallbackLogInnerToJSON,
-    GetUserTransactionById200ResponseAllOfCallbackLogInnerToJSONTyped,
-} from './GetUserTransactionById200ResponseAllOfCallbackLogInner';
+    GetUserTransactionById200ResponseAllOfInfractionsInnerFromJSON,
+    GetUserTransactionById200ResponseAllOfInfractionsInnerFromJSONTyped,
+    GetUserTransactionById200ResponseAllOfInfractionsInnerToJSON,
+    GetUserTransactionById200ResponseAllOfInfractionsInnerToJSONTyped,
+} from './GetUserTransactionById200ResponseAllOfInfractionsInner';
 
 /**
  * 
@@ -270,17 +270,17 @@ export interface GetUserTransactionById200Response {
      */
     virtualAccount?: string;
     /**
-     * Webhook delivery attempts for this transaction (most recent first)
-     * @type {Array<GetUserTransactionById200ResponseAllOfCallbackLogInner>}
+     * Histórico completo de infrações desta transação.
+     * @type {Array<GetUserTransactionById200ResponseAllOfInfractionsInner>}
      * @memberof GetUserTransactionById200Response
      */
-    callbackLog?: Array<GetUserTransactionById200ResponseAllOfCallbackLogInner>;
+    infractions?: Array<GetUserTransactionById200ResponseAllOfInfractionsInner>;
     /**
-     * Infractions linked to this transaction
-     * @type {Array<GetUserTransactionById200ResponseAllOfInfractionInner>}
+     * Webhook delivery attempts for this transaction (most recent first)
+     * @type {Array<GetUserTransactionById200ResponseAllOfCallbackLogsInner>}
      * @memberof GetUserTransactionById200Response
      */
-    infraction?: Array<GetUserTransactionById200ResponseAllOfInfractionInner>;
+    callbackLogs?: Array<GetUserTransactionById200ResponseAllOfCallbackLogsInner>;
 }
 
 /**
@@ -338,8 +338,8 @@ export function GetUserTransactionById200ResponseFromJSONTyped(json: any, ignore
         'cancellationReason': json['cancellationReason'] == null ? undefined : json['cancellationReason'],
         'infraction': json['infraction'] == null ? undefined : TransactionInfractionFromJSON(json['infraction']),
         'virtualAccount': json['virtualAccount'] == null ? undefined : json['virtualAccount'],
-        'callbackLog': json['CallbackLog'] == null ? undefined : ((json['CallbackLog'] as Array<any>).map(GetUserTransactionById200ResponseAllOfCallbackLogInnerFromJSON)),
-        'infraction': json['Infraction'] == null ? undefined : ((json['Infraction'] as Array<any>).map(GetUserTransactionById200ResponseAllOfInfractionInnerFromJSON)),
+        'infractions': json['infractions'] == null ? undefined : ((json['infractions'] as Array<any>).map(GetUserTransactionById200ResponseAllOfInfractionsInnerFromJSON)),
+        'callbackLogs': json['callbackLogs'] == null ? undefined : ((json['callbackLogs'] as Array<any>).map(GetUserTransactionById200ResponseAllOfCallbackLogsInnerFromJSON)),
     };
 }
 
@@ -392,8 +392,8 @@ export function GetUserTransactionById200ResponseToJSONTyped(value?: GetUserTran
         'cancellationReason': value['cancellationReason'],
         'infraction': TransactionInfractionToJSON(value['infraction']),
         'virtualAccount': value['virtualAccount'],
-        'CallbackLog': value['callbackLog'] == null ? undefined : ((value['callbackLog'] as Array<any>).map(GetUserTransactionById200ResponseAllOfCallbackLogInnerToJSON)),
-        'Infraction': value['infraction'] == null ? undefined : ((value['infraction'] as Array<any>).map(GetUserTransactionById200ResponseAllOfInfractionInnerToJSON)),
+        'infractions': value['infractions'] == null ? undefined : ((value['infractions'] as Array<any>).map(GetUserTransactionById200ResponseAllOfInfractionsInnerToJSON)),
+        'callbackLogs': value['callbackLogs'] == null ? undefined : ((value['callbackLogs'] as Array<any>).map(GetUserTransactionById200ResponseAllOfCallbackLogsInnerToJSON)),
     };
 }
 

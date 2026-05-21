@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Limit** | Pointer to **float32** |  | [optional] 
+**Limit** | Pointer to **int32** |  | [optional] 
 **Used** | Pointer to **float32** |  | [optional] 
 **UpdatedAt** | Pointer to **time.Time** |  | [optional] 
 **LastReset** | Pointer to **time.Time** |  | [optional] 
@@ -30,20 +30,20 @@ but it doesn't guarantee that properties required by API are set
 
 ### GetLimit
 
-`func (o *GetUser200ResponseDailyWithdrawLimit) GetLimit() float32`
+`func (o *GetUser200ResponseDailyWithdrawLimit) GetLimit() int32`
 
 GetLimit returns the Limit field if non-nil, zero value otherwise.
 
 ### GetLimitOk
 
-`func (o *GetUser200ResponseDailyWithdrawLimit) GetLimitOk() (*float32, bool)`
+`func (o *GetUser200ResponseDailyWithdrawLimit) GetLimitOk() (*int32, bool)`
 
 GetLimitOk returns a tuple with the Limit field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetLimit
 
-`func (o *GetUser200ResponseDailyWithdrawLimit) SetLimit(v float32)`
+`func (o *GetUser200ResponseDailyWithdrawLimit) SetLimit(v int32)`
 
 SetLimit sets Limit field to given value.
 

@@ -7,7 +7,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **name** | **str** |  | [optional] 
 **mime_type** | **str** |  | [optional] 
-**size** | **float** |  | [optional] 
+**size** | **int** |  | [optional] 
 **url** | **str** | Signed URL for download (expires in 9 minutes) | [optional] 
 
 ## Example
