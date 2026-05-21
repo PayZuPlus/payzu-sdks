@@ -1,0 +1,90 @@
+name: Generate SDKs
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'openapi.json'
+      - '.github/workflows/generate.yml'
+  workflow_dispatch:
+  schedule:
+    - cron: '0 6 * * *'
+
+permissions:
+  contents: write
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Sync openapi.json
+        run: |
+          for url in https://docs.payzu.com.br/openapi.json https://payzu-docs.web.app/openapi.json; do
+            if curl -sf "$url" -o openapi.json.new; then
+              if ! cmp -s openapi.json openapi.json.new; then
+                mv openapi.json.new openapi.json
+              else
+                rm openapi.json.new
+              fi
+              break
+            fi
+          done
+          [ -f openapi.json.new ] && rm openapi.json.new
+
+      - name: Install openapi-generator-cli
+        run: npm install -g @openapitools/openapi-generator-cli@latest
+
+      - name: Generate Node.js SDK
+        run: |
+          rm -rf nodejs
+          openapi-generator-cli generate \
+            -i openapi.json -g typescript-fetch -o nodejs \
+            --additional-properties=npmName=@payzu/pix,npmVersion=0.1.0,supportsES6=true,withInterfaces=true,typescriptThreePlus=true
+
+      - name: Generate Python SDK
+        run: |
+          rm -rf python
+          openapi-generator-cli generate \
+            -i openapi.json -g python -o python \
+            --additional-properties=packageName=payzu_pix,projectName=payzu-pix,packageVersion=0.1.0
+
+      - name: Generate Go SDK
+        run: |
+          rm -rf go
+          openapi-generator-cli generate \
+            -i openapi.json -g go -o go \
+            --git-user-id=PayZuPlus --git-repo-id=payzu-sdks \
+            --additional-properties=packageName=payzupix,packageVersion=0.1.0,isGoSubmodule=true
+
+      - name: Generate PHP SDK
+        run: |
+          rm -rf php
+          openapi-generator-cli generate \
+            -i openapi.json -g php -o php \
+            --git-user-id=PayZuPlus --git-repo-id=payzu-sdks \
+            --additional-properties=composerVendorName=payzu,composerProjectName=pix,packageName=PayZuPix,artifactVersion=0.1.0
+
+      - name: Commit
+        run: |
+          git config user.name "PayZu SDK Bot"
+          git config user.email "noreply@payzu.com.br"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "Sem mudancas."
+          else
+            git commit -m "chore(sdks): regenerar de openapi.json $(date -u +%Y-%m-%d)"
+            git push
+          fi
