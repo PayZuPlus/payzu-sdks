@@ -1,0 +1,67 @@
+name: Publish SDKs
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Versão (ex: 0.1.0)'
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  npm:
+    runs-on: ubuntu-latest
+    if: ${{ vars.NPM_PUBLISH == 'true' || github.event_name == 'release' }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          registry-url: 'https://registry.npmjs.org'
+      - name: Build
+        working-directory: nodejs
+        run: |
+          npm version "${{ inputs.version || github.event.release.tag_name }}" --no-git-tag-version --allow-same-version || true
+          npm install
+          npm run build || npx tsc
+      - name: Publish
+        working-directory: nodejs
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: npm publish --access public
+
+  pypi:
+    runs-on: ubuntu-latest
+    if: ${{ vars.PYPI_PUBLISH == 'true' || github.event_name == 'release' }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Build
+        working-directory: python
+        run: |
+          python -m pip install --upgrade build twine
+          sed -i "s/^VERSION = .*/VERSION = \"${{ inputs.version || github.event.release.tag_name }}\"/" setup.py || true
+          python -m build
+      - name: Publish
+        working-directory: python
+        env:
+          TWINE_USERNAME: __token__
+          TWINE_PASSWORD: ${{ secrets.PYPI_TOKEN }}
+        run: twine upload dist/*
+
+  packagist:
+    runs-on: ubuntu-latest
+    if: ${{ vars.PACKAGIST_PUBLISH == 'true' || github.event_name == 'release' }}
+    steps:
+      - name: Trigger Packagist update
+        run: |
+          curl -sf -XPOST -H "content-type:application/json" \
+            "https://packagist.org/api/update-package?username=payzu&apiToken=${{ secrets.PACKAGIST_TOKEN }}" \
+            -d '{"repository":{"url":"https://github.com/PayZuPlus/payzu-sdks"}}'
