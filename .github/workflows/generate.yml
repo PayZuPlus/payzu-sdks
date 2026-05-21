@@ -12,6 +12,7 @@ on:
 
 permissions:
   contents: write
+  pull-requests: write
 
 jobs:
   generate:
@@ -77,14 +78,14 @@ jobs:
             --git-user-id=PayZuPlus --git-repo-id=payzu-sdks \
             --additional-properties=composerVendorName=payzu,composerProjectName=pix,packageName=PayZuPix,artifactVersion=0.1.0
 
-      - name: Commit
-        run: |
-          git config user.name "PayZu SDK Bot"
-          git config user.email "noreply@payzu.com.br"
-          git add -A
-          if git diff --cached --quiet; then
-            echo "Sem mudancas."
-          else
-            git commit -m "chore(sdks): regenerar de openapi.json $(date -u +%Y-%m-%d)"
-            git push
-          fi
+      - name: Create PR
+        uses: peter-evans/create-pull-request@v6
+        with:
+          commit-message: "chore(sdks): regenerar de openapi.json"
+          title: "chore(sdks): regenerar SDKs de openapi.json"
+          body: SDKs regenerados automaticamente.
+          branch: bot/regenerate-sdks
+          delete-branch: true
+          base: main
+          author: PayZu SDK Bot <noreply@payzu.com.br>
+          committer: PayZu SDK Bot <noreply@payzu.com.br>
