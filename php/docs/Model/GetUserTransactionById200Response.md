@@ -1,0 +1,48 @@
+# GetUserTransactionById200Response
+
+## Properties
+
+Name | Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+**id** | **string** |  | [optional]
+**status** | **string** | PENDING, COMPLETED, CANCELED, WAITING_FOR_REFUND, REFUNDED, EXPIRED, ERROR | [optional]
+**amount** | **float** |  | [optional]
+**type** | **string** | DEPOSIT or WITHDRAW | [optional]
+**callback_url** | **string** |  | [optional]
+**qr_code_text** | **string** |  | [optional]
+**qr_code_base64** | **string** |  | [optional]
+**qr_code_url** | **string** |  | [optional]
+**generated_name** | **string** |  | [optional]
+**generated_document** | **string** |  | [optional]
+**generated_email** | **string** |  | [optional]
+**payer_name** | **string** |  | [optional]
+**payer_document** | **string** |  | [optional]
+**payer_institution_ispb** | **string** |  | [optional]
+**payer_institution_name** | **string** |  | [optional]
+**payer_account_number** | **string** | Payer&#39;s PayZu account number (6 digits). Present only on internal-transfer transactions. | [optional]
+**service_fee_charged** | **float** |  | [optional]
+**withdraw_pix_key** | **string** |  | [optional]
+**withdraw_pix_type** | **string** |  | [optional]
+**receiver_name** | **string** |  | [optional]
+**receiver_document** | **string** |  | [optional]
+**receiver_institution_ispb** | **string** |  | [optional]
+**receiver_institution_name** | **string** |  | [optional]
+**receiver_account_number** | **string** | Receiver&#39;s PayZu account number (6 digits). Present only on internal-transfer transactions. | [optional]
+**end_to_end_id** | **string** |  | [optional]
+**created_at** | **string** |  | [optional]
+**updated_at** | **string** |  | [optional]
+**paid_at** | **string** |  | [optional]
+**client_reference** | **string** |  | [optional]
+**refund_end_to_end_id** | **string** | End-to-end ID of the refund transaction | [optional]
+**refund_amount** | **string** | Amount refunded | [optional]
+**refund_status** | **string** | Status of the refund (PENDING, COMPLETED, CANCELED, WAITING_FOR_REFUND, REFUNDED, EXPIRED, ERROR) | [optional]
+**refund_reason** | **string** | Reason for the refund | [optional]
+**refund_description** | **string** | Description of the refund | [optional]
+**refunded_at** | **string** | Date and time when the refund was processed | [optional]
+**cancellation_reason** | **string** | Reason for cancellation (if cancelled) | [optional]
+**infraction** | [**\OpenAPI\Client\Model\TransactionInfraction**](TransactionInfraction.md) |  | [optional]
+**virtual_account** | **string** | Subconta virtual informada na criação. | [optional]
+**callback_log** | [**\OpenAPI\Client\Model\GetUserTransactionById200ResponseAllOfCallbackLogInner[]**](GetUserTransactionById200ResponseAllOfCallbackLogInner.md) | Webhook delivery attempts for this transaction (most recent first) | [optional]
+**infraction** | [**\OpenAPI\Client\Model\GetUserTransactionById200ResponseAllOfInfractionInner[]**](GetUserTransactionById200ResponseAllOfInfractionInner.md) | Infractions linked to this transaction | [optional]
+
+[[Back to Model list]](../../README.md#models) [[Back to API list]](../../README.md#endpoints) [[Back to README]](../../README.md)

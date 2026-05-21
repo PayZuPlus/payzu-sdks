@@ -1,0 +1,109 @@
+
+# Transaction
+
+Unified transaction representation used by all endpoints.
+
+## Properties
+
+Name | Type
+------------ | -------------
+`id` | string
+`status` | string
+`amount` | number
+`type` | string
+`callbackUrl` | string
+`qrCodeText` | string
+`qrCodeBase64` | string
+`qrCodeUrl` | string
+`generatedName` | string
+`generatedDocument` | string
+`generatedEmail` | string
+`payerName` | string
+`payerDocument` | string
+`payerInstitutionIspb` | string
+`payerInstitutionName` | string
+`payerAccountNumber` | string
+`serviceFeeCharged` | number
+`withdrawPixKey` | string
+`withdrawPixType` | string
+`receiverName` | string
+`receiverDocument` | string
+`receiverInstitutionIspb` | string
+`receiverInstitutionName` | string
+`receiverAccountNumber` | string
+`endToEndId` | string
+`createdAt` | string
+`updatedAt` | string
+`paidAt` | string
+`clientReference` | string
+`refundEndToEndId` | string
+`refundAmount` | string
+`refundStatus` | string
+`refundReason` | string
+`refundDescription` | string
+`refundedAt` | string
+`cancellationReason` | string
+`infraction` | [TransactionInfraction](TransactionInfraction.md)
+`virtualAccount` | string
+
+## Example
+
+```typescript
+import type { Transaction } from '@payzu/pix'
+
+// TODO: Update the object below with actual values
+const example = {
+  "id": null,
+  "status": null,
+  "amount": null,
+  "type": null,
+  "callbackUrl": null,
+  "qrCodeText": null,
+  "qrCodeBase64": null,
+  "qrCodeUrl": null,
+  "generatedName": null,
+  "generatedDocument": null,
+  "generatedEmail": null,
+  "payerName": null,
+  "payerDocument": null,
+  "payerInstitutionIspb": null,
+  "payerInstitutionName": null,
+  "payerAccountNumber": null,
+  "serviceFeeCharged": null,
+  "withdrawPixKey": null,
+  "withdrawPixType": null,
+  "receiverName": null,
+  "receiverDocument": null,
+  "receiverInstitutionIspb": null,
+  "receiverInstitutionName": null,
+  "receiverAccountNumber": null,
+  "endToEndId": null,
+  "createdAt": null,
+  "updatedAt": null,
+  "paidAt": null,
+  "clientReference": null,
+  "refundEndToEndId": null,
+  "refundAmount": null,
+  "refundStatus": null,
+  "refundReason": null,
+  "refundDescription": null,
+  "refundedAt": null,
+  "cancellationReason": null,
+  "infraction": null,
+  "virtualAccount": null,
+} satisfies Transaction
+
+console.log(example)
+
+// Convert the instance to a JSON string
+const exampleJSON: string = JSON.stringify(example)
+console.log(exampleJSON)
+
+// Parse the JSON string back to an object
+const exampleParsed = JSON.parse(exampleJSON) as Transaction
+console.log(exampleParsed)
+```
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
