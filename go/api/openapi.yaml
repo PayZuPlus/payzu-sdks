@@ -1,0 +1,4594 @@
+openapi: 3.1.0
+info:
+  contact:
+    name: Suporte PayZu
+    url: https://suporte.payzu.com.br
+  description: "REST API for Pix operations on the PayZu platform, deposits, withdrawals,\
+    \ internal transfers, infractions, reports, and callback inspection. All amounts\
+    \ are in BRL (reais) unless explicitly noted. Authentication uses a Bearer token\
+    \ issued during onboarding."
+  title: PayZu Pix API
+  version: 1.5.0
+externalDocs:
+  description: Documentação completa
+  url: https://docs.payzu.com.br/docs/pix-processamento
+servers:
+- description: Produção
+  url: https://api.payzu.processamento.com/v1
+tags:
+- description: Create and manage Pix charges (deposits)
+  name: Pix Operations
+- description: Send money via Pix (cash out) and DICT key/QR-code consultation
+  name: Withdrawals
+- description: "Transfer funds between PayZu accounts (free, instant)"
+  name: Internal Transfer
+- description: "Account profile, balance, and auto-withdraw configuration"
+  name: Account
+- description: "Transaction history, reports, bank statements, and pending deposits"
+  name: Reports
+- description: Webhook callback inspection and re-trigger
+  name: Callbacks
+- description: "Manage Pix infractions (disputes, fraud reports) and submit defenses"
+  name: Infractions
+paths:
+  /pix:
+    get:
+      description: "Get the latest status and details for a Pix **deposit (charge)**.\
+        \ Provide **one** of `id`, `clientReference`, or `endToEndId`. Use apenas\
+        \ um destes parâmetros: id, clientReference, endToEndId. Combinar mais de\
+        \ um retorna erro."
+      operationId: get_pix
+      parameters:
+      - description: Obrigatório em toda chamada PayZu.
+        explode: false
+        in: header
+        name: Content-Type
+        required: true
+        schema:
+          default: application/json
+          enum:
+          - application/json
+          type: string
+        style: simple
+      - description: Transaction ID.
+        example: PAYZU20250817215911F49RDOBJ
+        explode: true
+        in: query
+        name: id
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: External reference provided when creating the charge.
+        explode: true
+        in: query
+        name: clientReference
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: Pix end-to-end ID.
+        explode: true
+        in: query
+        name: endToEndId
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: Subconta virtual (até 50 caracteres) usada na criação. Aceito
+          como chave de busca alternativa.
+        explode: true
+        in: query
+        name: virtualAccount
+        required: false
+        schema:
+          maxLength: 50
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              examples:
+                pending:
+                  summary: Pending payment
+                  value:
+                    id: PAYZU20250817215911F49RDOBJ
+                    status: PENDING
+                    amount: 10
+                    type: DEPOSIT
+                    callbackUrl: https://webhook.cool/
+                    qrCodeText: 00020126870014br.gov.bcb.pix2565qrcode.payzu.com.br/dynamic/d7790b91-3979-4ad5-9d96-ee941e5a42765204000053039865802BR5908PAYZUPLUS6009SAO
+                      PAULO62070503***63047EE4
+                    qrCodeBase64: iVBORw0KGgoAAAANSUhEUgAAAZAAAAGQCAYAAAC...
+                    qrCodeUrl: https://pix.payzu.com.br/v1/pix/qr-code/PAYZU20250817215911F49RDOBJ
+                    generatedName: John Doe
+                    generatedDocument: "12345678901"
+                    generatedEmail: john.doe@example.com
+                    serviceFeeCharged: 0.115
+                    payerName: null
+                    payerDocument: null
+                    payerInstitutionIspb: null
+                    payerInstitutionName: null
+                    payerAccountNumber: null
+                    receiverName: null
+                    receiverDocument: null
+                    receiverInstitutionIspb: null
+                    receiverInstitutionName: null
+                    receiverAccountNumber: "513579"
+                    endToEndId: null
+                    createdAt: 2025-08-17T21:59:11.579Z
+                    updatedAt: 2025-08-17T21:59:11.579Z
+                    paidAt: null
+                    withdrawPixKey: null
+                    withdrawPixType: null
+                    clientReference: order_12345
+                    refundEndToEndId: null
+                    refundAmount: null
+                    refundStatus: null
+                    refundReason: null
+                    refundDescription: null
+                    refundedAt: null
+                    cancellationReason: null
+                completed:
+                  summary: Completed payment
+                  value:
+                    id: PAYZU20250817215911F49RDOBJ
+                    status: COMPLETED
+                    amount: 10
+                    type: DEPOSIT
+                    callbackUrl: https://webhook.cool/
+                    qrCodeText: null
+                    qrCodeBase64: null
+                    qrCodeUrl: null
+                    generatedName: John Doe
+                    generatedDocument: "12345678901"
+                    generatedEmail: john.doe@example.com
+                    serviceFeeCharged: 0.115
+                    payerName: John Doe
+                    payerDocument: "12345678901"
+                    payerInstitutionIspb: "12345678"
+                    payerInstitutionName: Banco X
+                    payerAccountNumber: null
+                    receiverName: PayZu Pagamentos Ltda
+                    receiverDocument: 12.345.678/0001-00
+                    receiverInstitutionIspb: "23066240"
+                    receiverInstitutionName: PAYZU IP LTDA.
+                    receiverAccountNumber: "513579"
+                    endToEndId: E123456782025081422403B13DMS72H9
+                    createdAt: 2025-08-17T21:59:11.579Z
+                    updatedAt: 2025-08-17T22:01:30.123Z
+                    paidAt: 2025-08-17T22:01:30.123Z
+                    withdrawPixKey: null
+                    withdrawPixType: null
+                    clientReference: order_12345
+                    refundEndToEndId: null
+                    refundAmount: null
+                    refundStatus: null
+                    refundReason: null
+                    refundDescription: null
+                    refundedAt: null
+                    cancellationReason: null
+              schema:
+                $ref: "#/components/schemas/Transaction"
+          description: Current transaction state
+        "400":
+          content:
+            application/json:
+              examples:
+                error:
+                  value:
+                    statusCode: 400
+                    error: Bad Request
+                    message: "querystring/dateFrom Invalid input: expected string,\
+                      \ received undefined"
+                    requestId: cmou00000abcdef01s6ghij1k2lm
+              schema:
+                $ref: "#/components/schemas/get_pix_400_response"
+          description: "Bad Request, payload or query string failed validation"
+        "401":
+          content:
+            application/json:
+              examples:
+                error:
+                  value:
+                    statusCode: 401
+                    error: Unauthorized
+                    message: Missing or invalid Bearer token
+                    requestId: cmou00000abcdef01s6ghij1k2lm
+              schema:
+                $ref: "#/components/schemas/get_pix_400_response"
+          description: "Unauthorized, missing or invalid Bearer token, or token lacks\
+            \ the required permission for this endpoint"
+        "404":
+          content:
+            application/json:
+              examples:
+                error:
+                  value:
+                    statusCode: 404
+                    error: Not Found
+                    message: Resource not found
+                    requestId: cmou00000abcdef01s6ghij1k2lm
+              schema:
+                $ref: "#/components/schemas/get_pix_400_response"
+          description: Resource not found
+      security:
+      - BearerAuth: []
+      summary: Retrieve Charge
+      tags:
+      - Pix Operations
+    post:
+      description: Create a new Pix **deposit** (charge). Returns QR Code and transaction
+        details.
+      operationId: post_pix
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/post_pix_request"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              examples:
+                created:
+                  summary: Created (PENDING)
+                  value:
+                    id: PAYZU20250817215911F49RDOBJ
+                    status: PENDING
+                    amount: 10
+                    type: DEPOSIT
+                    callbackUrl: https://webhook.cool/
+                    qrCodeText: 00020126870014br.gov.bcb.pix2565qrcode.payzu.com.br/dynamic/d7790b91-3979-4ad5-9d96-ee941e5a42765204000053039865802BR5908PAYZUPLUS6009SAO
+                      PAULO62070503***63047EE4
+                    qrCodeBase64: iVBORw0KGgoAAAANSUhEUgAAAZAAAAGQCAYAAAC...
+                    qrCodeUrl: https://pix.payzu.com.br/v1/pix/qr-code/PAYZU20250817215911F49RDOBJ
+                    generatedName: John Doe
+                    generatedDocument: "12345678901"
+                    generatedEmail: john.doe@example.com
+                    serviceFeeCharged: 0.115
+                    payerName: null
+                    payerDocument: null
+                    payerInstitutionIspb: null
+                    payerInstitutionName: null
+                    payerAccountNumber: null
+                    receiverName: null
+                    receiverDocument: null
+                    receiverInstitutionIspb: null
+                    receiverInstitutionName: null
+                    receiverAccountNumber: "513579"
+                    endToEndId: null
+                    createdAt: 2025-08-17T21:59:11.579Z
+                    updatedAt: 2025-08-17T21:59:11.579Z
+                    paidAt: null
+                    withdrawPixKey: null
+                    withdrawPixType: null
+                    clientReference: order_12345
+                    refundEndToEndId: null
+                    refundAmount: null
+                    refundStatus: null
+                    refundReason: null
+                    refundDescription: null
+                    refundedAt: null
+                    cancellationReason: null
+              schema:
+                $ref: "#/components/schemas/Transaction"
+          description: Charge created
+        "400":
+          content:
+            application/json:
+              examples:
+                error:
+                  value:
+                    statusCode: 400
+                    error: Bad Request
+                    message: "querystring/dateFrom Invalid input: expected string,\
+                      \ received undefined"
+                    requestId: cmou00000abcdef01s6ghij1k2lm
+              schema:
+                $ref: "#/components/schemas/get_pix_400_response"
+          description: "Bad Request, payload or query string failed validation"
+        "401":
+          content:
+            application/json:
+              examples:
+                error:
+                  value:
+                    statusCode: 401
+                    error: Unauthorized
+                    message: Missing or invalid Bearer token
+                    requestId: cmou00000abcdef01s6ghij1k2lm
+              schema:
+                $ref: "#/components/schemas/get_pix_400_response"
+          description: "Unauthorized, missing or invalid Bearer token, or token lacks\
+            \ the required permission for this endpoint"
+      security:
+      - BearerAuth: []
+      summary: Create Charge (Pix deposit)
+      tags:
+      - Pix Operations
+  /pix/key:
+    get:
+      description: Query the DICT (Diretório de Identificadores de Contas Transacionais)
+        to retrieve information about a Pix key before sending a payment. Returns
+        the key owner's details and associated financial institution.
+      operationId: get_pix_key
+      parameters:
+      - description: Obrigatório em toda chamada PayZu.
+        explode: false
+        in: header
+        name: Content-Type
+        required: true
+        schema:
+          default: application/json
+          enum:
+          - application/json
+          type: string
+        style: simple
+      - description: "The Pix key to lookup (CPF, CNPJ, email, phone, or EVP)."
+        example: example@payzu.com.br
+        explode: true
+        in: query
+        name: pixKey
+        required: true
+        schema:
+          maxLength: 77
+          minLength: 1
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              examples:
+                pj:
+                  summary: Legal Entity (PJ)
+                  value:
+                    pixKey: 5c8999e2-6b29-468b-b4e9-04d4872b1bc4
+                    document: '**.345.678/****-**'
+                    name: EMPRESA EXEMPLO LTDA
+                    branch: '****'
+                    accountNumber: '*******'
+                    personType: PJ
+                    accountType: CACC
+                    institutionIspb: "12345678"
+                    institutionCode: "001"
+                    institutionName: BANCO EXEMPLO S.A.
+                pf:
+                  summary: Individual (PF)
+                  value:
+                    pixKey: "12345678901"
+                    document: '***.456.789-**'
+                    name: João da Silva
+                    branch: '****'
+                    accountNumber: '********'
+                    personType: PF
+                    accountType: TRAN
+                    institutionIspb: "87654321"
+                    institutionCode: "260"
+                    institutionName: BANCO FICTICIO S.A.
+              schema:
+                $ref: "#/components/schemas/PixKeyInfo"
+          description: Pix key information retrieved successfully
+        "400":
+          content:
+            application/json:
+              examples:
+                error:
+                  value:
+                    statusCode: 400
+                    error: Bad Request
+                    message: "querystring/dateFrom Invalid input: expected string,\
+                      \ received undefined"
+                    requestId: cmou00000abcdef01s6ghij1k2lm
+              schema:
+                $ref: "#/components/schemas/get_pix_key_400_response"
+          description: Invalid Pix key format
+        "404":
+          content:
+            application/json:
+              examples:
+                error:
+                  value:
+                    statusCode: 404
+                    error: Not Found
+                    message: Resource not found
+                    requestId: cmou00000abcdef01s6ghij1k2lm
+              schema:
+                $ref: "#/components/schemas/get_pix_key_404_response"
+          description: Pix key not found in DICT
+      security:
+      - BearerAuth: []
+      summary: Dict Pix Key Lookup
+      tags:
+      - Withdrawals
+  /pix/qrcode/read:
+    post:
+      description: "Decode and extract information from a Pix QR Code (EMV format)\
+        \ before making a payment. Returns the parsed data including receiver details,\
+        \ amount (if present), and other QR Code metadata. No momento a PayZu só suporta\
+        \ QR Code dinâmico. QR estático ainda não é processado."
+      operationId: post_pix_qrcode_read
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/post_pix_qrcode_read_request"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              examples:
+                dynamic:
+                  summary: Dynamic QR Code
+                  value:
+                    qrCodeType: DYNAMIC
+                    name: LOJA EXEMPLO LTDA
+                    document: "12345678000199"
+                    amount: 10
+                    originalAmount: 10
+                    txid: c5886b83f0254d0dbfc3900f72d5a8d1
+                    additionalInfo: null
+                    expiresIn: 1799
+                    createdAt: 2026-02-03T22:59:36.138
+                static:
+                  summary: Static QR Code
+                  value:
+                    qrCodeType: STATIC
+                    name: MARIA SANTOS
+                    document: "98765432100"
+                    amount: 1
+                    originalAmount: 1
+                    txid: QRTEST20251103083119867
+                    additionalInfo: null
+                    expiresIn: 0
+                    createdAt: null
+              schema:
+                $ref: "#/components/schemas/QRCodeReadResponse"
+          description: QR Code decoded successfully
+        "400":
+          content:
+            application/json:
+              examples:
+                error:
+                  value:
+                    statusCode: 400
+                    error: Bad Request
+                    message: "querystring/dateFrom Invalid input: expected string,\
+                      \ received undefined"
+                    requestId: cmou00000abcdef01s6ghij1k2lm
+              schema:
+                $ref: "#/components/schemas/post_pix_qrcode_read_400_response"
+          description: Invalid QR Code format
+      security:
+      - BearerAuth: []
+      summary: Read QR Code
+      tags:
+      - Withdrawals
+  /proof/{id}:
+    get:
+      description: Retorna o comprovante da transação como JSON com o campo `base64`
+        (PDF codificado). Decodifique pra exibir ou salvar como `.pdf`.
+      operationId: get_proof
+      parameters:
+      - description: Obrigatório em toda chamada PayZu.
+        explode: false
+        in: header
+        name: Content-Type
+        required: true
+        schema:
+          default: application/json
+          enum:
+          - application/json
+          type: string
+        style: simple
+      - description: Transaction ID.
+        example: PAYZU2025081418333632CYKN8M
+        explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Return format.
+        example: pdf
+        explode: true
+        in: query
+        name: type
+        required: false
+        schema:
+          default: pdf
+          enum:
+          - pdf
+          - base64
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              examples:
+                base64:
+                  summary: As Base64
+                  value:
+                    base64: JVBERi0xLjQKJ...
+              schema:
+                $ref: "#/components/schemas/get_proof_200_response"
+          description: "Base64 if `type=base64`, otherwise binary PDF."
+        "400":
+          content:
+            application/json:
+              examples:
+                error:
+                  value:
+                    statusCode: 400
+                    error: Bad Request
+                    message: "querystring/dateFrom Invalid input: expected string,\
+                      \ received undefined"
+                    requestId: cmou00000abcdef01s6ghij1k2lm
+              schema:
+                $ref: "#/components/schemas/get_pix_400_response"
+          description: "Bad Request, payload or query string failed validation"
+        "401":
+          content:
+            application/json:
+              examples:
+                error:
+                  value:
+                    statusCode: 401
+                    error: Unauthorized
+                    message: Missing or invalid Bearer token
+                    requestId: cmou00000abcdef01s6ghij1k2lm
+              schema:
+                $ref: "#/components/schemas/get_pix_400_response"
+          description: "Unauthorized, missing or invalid Bearer token, or token lacks\
+            \ the required permission for this endpoint"
+        "404":
+          content:
+            application/json:
+              examples:
+                error:
+                  value:
+                    statusCode: 404
+                    error: Not Found
+                    message: Resource not found
+                    requestId: cmou00000abcdef01s6ghij1k2lm
+              schema:
+                $ref: "#/components/schemas/get_pix_400_response"
+          description: Resource not found
+      security:
+      - BearerAuth: []
+      summary: Get Transaction Receipt
+      tags:
+      - Pix Operations
+  /withdraw:
+    get:
+      description: "Get the latest status and details for a **withdrawal**. You can\
+        \ provide any **one** of the following parameters: `id`, `clientReference`,\
+        \ or `endToEndId`. All three are optional and you can use any one of them\
+        \ to retrieve the withdrawal. Use apenas um destes parâmetros: id, clientReference,\
+        \ endToEndId. Combinar mais de um retorna erro."
+      operationId: get_withdraw
+      parameters:
+      - description: Obrigatório em toda chamada PayZu.
+        explode: false
+        in: header
+        name: Content-Type
+        required: true
+        schema:
+          default: application/json
+          enum:
+          - application/json
+          type: string
+        style: simple
+      - description: Transaction ID.
+        example: PAYZU2025081721512946OOLK75
+        explode: true
+        in: query
+        name: id
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: External reference provided when creating the withdrawal.
+        explode: true
+        in: query
+        name: clientReference
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: Pix end-to-end ID.
+        explode: true
+        in: query
+        name: endToEndId
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: Subconta virtual (até 50 caracteres) usada na criação. Aceito
+          como chave de busca alternativa.
+        explode: true
+        in: query
+        name: virtualAccount
+        required: false
+        schema:
+          maxLength: 50
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              examples:
+                pending:
+                  summary: Pending withdrawal
+                  value:
+                    id: PAYZU2025081721512946OOLK75
+                    status: PENDING
+                    amount: 2
+                    type: WITHDRAW
+                    callbackUrl: https://webhook.cool/
+                    qrCodeText: null
+                    qrCodeBase64: null
+                    qrCodeUrl: null
+                    generatedName: null
+                    generatedDocument: null
+                    generatedEmail: null
+                    payerName: null
+                    payerDocument: null
+                    payerInstitutionIspb: null
+                    payerInstitutionName: null
+                    payerAccountNumber: "513579"
+                    serviceFeeCharged: 1
+                    withdrawPixKey: teste@teste.com
+                    withdrawPixType: email
+                    receiverName: null
+                    receiverDocument: null
+                    receiverInstitutionIspb: null
+                    receiverInstitutionName: null
+                    receiverAccountNumber: null
+                    endToEndId: null
+                    createdAt: 2025-08-17T21:51:29.748Z
+                    updatedAt: 2025-08-17T21:51:29.748Z
+                    paidAt: null
+                    clientReference: withdraw_98765
+                    refundEndToEndId: null
+                    refundAmount: null
+                    refundStatus: null
+                    refundReason: null
+                    refundDescription: null
+                    refundedAt: null
+                    cancellationReason: null
+                completed:
+                  summary: Completed withdrawal
+                  value:
+                    id: PAYZU2025081721512946OOLK75
+                    status: COMPLETED
+                    amount: 2
+                    type: WITHDRAW
+                    callbackUrl: https://webhook.cool/
+                    qrCodeText: null
+                    qrCodeBase64: null
+                    qrCodeUrl: null
+                    generatedName: null
+                    generatedDocument: null
+                    generatedEmail: null
+                    serviceFeeCharged: 1
+                    payerName: PayZu Pagamentos Ltda
+                    payerDocument: 12.345.678/0001-00
+                    payerInstitutionIspb: "23066240"
+                    payerInstitutionName: PAYZU IP LTDA.
+                    payerAccountNumber: "513579"
+                    withdrawPixKey: teste@teste.com
+                    withdrawPixType: email
+                    receiverName: Maria Santos
+                    receiverDocument: "12345678901"
+                    receiverInstitutionIspb: "87654321"
+                    receiverInstitutionName: Banco Y
+                    receiverAccountNumber: null
+                    endToEndId: E2306624020251217134500X98765432
+                    createdAt: 2025-08-17T21:51:29.748Z
+                    updatedAt: 2025-08-17T21:52:15.123Z
+                    paidAt: 2025-08-17T21:52:15.123Z
+                    clientReference: withdraw_98765
+                    refundEndToEndId: null
+                    refundAmount: null
+                    refundStatus: null
+                    refundReason: null
+                    refundDescription: null
+                    refundedAt: null
+                    cancellationReason: null
+              schema:
+                $ref: "#/components/schemas/Transaction"
+          description: Current withdrawal state
+        "400":
+          content:
+            application/json:
+              examples:
+                error:
+                  value:
+                    statusCode: 400
+                    error: Bad Request
+                    message: "querystring/dateFrom Invalid input: expected string,\
+                      \ received undefined"
+                    requestId: cmou00000abcdef01s6ghij1k2lm
+              schema:
+                $ref: "#/components/schemas/get_pix_400_response"
+          description: "Bad Request, payload or query string failed validation"
+        "401":
+          content:
+            application/json:
+              examples:
+                error:
+                  value:
+                    statusCode: 401
+                    error: Unauthorized
+                    message: Missing or invalid Bearer token
+                    requestId: cmou00000abcdef01s6ghij1k2lm
+              schema:
+                $ref: "#/components/schemas/get_pix_400_response"
+          description: "Unauthorized, missing or invalid Bearer token, or token lacks\
+            \ the required permission for this endpoint"
+        "404":
+          content:
+            application/json:
+              examples:
+                error:
+                  value:
+                    statusCode: 404
+                    error: Not Found
+                    message: Resource not found
+                    requestId: cmou00000abcdef01s6ghij1k2lm
+              schema:
+                $ref: "#/components/schemas/get_pix_400_response"
+          description: Resource not found
+      security:
+      - BearerAuth: []
+      summary: Retrieve Withdrawal
+      tags:
+      - Withdrawals
+    post:
+      description: Send a Pix **cash out** to the specified Pix key.
+      operationId: post_withdraw
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/post_withdraw_request"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              examples:
+                created:
+                  summary: Created (PENDING)
+                  value:
+                    id: PAYZU2025081721512946OOLK75
+                    status: PENDING
+                    amount: 2
+                    type: WITHDRAW
+                    qrCodeText: null
+                    qrCodeBase64: null
+                    qrCodeUrl: null
+                    generatedName: null
+                    generatedDocument: null
+                    generatedEmail: null
+                    payerName: null
+                    payerDocument: null
+                    payerInstitutionIspb: null
+                    payerInstitutionName: null
+                    payerAccountNumber: "513579"
+                    serviceFeeCharged: 1
+                    withdrawPixKey: teste@teste.com
+                    withdrawPixType: email
+                    receiverName: null
+                    receiverDocument: null
+                    receiverInstitutionIspb: null
+                    receiverInstitutionName: null
+                    receiverAccountNumber: null
+                    endToEndId: null
+                    createdAt: 2025-08-17T21:51:29.748Z
+                    updatedAt: 2025-08-17T21:51:29.748Z
+                    paidAt: null
+                    clientReference: withdraw_98765
+                    refundEndToEndId: null
+                    refundAmount: null
+                    refundStatus: null
+                    refundReason: null
+                    refundDescription: null
+                    refundedAt: null
+                    cancellationReason: null
+                completed:
+                  summary: Completed
+                  value:
+                    id: PAYZU2025081721512946OOLK75
+                    status: COMPLETED
+                    amount: 2
+                    type: WITHDRAW
+                    callbackUrl: https://webhook.cool/
+                    qrCodeText: null
+                    qrCodeBase64: null
+                    qrCodeUrl: null
+                    generatedName: null
+                    generatedDocument: null
+                    generatedEmail: null
+                    serviceFeeCharged: 1
+                    payerName: PayZu Pagamentos Ltda
+                    payerDocument: 12.345.678/0001-00
+                    payerInstitutionIspb: "23066240"
+                    payerInstitutionName: PAYZU IP LTDA.
+                    payerAccountNumber: "513579"
+                    withdrawPixKey: teste@teste.com
+                    withdrawPixType: email
+                    receiverName: Maria Santos
+                    receiverDocument: "12345678901"
+                    receiverInstitutionIspb: "87654321"
+                    receiverInstitutionName: Banco Y
+                    receiverAccountNumber: null
+                    endToEndId: E2306624020251217134500X98765432
+                    createdAt: 2025-08-17T21:51:29.748Z
+                    updatedAt: 2025-08-17T21:52:15.123Z
+                    paidAt: 2025-08-17T21:52:15.123Z
+                    clientReference: withdraw_98765
+                    refundEndToEndId: null
+                    refundAmount: null
+                    refundStatus: null
+                    refundReason: null
+                    refundDescription: null
+                    refundedAt: null
+                    cancellationReason: null
+              schema:
+                $ref: "#/components/schemas/Transaction"
+          description: Withdrawal created
+        "400":
+          content:
+            application/json:
+              examples:
+                error:
+                  value:
+                    statusCode: 400
+                    error: Bad Request
+                    message: "querystring/dateFrom Invalid input: expected string,\
+                      \ received undefined"
+                    requestId: cmou00000abcdef01s6ghij1k2lm
+              schema:
+                $ref: "#/components/schemas/get_pix_400_response"
+          description: "Bad Request, payload or query string failed validation"
+        "401":
+          content:
+            application/json:
+              examples:
+                error:
+                  value:
+                    statusCode: 401
+                    error: Unauthorized
+                    message: Missing or invalid Bearer token
+                    requestId: cmou00000abcdef01s6ghij1k2lm
+              schema:
+                $ref: "#/components/schemas/get_pix_400_response"
+          description: "Unauthorized, missing or invalid Bearer token, or token lacks\
+            \ the required permission for this endpoint"
+      security:
+      - BearerAuth: []
+      summary: Create Withdrawal (Pix key)
+      tags:
+      - Withdrawals
+  /withdraw/qrcode:
+    post:
+      description: "Cash out using a **Pix QR Code** (static/dynamic). If `amount`\
+        \ is not provided, the QR Code's embedded value will be used. No momento a\
+        \ PayZu só suporta QR Code dinâmico. QR estático ainda não é processado."
+      operationId: post_withdraw_qrcode
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/post_withdraw_qrcode_request"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              examples:
+                with_amount:
+                  summary: Created with custom amount
+                  value:
+                    id: PAYZU202511061998787515D0PH2Y
+                    status: PENDING
+                    amount: 20
+                    type: WITHDRAW
+                    callbackUrl: https://bright-lightning-66.webhook.cool
+                    qrCodeText: null
+                    qrCodeBase64: null
+                    qrCodeUrl: null
+                    generatedName: null
+                    generatedDocument: null
+                    generatedEmail: null
+                    serviceFeeCharged: 1
+                    payerName: null
+                    payerDocument: null
+                    payerInstitutionIspb: null
+                    payerInstitutionName: null
+                    payerAccountNumber: "513579"
+                    withdrawPixKey: "88888888888"
+                    withdrawPixType: cpf
+                    receiverName: null
+                    receiverDocument: null
+                    receiverInstitutionIspb: null
+                    receiverInstitutionName: null
+                    receiverAccountNumber: null
+                    endToEndId: null
+                    createdAt: 2025-11-06T19:08:55.848Z
+                    updatedAt: 2025-11-06T19:08:55.848Z
+                    paidAt: null
+                    clientReference: order-123
+                    refundEndToEndId: null
+                    refundAmount: null
+                    refundStatus: null
+                    refundReason: null
+                    refundDescription: null
+                    refundedAt: null
+                    cancellationReason: null
+                without_amount:
+                  summary: Created using QR Code value
+                  value:
+                    id: PAYZU202511061998787515D0PH2Z
+                    status: PENDING
+                    amount: 150
+                    type: WITHDRAW
+                    callbackUrl: https://bright-lightning-66.webhook.cool
+                    qrCodeText: null
+                    qrCodeBase64: null
+                    qrCodeUrl: null
+                    generatedName: null
+                    generatedDocument: null
+                    generatedEmail: null
+                    serviceFeeCharged: 1
+                    payerName: null
+                    payerDocument: null
+                    payerInstitutionIspb: null
+                    payerInstitutionName: null
+                    payerAccountNumber: "513579"
+                    withdrawPixKey: example@payzu.com.br
+                    withdrawPixType: email
+                    receiverName: null
+                    receiverDocument: null
+                    receiverInstitutionIspb: null
+                    receiverInstitutionName: null
+                    receiverAccountNumber: null
+                    endToEndId: null
+                    createdAt: 2025-11-06T19:10:00.000Z
+                    updatedAt: 2025-11-06T19:10:00.000Z
+                    paidAt: null
+                    clientReference: order-12323456
+                    refundEndToEndId: null
+                    refundAmount: null
+                    refundStatus: null
+                    refundReason: null
+                    refundDescription: null
+                    refundedAt: null
+                    cancellationReason: null
+              schema:
+                $ref: "#/components/schemas/Transaction"
+          description: Withdrawal created from QR Code
+        "400":
+          content:
+            application/json:
+              examples:
+                error:
+                  value:
+                    statusCode: 400
+                    error: Bad Request
+                    message: "querystring/dateFrom Invalid input: expected string,\
+                      \ received undefined"
+                    requestId: cmou00000abcdef01s6ghij1k2lm
+              schema:
+                $ref: "#/components/schemas/post_withdraw_qrcode_400_response"
+          description: Invalid QR Code or missing amount for static QR Code without
+            value
+      security:
+      - BearerAuth: []
+      summary: Create Withdrawal using QR Code
+      tags:
+      - Withdrawals
+  /withdraw/proof/{id}:
+    get:
+      description: Retorna o comprovante da transação como JSON com o campo `base64`
+        (PDF codificado). Decodifique pra exibir ou salvar como `.pdf`.
+      operationId: get_withdraw_proof
+      parameters:
+      - description: Obrigatório em toda chamada PayZu.
+        explode: false
+        in: header
+        name: Content-Type
+        required: true
+        schema:
+          default: application/json
+          enum:
+          - application/json
+          type: string
+        style: simple
+      - description: Transaction ID.
+        example: PAYZU2025081721512946OOLK75
+        explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Return format.
+        example: pdf
+        explode: true
+        in: query
+        name: type
+        required: false
+        schema:
+          default: pdf
+          enum:
+          - pdf
+          - base64
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              examples:
+                base64:
+                  summary: As Base64
+                  value:
+                    base64: JVBERi0xLjQKJ...
+              schema:
+                $ref: "#/components/schemas/get_proof_200_response"
+          description: "Base64 if `type=base64`, otherwise binary PDF."
+        "400":
+          content:
+            application/json:
+              examples:
+                error:
+                  value:
+                    statusCode: 400
+                    error: Bad Request
+                    message: "querystring/dateFrom Invalid input: expected string,\
+                      \ received undefined"
+                    requestId: cmou00000abcdef01s6ghij1k2lm
+              schema:
+                $ref: "#/components/schemas/get_pix_400_response"
+          description: "Bad Request, payload or query string failed validation"
+        "401":
+          content:
+            application/json:
+              examples:
+                error:
+                  value:
+                    statusCode: 401
+                    error: Unauthorized
+                    message: Missing or invalid Bearer token
+                    requestId: cmou00000abcdef01s6ghij1k2lm
+              schema:
+                $ref: "#/components/schemas/get_pix_400_response"
+          description: "Unauthorized, missing or invalid Bearer token, or token lacks\
+            \ the required permission for this endpoint"
+        "404":
+          content:
+            application/json:
+              examples:
+                error:
+                  value:
+                    statusCode: 404
+                    error: Not Found
+                    message: Resource not found
+                    requestId: cmou00000abcdef01s6ghij1k2lm
+              schema:
+                $ref: "#/components/schemas/get_pix_400_response"
+          description: Resource not found
+      security:
+      - BearerAuth: []
+      summary: Get Withdrawal Receipt
+      tags:
+      - Withdrawals
+  /user:
+    get:
+      description: "Account profile, permissions, limits and fee rules."
+      operationId: get_user
+      parameters:
+      - description: Obrigatório em toda chamada PayZu.
+        explode: false
+        in: header
+        name: Content-Type
+        required: true
+        schema:
+          default: application/json
+          enum:
+          - application/json
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              examples:
+                ok:
+                  summary: Account information
+                  value:
+                    accountNumber: "513579"
+                    name: PAYZU
+                    role: USER
+                    balanceAvailable: 231.46
+                    balanceBlocked: 0
+                    status: ACTIVE
+                    allowWithdraw: true
+                    allowDeposit: true
+                    allowInfraction: true
+                    cashInTicketMin: 1
+                    cashInTicketMax: 50000
+                    cashOutTicketMin: 1
+                    cashOutTicketMax: 100000
+                    AutoWithdraw: null
+                    ServiceFee:
+                      cashInMinimum: 0
+                      cashInFixed: 0
+                      cashInPercent: 0
+                      cashOutMinimum: 0
+                      cashOutFixed: 0
+                      cashOutPercent: 0
+                    DailyWithdrawLimit:
+                      limit: 100000000
+                      used: 40000
+                      updatedAt: 2025-10-21T21:16:47.759Z
+                      lastReset: 2025-10-21T21:16:47.759Z
+              schema:
+                $ref: "#/components/schemas/get_user_200_response"
+          description: Account data
+        "401":
+          content:
+            application/json:
+              examples:
+                error:
+                  value:
+                    statusCode: 401
+                    error: Unauthorized
+                    message: Missing or invalid Bearer token
+                    requestId: cmou00000abcdef01s6ghij1k2lm
+              schema:
+                $ref: "#/components/schemas/get_pix_400_response"
+          description: "Unauthorized, missing or invalid Bearer token, or token lacks\
+            \ the required permission for this endpoint"
+        "404":
+          content:
+            application/json:
+              examples:
+                error:
+                  value:
+                    statusCode: 404
+                    error: Not Found
+                    message: Resource not found
+                    requestId: cmou00000abcdef01s6ghij1k2lm
+              schema:
+                $ref: "#/components/schemas/get_pix_400_response"
+          description: Resource not found
+      security:
+      - BearerAuth: []
+      summary: Account Info
+      tags:
+      - Account
+  /user/balance:
+    get:
+      description: Available and blocked balances.
+      operationId: get_user_balance
+      parameters:
+      - description: Obrigatório em toda chamada PayZu.
+        explode: false
+        in: header
+        name: Content-Type
+        required: true
+        schema:
+          default: application/json
+          enum:
+          - application/json
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              examples:
+                ok:
+                  summary: Current balance
+                  value:
+                    balanceAvailable: 231.46
+                    balanceBlocked: 0
+              schema:
+                $ref: "#/components/schemas/get_user_balance_200_response"
+          description: Balances
+        "401":
+          content:
+            application/json:
+              examples:
+                error:
+                  value:
+                    statusCode: 401
+                    error: Unauthorized
+                    message: Missing or invalid Bearer token
+                    requestId: cmou00000abcdef01s6ghij1k2lm
+              schema:
+                $ref: "#/components/schemas/get_pix_400_response"
+          description: "Unauthorized, missing or invalid Bearer token, or token lacks\
+            \ the required permission for this endpoint"
+      security:
+      - BearerAuth: []
+      summary: Account Balance
+      tags:
+      - Account
+  /user/transactions:
+    get:
+      description: Paginated list of account transactions with filters.
+      operationId: get_user_transactions
+      parameters:
+      - description: Obrigatório em toda chamada PayZu.
+        explode: false
+        in: header
+        name: Content-Type
+        required: true
+        schema:
+          default: application/json
+          enum:
+          - application/json
+          type: string
+        style: simple
+      - description: Start date (YYYY-MM-DD).
+        example: 2025-08-01
+        explode: true
+        in: query
+        name: dateFrom
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: End date (YYYY-MM-DD).
+        example: 2025-08-17
+        explode: true
+        in: query
+        name: dateTo
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: Items per page (max 1000).
+        example: 10
+        explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          default: 10
+          type: number
+        style: form
+      - description: Page number (default 1).
+        example: 1
+        explode: true
+        in: query
+        name: page
+        required: false
+        schema:
+          default: 1
+          type: number
+        style: form
+      - description: Transaction ID.
+        example: PAYZU2025081418333632CYKN8M
+        explode: true
+        in: query
+        name: id
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "Status da transação. Aceita CSV: PENDING,COMPLETED,etc."
+        example: COMPLETED
+        explode: true
+        in: query
+        name: status
+        required: false
+        schema:
+          example: "COMPLETED,PENDING"
+          type: string
+        style: form
+      - description: "Tipo da transação. Aceita CSV: DEPOSIT,WITHDRAW,COMMISSION."
+        example: DEPOSIT
+        explode: true
+        in: query
+        name: type
+        required: false
+        schema:
+          example: "DEPOSIT,WITHDRAW"
+          type: string
+        style: form
+      - description: Amount filter.
+        example: 15000
+        explode: true
+        in: query
+        name: amount
+        required: false
+        schema:
+          type: number
+        style: form
+      - description: "CPF (11 dígitos) ou CNPJ (14 dígitos), apenas números sem formataç\
+          ão."
+        example: "12345678901"
+        explode: true
+        in: query
+        name: document
+        required: false
+        schema:
+          pattern: "^[0-9]{11,14}$"
+          type: string
+        style: form
+      - description: Name filter.
+        example: Alice
+        explode: true
+        in: query
+        name: name
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: Pix end-to-end ID.
+        example: E00360305202508141833bcf1f37b487
+        explode: true
+        in: query
+        name: endToEndId
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: Field to sort by
+        explode: true
+        in: query
+        name: sortBy
+        required: false
+        schema:
+          default: createdAt
+          enum:
+          - createdAt
+          - updatedAt
+          type: string
+        style: form
+      - description: Sort direction
+        explode: true
+        in: query
+        name: sortDirection
+        required: false
+        schema:
+          default: desc
+          enum:
+          - asc
+          - desc
+          type: string
+        style: form
+      - description: Filter by external reference
+        explode: true
+        in: query
+        name: clientReference
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: Subconta virtual (até 50 caracteres) usada na criação. Aceito
+          como chave de busca alternativa.
+        explode: true
+        in: query
+        name: virtualAccount
+        required: false
+        schema:
+          maxLength: 50
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              examples:
+                two:
+                  summary: Two deposits
+                  value:
+                    total: 104
+                    pages: 2
+                    transactions:
+                    - id: PAYZU202511061998787515D0PH2Y
+                      amount: 10
+                      status: PENDING
+                      type: DEPOSIT
+                      callbackUrl: https://webhook.site/9cdd5879-5767-4e95-bf57-1ac29e0ad3d7
+                      qrCodeText: 00020126860014br.gov.bcb.pix2564qrcode.payzu.com.br/pix/84f95c33-3c86-4708-87f1-0e09b96b35795204000053039865802BR5908PAYZPLUS6009SAO
+                        PAULO62070503***63048227
+                      qrCodeBase64: null
+                      qrCodeUrl: https://pix.payzu.com.br/v1/pix/qr-code/PAYZU202511061998787515D0PH2Y
+                      serviceFeeCharged: 0.115
+                      payerDocument: null
+                      payerName: null
+                      payerInstitutionIspb: null
+                      payerInstitutionName: null
+                      receiverDocument: null
+                      receiverName: null
+                      receiverInstitutionIspb: null
+                      receiverInstitutionName: null
+                      generatedDocument: "00000000191"
+                      generatedName: THIAGO SILVA
+                      generatedEmail: null
+                      endToEndId: null
+                      withdrawPixKey: null
+                      withdrawPixType: null
+                      paidAt: null
+                      createdAt: 2025-11-06T22:06:19.598Z
+                      updatedAt: 2025-11-06T22:06:19.598Z
+                      clientReference: order_12345
+                      refundEndToEndId: null
+                      refundAmount: null
+                      refundStatus: null
+                      refundReason: null
+                      refundDescription: null
+                      refundedAt: null
+                      cancellationReason: null
+                    - id: PAYZU202511061998787515D0PH2Y
+                      amount: 5.5
+                      status: ERROR
+                      type: WITHDRAW
+                      callbackUrl: https://webhook.site/9cdd5879-5767-4e95-bf57-1ac29e0ad3d7
+                      qrCodeText: null
+                      qrCodeBase64: null
+                      qrCodeUrl: null
+                      serviceFeeCharged: 1
+                      payerDocument: null
+                      payerName: null
+                      payerInstitutionIspb: null
+                      payerInstitutionName: null
+                      receiverDocument: null
+                      receiverName: null
+                      receiverInstitutionIspb: null
+                      receiverInstitutionName: null
+                      generatedDocument: null
+                      generatedName: null
+                      generatedEmail: null
+                      endToEndId: null
+                      withdrawPixKey: "88888888888"
+                      withdrawPixType: cpf
+                      paidAt: null
+                      createdAt: 2025-11-06T19:08:55.848Z
+                      updatedAt: 2025-11-06T19:09:13.602Z
+                      clientReference: null
+                      refundEndToEndId: null
+                      refundAmount: null
+                      refundStatus: null
+                      refundReason: null
+                      refundDescription: null
+                      refundedAt: null
+                      cancellationReason: PIX_KEY_NOT_FOUND
+              schema:
+                $ref: "#/components/schemas/get_user_transactions_200_response"
+          description: Transaction page
+        "400":
+          content:
+            application/json:
+              examples:
+                error:
+                  value:
+                    statusCode: 400
+                    error: Bad Request
+                    message: "querystring/dateFrom Invalid input: expected string,\
+                      \ received undefined"
+                    requestId: cmou00000abcdef01s6ghij1k2lm
+              schema:
+                $ref: "#/components/schemas/get_pix_400_response"
+          description: "Bad Request, payload or query string failed validation"
+        "401":
+          content:
+            application/json:
+              examples:
+                error:
+                  value:
+                    statusCode: 401
+                    error: Unauthorized
+                    message: Missing or invalid Bearer token
+                    requestId: cmou00000abcdef01s6ghij1k2lm
+              schema:
+                $ref: "#/components/schemas/get_pix_400_response"
+          description: "Unauthorized, missing or invalid Bearer token, or token lacks\
+            \ the required permission for this endpoint"
+        "404":
+          content:
+            application/json:
+              examples:
+                error:
+                  value:
+                    statusCode: 404
+                    error: Not Found
+                    message: Resource not found
+                    requestId: cmou00000abcdef01s6ghij1k2lm
+              schema:
+                $ref: "#/components/schemas/get_pix_400_response"
+          description: Resource not found
+      security:
+      - BearerAuth: []
+      summary: List Transactions
+      tags:
+      - Reports
+  /user/callbacks:
+    get:
+      description: Returns a paginated list of webhook callback logs for the user's
+        transactions.
+      operationId: get_user_callbacks
+      parameters:
+      - description: Obrigatório em toda chamada PayZu.
+        explode: false
+        in: header
+        name: Content-Type
+        required: true
+        schema:
+          default: application/json
+          enum:
+          - application/json
+          type: string
+        style: simple
+      - explode: true
+        in: query
+        name: page
+        required: false
+        schema:
+          default: 1
+          minimum: 1
+          type: integer
+        style: form
+      - explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          default: 10
+          maximum: 100
+          minimum: 1
+          type: integer
+        style: form
+      - explode: true
+        in: query
+        name: sortBy
+        required: false
+        schema:
+          default: createdAt
+          enum:
+          - createdAt
+          - status
+          type: string
+        style: form
+      - explode: true
+        in: query
+        name: sortDirection
+        required: false
+        schema:
+          default: desc
+          enum:
+          - asc
+          - desc
+          type: string
+        style: form
+      - description: Filter by callback ID
+        explode: true
+        in: query
+        name: id
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: Filter by callback URL
+        explode: true
+        in: query
+        name: url
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: HTTP status code
+        explode: true
+        in: query
+        name: status
+        required: false
+        schema:
+          type: integer
+        style: form
+      - explode: true
+        in: query
+        name: transactionId
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: Filter callbacks that errored
+        explode: true
+        in: query
+        name: hasError
+        required: false
+        schema:
+          type: boolean
+        style: form
+      - explode: true
+        in: query
+        name: createdAtFrom
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - explode: true
+        in: query
+        name: createdAtTo
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              examples:
+                list:
+                  summary: Callback log page
+                  value:
+                    pagination:
+                      page: 1
+                      limit: 10
+                      hasNextPage: true
+                    callbacks:
+                    - id: cmh211yjm03ohs601kf7672du
+                      url: https://great-lock-79.webhook.cool
+                      status: 200
+                      transactionId: PAYZU2025102213082667EDC8079C
+                      createdAt: 2025-10-22T13:26:53.219Z
+                      responseTime: 124
+                      body:
+                        id: PAYZU2025102213082667EDC8079C
+                        type: DEPOSIT
+                        status: REFUNDED
+                      responseBody: OK
+                      responseHeaders:
+                        content-type: text/plain; charset=UTF-8
+              schema:
+                $ref: "#/components/schemas/CallbackListResponse"
+          description: List of callback logs with pagination
+        "400":
+          content:
+            application/json:
+              examples:
+                error:
+                  value:
+                    statusCode: 400
+                    error: Bad Request
+                    message: "querystring/dateFrom Invalid input: expected string,\
+                      \ received undefined"
+                    requestId: cmou00000abcdef01s6ghij1k2lm
+              schema:
+                $ref: "#/components/schemas/get_pix_400_response"
+          description: "Bad Request, payload or query string failed validation"
+        "401":
+          content:
+            application/json:
+              examples:
+                error:
+                  value:
+                    statusCode: 401
+                    error: Unauthorized
+                    message: Missing or invalid Bearer token
+                    requestId: cmou00000abcdef01s6ghij1k2lm
+              schema:
+                $ref: "#/components/schemas/get_pix_400_response"
+          description: "Unauthorized, missing or invalid Bearer token, or token lacks\
+            \ the required permission for this endpoint"
+        "404":
+          content:
+            application/json:
+              examples:
+                error:
+                  value:
+                    statusCode: 404
+                    error: Not Found
+                    message: Resource not found
+                    requestId: cmou00000abcdef01s6ghij1k2lm
+              schema:
+                $ref: "#/components/schemas/get_pix_400_response"
+          description: Resource not found
+      security:
+      - BearerAuth: []
+      summary: List Callbacks
+      tags:
+      - Callbacks
+  /user/callbacks/{id}:
+    get:
+      description: Returns the details of a specific callback log.
+      operationId: get_user_callback_by_id
+      parameters:
+      - description: Obrigatório em toda chamada PayZu.
+        explode: false
+        in: header
+        name: Content-Type
+        required: true
+        schema:
+          default: application/json
+          enum:
+          - application/json
+          type: string
+        style: simple
+      - description: Unique callback ID
+        explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              examples:
+                detail:
+                  summary: Single callback log
+                  value:
+                    id: cmh211yjm03ohs601kf7672du
+                    url: https://great-lock-79.webhook.cool
+                    status: 200
+                    transactionId: PAYZU2025102213082667EDC8079C
+                    createdAt: 2025-10-22T13:26:53.219Z
+                    responseTime: 124
+                    body:
+                      id: PAYZU2025102213082667EDC8079C
+                      type: DEPOSIT
+                      status: REFUNDED
+                    responseBody: OK
+                    responseHeaders:
+                      content-type: text/plain; charset=UTF-8
+              schema:
+                $ref: "#/components/schemas/CallbackDetail"
+          description: Callback details
+        "404":
+          content:
+            application/json:
+              examples:
+                error:
+                  value:
+                    statusCode: 404
+                    error: Not Found
+                    message: Resource not found
+                    requestId: cmou00000abcdef01s6ghij1k2lm
+              schema:
+                $ref: "#/components/schemas/get_pix_400_response"
+          description: Callback not found or does not belong to the user
+      security:
+      - BearerAuth: []
+      summary: Get Callback
+      tags:
+      - Callbacks
+  /user/infractions:
+    get:
+      description: List all infractions for the authenticated user with pagination
+        and filters.
+      operationId: get_infractions
+      parameters:
+      - description: Obrigatório em toda chamada PayZu.
+        explode: false
+        in: header
+        name: Content-Type
+        required: true
+        schema:
+          default: application/json
+          enum:
+          - application/json
+          type: string
+        style: simple
+      - explode: true
+        in: query
+        name: page
+        required: false
+        schema:
+          default: 1
+          minimum: 1
+          type: integer
+        style: form
+      - explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          default: 10
+          maximum: 100
+          minimum: 1
+          type: integer
+        style: form
+      - description: "Comma-separated InfractionStatus (WAITING_PSP,CLOSED,OPEN,CANCELLED,ACKNOWLEDGED,DEFENDED,ANSWERED,WAITING_ADJUSTMENTS)"
+        explode: true
+        in: query
+        name: status
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "Comma-separated InfractionType (REFUND_REQUEST,FRAUD,REFUND_CANCELLED)"
+        explode: true
+        in: query
+        name: type
+        required: false
+        schema:
+          type: string
+        style: form
+      - explode: true
+        in: query
+        name: endToEndId
+        required: false
+        schema:
+          type: string
+        style: form
+      - explode: true
+        in: query
+        name: transactionId
+        required: false
+        schema:
+          type: string
+        style: form
+      - explode: true
+        in: query
+        name: amountMin
+        required: false
+        schema:
+          type: number
+        style: form
+      - explode: true
+        in: query
+        name: amountMax
+        required: false
+        schema:
+          type: number
+        style: form
+      - description: Comma-separated AnalysisResult
+        explode: true
+        in: query
+        name: analysisResult
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "Comma-separated ReportedType (DEBITED_PARTICIPANT,CREDITED_PARTICIPANT)"
+        explode: true
+        in: query
+        name: reportedBy
+        required: false
+        schema:
+          type: string
+        style: form
+      - explode: true
+        in: query
+        name: participantDocument
+        required: false
+        schema:
+          type: string
+        style: form
+      - explode: true
+        in: query
+        name: participantName
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              examples:
+                success:
+                  summary: List with infractions
+                  value:
+                    infractions:
+                    - id: infraction_id
+                      protocol: PROTOCOL123
+                      status: OPEN
+                      type: FRAUD
+                      reportedBy: DEBITED_PARTICIPANT
+                      reportDetails: Transação não autorizada
+                      analysisResult: null
+                      analysisDetails: null
+                      reportedAt: 2024-01-15T10:30:00Z
+                      expiresAt: 2024-02-15T10:30:00Z
+                      createdAt: 2024-01-15T10:30:00Z
+                      updatedAt: 2024-01-15T10:30:00Z
+                      transaction:
+                        id: transaction_id
+                        amount: 100.5
+                        payerName: João Silva
+                        payerDocument: "12345678901"
+                        receiverName: Maria Santos
+                        receiverDocument: "12345678901"
+                        endToEndId: E12345678202401151030001
+                      defenseHistory: []
+                    pagination:
+                      page: 1
+                      limit: 20
+                      totalItems: 45
+                      totalPages: 3
+              schema:
+                $ref: "#/components/schemas/InfractionListResponse"
+          description: List of infractions with pagination
+        "400":
+          content:
+            application/json:
+              examples:
+                error:
+                  value:
+                    statusCode: 400
+                    error: Bad Request
+                    message: "querystring/dateFrom Invalid input: expected string,\
+                      \ received undefined"
+                    requestId: cmou00000abcdef01s6ghij1k2lm
+              schema:
+                $ref: "#/components/schemas/get_pix_400_response"
+          description: "Bad Request, payload or query string failed validation"
+        "401":
+          content:
+            application/json:
+              examples:
+                error:
+                  value:
+                    statusCode: 401
+                    error: Unauthorized
+                    message: Missing or invalid Bearer token
+                    requestId: cmou00000abcdef01s6ghij1k2lm
+              schema:
+                $ref: "#/components/schemas/get_pix_400_response"
+          description: "Unauthorized, missing or invalid Bearer token, or token lacks\
+            \ the required permission for this endpoint"
+        "404":
+          content:
+            application/json:
+              examples:
+                error:
+                  value:
+                    statusCode: 404
+                    error: Not Found
+                    message: Resource not found
+                    requestId: cmou00000abcdef01s6ghij1k2lm
+              schema:
+                $ref: "#/components/schemas/get_pix_400_response"
+          description: Resource not found
+      security:
+      - BearerAuth: []
+      summary: List Infractions
+      tags:
+      - Infractions
+  /user/infractions/{id}:
+    get:
+      description: Get a specific infraction by ID.
+      operationId: get_infractions_by_id
+      parameters:
+      - description: Obrigatório em toda chamada PayZu.
+        explode: false
+        in: header
+        name: Content-Type
+        required: true
+        schema:
+          default: application/json
+          enum:
+          - application/json
+          type: string
+        style: simple
+      - description: Infraction ID
+        explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              examples:
+                success:
+                  summary: Infraction details
+                  value:
+                    id: infraction_123
+                    protocol: PROTOCOL123
+                    status: OPEN
+                    type: FRAUD
+                    reportedBy: DEBITED_PARTICIPANT
+                    reportDetails: Transação não autorizada
+                    analysisResult: null
+                    analysisDetails: null
+                    reportedAt: 2024-01-15T10:30:00Z
+                    expiresAt: 2024-02-15T10:30:00Z
+                    createdAt: 2024-01-15T10:30:00Z
+                    updatedAt: 2024-01-15T10:30:00Z
+                    transaction:
+                      id: transaction_id
+                      amount: 100.5
+                      payerName: João Silva
+                      payerDocument: "12345678901"
+                      receiverName: Maria Santos
+                      receiverDocument: "12345678901"
+                      endToEndId: E12345678202401151030001
+                    defenseHistory: []
+              schema:
+                $ref: "#/components/schemas/InfractionDetail"
+          description: Infraction details
+        "404":
+          content:
+            application/json:
+              examples:
+                error:
+                  value:
+                    statusCode: 404
+                    error: Not Found
+                    message: Resource not found
+                    requestId: cmou00000abcdef01s6ghij1k2lm
+              schema:
+                $ref: "#/components/schemas/get_pix_400_response"
+          description: Infraction not found
+      security:
+      - BearerAuth: []
+      summary: Get Infraction
+      tags:
+      - Infractions
+  /user/infractions/{id}/defenses:
+    get:
+      description: List all defenses for a specific infraction. **Requires support
+        privileges**.
+      operationId: get_infractions_defenses
+      parameters:
+      - description: Obrigatório em toda chamada PayZu.
+        explode: false
+        in: header
+        name: Content-Type
+        required: true
+        schema:
+          default: application/json
+          enum:
+          - application/json
+          type: string
+        style: simple
+      - description: Infraction ID
+        explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              examples:
+                success:
+                  summary: List of defenses
+                  value:
+                  - id: defense_id_1
+                    defense: Primeira defesa enviada
+                    status: DEFENDED
+                    infractionId: infraction_123
+                    createdAt: 2024-01-16T14:20:00Z
+                    updatedAt: 2024-01-17T09:15:00Z
+                    files: []
+              schema:
+                items:
+                  $ref: "#/components/schemas/Defense"
+                type: array
+          description: List of defenses
+        "400":
+          content:
+            application/json:
+              examples:
+                error:
+                  value:
+                    statusCode: 400
+                    error: Bad Request
+                    message: "querystring/dateFrom Invalid input: expected string,\
+                      \ received undefined"
+                    requestId: cmou00000abcdef01s6ghij1k2lm
+              schema:
+                $ref: "#/components/schemas/get_pix_400_response"
+          description: "Bad Request, payload or query string failed validation"
+        "401":
+          content:
+            application/json:
+              examples:
+                error:
+                  value:
+                    statusCode: 401
+                    error: Unauthorized
+                    message: Missing or invalid Bearer token
+                    requestId: cmou00000abcdef01s6ghij1k2lm
+              schema:
+                $ref: "#/components/schemas/get_pix_400_response"
+          description: "Unauthorized, missing or invalid Bearer token, or token lacks\
+            \ the required permission for this endpoint"
+        "404":
+          content:
+            application/json:
+              examples:
+                error:
+                  value:
+                    statusCode: 404
+                    error: Not Found
+                    message: Resource not found
+                    requestId: cmou00000abcdef01s6ghij1k2lm
+              schema:
+                $ref: "#/components/schemas/get_pix_400_response"
+          description: Resource not found
+      security:
+      - BearerAuth: []
+      summary: List Defenses
+      tags:
+      - Infractions
+    post:
+      description: Create a defense for a specific infraction.
+      operationId: post_infractions_defense
+      parameters:
+      - description: Infraction ID
+        explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: "#/components/schemas/post_infractions_defense_request"
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              examples:
+                success:
+                  summary: Defense created successfully
+                  value:
+                    id: defense_id
+                    defense: Esta transação foi devidamente autorizada pelo cliente
+                      através do app mobile.
+                    status: PENDING
+                    infractionId: infraction_123
+                    createdAt: 2024-01-16T14:20:00Z
+                    updatedAt: 2024-01-16T14:20:00Z
+                    files:
+                    - name: evidencia1.pdf
+                      mimeType: application/pdf
+                      size: 245760
+                      url: https://storage.googleapis.com/bucket/signed-url-1
+              schema:
+                $ref: "#/components/schemas/Defense"
+          description: Defense created
+        "400":
+          content:
+            application/json:
+              examples:
+                error:
+                  value:
+                    statusCode: 400
+                    error: Bad Request
+                    message: "querystring/dateFrom Invalid input: expected string,\
+                      \ received undefined"
+                    requestId: cmou00000abcdef01s6ghij1k2lm
+              schema:
+                $ref: "#/components/schemas/get_pix_400_response"
+          description: Invalid file or provider does not support defense
+        "404":
+          content:
+            application/json:
+              examples:
+                error:
+                  value:
+                    statusCode: 404
+                    error: Not Found
+                    message: Resource not found
+                    requestId: cmou00000abcdef01s6ghij1k2lm
+              schema:
+                $ref: "#/components/schemas/get_pix_400_response"
+          description: Infraction not found
+        "422":
+          content:
+            application/json:
+              examples:
+                error:
+                  value:
+                    statusCode: 422
+                    error: Unprocessable Entity
+                    message: Insufficient balance for this operation
+                    requestId: cmou00000abcdef01s6ghij1k2lm
+              schema:
+                $ref: "#/components/schemas/get_pix_400_response"
+          description: Infraction not open for defense
+      security:
+      - BearerAuth: []
+      summary: Create Defense
+      tags:
+      - Infractions
+  /user/infractions/{infractionId}/defenses/{defenseId}:
+    get:
+      description: Get a specific defense for an infraction. **Requires support privileges**.
+      operationId: get_infractions_defense_by_id
+      parameters:
+      - description: Obrigatório em toda chamada PayZu.
+        explode: false
+        in: header
+        name: Content-Type
+        required: true
+        schema:
+          default: application/json
+          enum:
+          - application/json
+          type: string
+        style: simple
+      - description: Infraction ID
+        explode: false
+        in: path
+        name: infractionId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Defense ID
+        explode: false
+        in: path
+        name: defenseId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              examples:
+                success:
+                  summary: Defense details
+                  value:
+                    id: defense_id
+                    defense: Esta transação foi devidamente autorizada.
+                    status: DEFENDED
+                    infractionId: infraction_123
+                    createdAt: 2024-01-16T14:20:00Z
+                    updatedAt: 2024-01-17T09:15:00Z
+                    files:
+                    - name: evidencia1.pdf
+                      size: 245760
+                      mimeType: application/pdf
+                      url: https://storage.googleapis.com/bucket/signed-url-1
+              schema:
+                $ref: "#/components/schemas/Defense"
+          description: Defense details
+        "404":
+          content:
+            application/json:
+              examples:
+                error:
+                  value:
+                    statusCode: 404
+                    error: Not Found
+                    message: Resource not found
+                    requestId: cmou00000abcdef01s6ghij1k2lm
+              schema:
+                $ref: "#/components/schemas/get_pix_400_response"
+          description: Defense not found
+      security:
+      - BearerAuth: []
+      summary: Get Defense
+      tags:
+      - Infractions
+  /internal-transfer:
+    get:
+      description: "Retrieve an internal transfer by id or clientReference Use apenas\
+        \ um destes parâmetros: id, clientReference. Combinar mais de um retorna erro."
+      operationId: get_internal_transfer
+      parameters:
+      - description: Obrigatório em toda chamada PayZu.
+        explode: false
+        in: header
+        name: Content-Type
+        required: true
+        schema:
+          default: application/json
+          enum:
+          - application/json
+          type: string
+        style: simple
+      - description: Transaction ID
+        explode: true
+        in: query
+        name: id
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: External reference
+        explode: true
+        in: query
+        name: clientReference
+        required: false
+        schema:
+          maxLength: 64
+          type: string
+        style: form
+      - description: Subconta virtual (até 50 caracteres) usada na criação. Aceito
+          como chave de busca alternativa.
+        explode: true
+        in: query
+        name: virtualAccount
+        required: false
+        schema:
+          maxLength: 50
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              examples:
+                found:
+                  summary: Lookup by clientReference
+                  value:
+                    id: PAYZU20260506T142500ABC123
+                    status: COMPLETED
+                    amount: 100.5
+                    type: WITHDRAW
+                    callbackUrl: null
+                    qrCodeText: null
+                    qrCodeBase64: null
+                    qrCodeUrl: null
+                    generatedName: null
+                    generatedDocument: null
+                    generatedEmail: null
+                    serviceFeeCharged: 0
+                    payerName: Joao Silva
+                    payerDocument: "12345678901"
+                    payerInstitutionIspb: "23066240"
+                    payerInstitutionName: PAYZU IP LTDA.
+                    payerAccountNumber: "513579"
+                    withdrawPixKey: null
+                    withdrawPixType: null
+                    receiverName: Maria Santos
+                    receiverDocument: "98765432109"
+                    receiverInstitutionIspb: "23066240"
+                    receiverInstitutionName: PAYZU IP LTDA.
+                    receiverAccountNumber: "987654"
+                    endToEndId: null
+                    clientReference: transfer_abc_123
+                    createdAt: 2026-05-06T14:25:00.000Z
+                    updatedAt: 2026-05-06T14:25:00.123Z
+                    paidAt: 2026-05-06T14:25:00.123Z
+                    refundEndToEndId: null
+                    refundAmount: null
+                    refundStatus: null
+                    refundReason: null
+                    refundDescription: null
+                    refundedAt: null
+                    cancellationReason: null
+              schema:
+                $ref: "#/components/schemas/Transaction"
+          description: Transfer details
+        "400":
+          content:
+            application/json:
+              examples:
+                error:
+                  value:
+                    statusCode: 400
+                    error: Bad Request
+                    message: "querystring/dateFrom Invalid input: expected string,\
+                      \ received undefined"
+                    requestId: cmou00000abcdef01s6ghij1k2lm
+              schema:
+                $ref: "#/components/schemas/get_pix_400_response"
+          description: Provide either `id` or `clientReference`
+        "404":
+          content:
+            application/json:
+              examples:
+                error:
+                  value:
+                    statusCode: 404
+                    error: Not Found
+                    message: Resource not found
+                    requestId: cmou00000abcdef01s6ghij1k2lm
+              schema:
+                $ref: "#/components/schemas/get_pix_400_response"
+          description: Transfer not found
+      security:
+      - BearerAuth: []
+      summary: Get internal transfer
+      tags:
+      - Internal Transfer
+    post:
+      description: Send funds to another PayZu account using its 6-digit accountNumber.
+        Settles instantly within PayZu.
+      operationId: post_internal_transfer
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/post_internal_transfer_request"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              examples:
+                completed:
+                  summary: "Transfer completed (debit side, payer view)"
+                  value:
+                    id: PAYZU20260506T142500ABC123
+                    status: COMPLETED
+                    amount: 100.5
+                    type: WITHDRAW
+                    callbackUrl: null
+                    qrCodeText: null
+                    qrCodeBase64: null
+                    qrCodeUrl: null
+                    generatedName: null
+                    generatedDocument: null
+                    generatedEmail: null
+                    serviceFeeCharged: 0
+                    payerName: Joao Silva
+                    payerDocument: "12345678901"
+                    payerInstitutionIspb: "23066240"
+                    payerInstitutionName: PAYZU IP LTDA.
+                    payerAccountNumber: "513579"
+                    withdrawPixKey: null
+                    withdrawPixType: null
+                    receiverName: Maria Santos
+                    receiverDocument: "98765432109"
+                    receiverInstitutionIspb: "23066240"
+                    receiverInstitutionName: PAYZU IP LTDA.
+                    receiverAccountNumber: "987654"
+                    endToEndId: null
+                    clientReference: transfer_abc_123
+                    createdAt: 2026-05-06T14:25:00.000Z
+                    updatedAt: 2026-05-06T14:25:00.123Z
+                    paidAt: 2026-05-06T14:25:00.123Z
+                    refundEndToEndId: null
+                    refundAmount: null
+                    refundStatus: null
+                    refundReason: null
+                    refundDescription: null
+                    refundedAt: null
+                    cancellationReason: null
+              schema:
+                $ref: "#/components/schemas/Transaction"
+          description: Transfer completed
+        "400":
+          content:
+            application/json:
+              examples:
+                error:
+                  value:
+                    statusCode: 400
+                    error: Bad Request
+                    message: "querystring/dateFrom Invalid input: expected string,\
+                      \ received undefined"
+                    requestId: cmou00000abcdef01s6ghij1k2lm
+              schema:
+                $ref: "#/components/schemas/get_pix_400_response"
+          description: Invalid payload (e.g. payerAccountNumber does not belong to
+            the requester)
+        "403":
+          content:
+            application/json:
+              examples:
+                error:
+                  value:
+                    statusCode: 403
+                    error: Forbidden
+                    message: Token does not have permission for this operation
+                    requestId: cmou00000abcdef01s6ghij1k2lm
+              schema:
+                $ref: "#/components/schemas/get_pix_400_response"
+          description: allowInternalTransfer disabled or token missing WITHDRAW permission
+        "404":
+          content:
+            application/json:
+              examples:
+                error:
+                  value:
+                    statusCode: 404
+                    error: Not Found
+                    message: Resource not found
+                    requestId: cmou00000abcdef01s6ghij1k2lm
+              schema:
+                $ref: "#/components/schemas/get_pix_400_response"
+          description: Receiver account not found
+        "422":
+          content:
+            application/json:
+              examples:
+                error:
+                  value:
+                    statusCode: 422
+                    error: Unprocessable Entity
+                    message: Insufficient balance for this operation
+                    requestId: cmou00000abcdef01s6ghij1k2lm
+              schema:
+                $ref: "#/components/schemas/get_pix_400_response"
+          description: Insufficient balance / amount below ticket minimum
+      security:
+      - BearerAuth: []
+      summary: Create internal transfer
+      tags:
+      - Internal Transfer
+  /user/transactions/{id}:
+    get:
+      description: Retrieve a single transaction with its callback log and linked
+        infractions.
+      operationId: get_user_transaction_by_id
+      parameters:
+      - description: Obrigatório em toda chamada PayZu.
+        explode: false
+        in: header
+        name: Content-Type
+        required: true
+        schema:
+          default: application/json
+          enum:
+          - application/json
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/get_user_transaction_by_id_200_response"
+          description: Transaction details
+        "404":
+          content:
+            application/json:
+              examples:
+                error:
+                  value:
+                    statusCode: 404
+                    error: Not Found
+                    message: Resource not found
+                    requestId: cmou00000abcdef01s6ghij1k2lm
+              schema:
+                $ref: "#/components/schemas/get_pix_400_response"
+          description: Transaction not found
+      security:
+      - BearerAuth: []
+      summary: List transaction details
+      tags:
+      - Reports
+  /user/report:
+    get:
+      description: List report jobs created by the authenticated user.
+      operationId: list_user_reports
+      parameters:
+      - description: Obrigatório em toda chamada PayZu.
+        explode: false
+        in: header
+        name: Content-Type
+        required: true
+        schema:
+          default: application/json
+          enum:
+          - application/json
+          type: string
+        style: simple
+      - explode: true
+        in: query
+        name: page
+        required: false
+        schema:
+          default: 1
+          minimum: 1
+          type: integer
+        style: form
+      - explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          default: 10
+          maximum: 100
+          minimum: 1
+          type: integer
+        style: form
+      - explode: true
+        in: query
+        name: status
+        required: false
+        schema:
+          enum:
+          - PENDING
+          - PROCESSING
+          - COMPLETED
+          - FAILED
+          - EXPIRED
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              examples:
+                list:
+                  value:
+                    total: 9
+                    pages: 3
+                    reports:
+                    - id: 5224fd4e-0abb-4498-a79b-9398ea6712ad
+                      status: COMPLETED
+                      createdAt: 2026-05-06T16:39:52.944Z
+                      updatedAt: 2026-05-06T16:39:53.500Z
+                      expiresAt: 2026-05-13T16:39:52.996Z
+              schema:
+                $ref: "#/components/schemas/list_user_reports_200_response"
+          description: Page of report jobs
+        "400":
+          content:
+            application/json:
+              examples:
+                error:
+                  value:
+                    statusCode: 400
+                    error: Bad Request
+                    message: "querystring/dateFrom Invalid input: expected string,\
+                      \ received undefined"
+                    requestId: cmou00000abcdef01s6ghij1k2lm
+              schema:
+                $ref: "#/components/schemas/get_pix_400_response"
+          description: "Bad Request, payload or query string failed validation"
+        "401":
+          content:
+            application/json:
+              examples:
+                error:
+                  value:
+                    statusCode: 401
+                    error: Unauthorized
+                    message: Missing or invalid Bearer token
+                    requestId: cmou00000abcdef01s6ghij1k2lm
+              schema:
+                $ref: "#/components/schemas/get_pix_400_response"
+          description: "Unauthorized, missing or invalid Bearer token, or token lacks\
+            \ the required permission for this endpoint"
+        "404":
+          content:
+            application/json:
+              examples:
+                error:
+                  value:
+                    statusCode: 404
+                    error: Not Found
+                    message: Resource not found
+                    requestId: cmou00000abcdef01s6ghij1k2lm
+              schema:
+                $ref: "#/components/schemas/get_pix_400_response"
+          description: Resource not found
+      security:
+      - BearerAuth: []
+      summary: List report jobs
+      tags:
+      - Reports
+    post:
+      description: Queue an asynchronous job that generates a CSV report of transactions
+        for the given period and filters.
+      operationId: post_user_report
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/post_user_report_request"
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ReportJob"
+          description: Report job enqueued
+        "422":
+          content:
+            application/json:
+              examples:
+                error:
+                  value:
+                    statusCode: 422
+                    error: Unprocessable Entity
+                    message: Insufficient balance for this operation
+                    requestId: cmou00000abcdef01s6ghij1k2lm
+              schema:
+                $ref: "#/components/schemas/get_pix_400_response"
+          description: No transactions match the filter / concurrency limit reached
+      security:
+      - BearerAuth: []
+      summary: Generate transactions report
+      tags:
+      - Reports
+  /user/report/{id}:
+    get:
+      description: List report jobs created by the authenticated user.
+      operationId: get_user_report
+      parameters:
+      - description: Obrigatório em toda chamada PayZu.
+        explode: false
+        in: header
+        name: Content-Type
+        required: true
+        schema:
+          default: application/json
+          enum:
+          - application/json
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          format: uuid
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              examples:
+                completed:
+                  value:
+                    id: 5224fd4e-0abb-4498-a79b-9398ea6712ad
+                    status: COMPLETED
+                    createdAt: 2026-05-06T16:39:52.944Z
+                    updatedAt: 2026-05-06T16:39:53.500Z
+                    expiresAt: 2026-05-13T16:39:52.996Z
+              schema:
+                $ref: "#/components/schemas/ReportJob"
+          description: Report job
+        "404":
+          content:
+            application/json:
+              examples:
+                error:
+                  value:
+                    statusCode: 404
+                    error: Not Found
+                    message: Resource not found
+                    requestId: cmou00000abcdef01s6ghij1k2lm
+              schema:
+                $ref: "#/components/schemas/get_pix_400_response"
+          description: Report not found
+      security:
+      - BearerAuth: []
+      summary: List report job status
+      tags:
+      - Reports
+  /user/report/{id}/download:
+    post:
+      description: Returns a short-lived signed URL to download the CSV file.
+      operationId: download_user_report
+      parameters:
+      - description: Obrigatório em toda chamada PayZu.
+        explode: false
+        in: header
+        name: Content-Type
+        required: true
+        schema:
+          default: application/json
+          enum:
+          - application/json
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          format: uuid
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              examples:
+                ok:
+                  value:
+                    url: https://storage.googleapis.com/relatorios-transacoes/relatorio-transacoes-06-05-2026_06-05-2026_5224fd4e-...csv?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Expires=300&...
+                    expiresAt: 2026-05-06T16:48:34.889Z
+              schema:
+                $ref: "#/components/schemas/download_user_report_200_response"
+          description: Signed download URL
+        "404":
+          content:
+            application/json:
+              examples:
+                error:
+                  value:
+                    statusCode: 404
+                    error: Not Found
+                    message: Resource not found
+                    requestId: cmou00000abcdef01s6ghij1k2lm
+              schema:
+                $ref: "#/components/schemas/get_pix_400_response"
+          description: Report not found
+        "410":
+          content:
+            application/json:
+              examples:
+                error:
+                  value:
+                    statusCode: 410
+                    error: Gone
+                    message: Report file expired and is no longer available
+                    requestId: cmou00000abcdef01s6ghij1k2lm
+              schema:
+                $ref: "#/components/schemas/get_pix_400_response"
+          description: Report file expired
+        "422":
+          content:
+            application/json:
+              examples:
+                error:
+                  value:
+                    statusCode: 422
+                    error: Unprocessable Entity
+                    message: Insufficient balance for this operation
+                    requestId: cmou00000abcdef01s6ghij1k2lm
+              schema:
+                $ref: "#/components/schemas/get_pix_400_response"
+          description: Report not ready (still processing)
+      security:
+      - BearerAuth: []
+      summary: Download report
+      tags:
+      - Reports
+  /user/callbacks/resend:
+    post:
+      description: Resend callbacks in bulk for transactions matching the given filters.
+      operationId: resend_user_callbacks
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              by_period:
+                summary: Resend everything paid in the last day
+                value:
+                  createdAtFrom: 2026-05-05T00:00:00Z
+                  createdAtTo: 2026-05-06T00:00:00Z
+              filtered:
+                summary: Only completed deposits in a 7-day window
+                value:
+                  createdAtFrom: 2026-04-29T00:00:00Z
+                  createdAtTo: 2026-05-06T00:00:00Z
+                  transactionTypes:
+                  - DEPOSIT
+                  transactionStatus:
+                  - COMPLETED
+            schema:
+              $ref: "#/components/schemas/resend_user_callbacks_request"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              examples:
+                ok:
+                  value:
+                    message: Callbacks reenviados com sucesso
+                    total: 42
+              schema:
+                $ref: "#/components/schemas/resend_user_callbacks_200_response"
+          description: Resend dispatched
+        "404":
+          content:
+            application/json:
+              examples:
+                error:
+                  value:
+                    statusCode: 404
+                    error: Not Found
+                    message: Resource not found
+                    requestId: cmou00000abcdef01s6ghij1k2lm
+              schema:
+                $ref: "#/components/schemas/get_pix_400_response"
+          description: No matching transactions
+        "429":
+          content:
+            application/json:
+              examples:
+                error:
+                  value:
+                    statusCode: 429
+                    error: Too Many Requests
+                    message: Limite de reenvios atingido. Tente novamente em 1 minuto.
+                    requestId: cmou00000abcdef01s6ghij1k2lm
+              schema:
+                $ref: "#/components/schemas/get_pix_400_response"
+          description: Rate limit exceeded (5/min)
+      security:
+      - BearerAuth: []
+      summary: Re-send callbacks (bulk)
+      tags:
+      - Callbacks
+  /user/callbacks/resend/{transactionId}:
+    post:
+      description: Resend the callback of a single transaction.
+      operationId: resend_user_callback_single
+      parameters:
+      - description: Obrigatório em toda chamada PayZu.
+        explode: false
+        in: header
+        name: Content-Type
+        required: true
+        schema:
+          default: application/json
+          enum:
+          - application/json
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: transactionId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              examples:
+                ok:
+                  value:
+                    message: Callback reenviado com sucesso
+              schema:
+                $ref: "#/components/schemas/resend_user_callback_single_200_response"
+          description: Resend dispatched
+        "404":
+          content:
+            application/json:
+              examples:
+                error:
+                  value:
+                    statusCode: 404
+                    error: Not Found
+                    message: Resource not found
+                    requestId: cmou00000abcdef01s6ghij1k2lm
+              schema:
+                $ref: "#/components/schemas/get_pix_400_response"
+          description: Transaction not found or has no callbackUrl configured
+        "429":
+          content:
+            application/json:
+              examples:
+                error:
+                  value:
+                    statusCode: 429
+                    error: Too Many Requests
+                    message: Limite de reenvios atingido. Tente novamente em 1 minuto.
+                    requestId: cmou00000abcdef01s6ghij1k2lm
+              schema:
+                $ref: "#/components/schemas/get_pix_400_response"
+          description: Rate limit exceeded (5/min)
+      security:
+      - BearerAuth: []
+      summary: Re-send callback (single)
+      tags:
+      - Callbacks
+  /pix/qr-code/{transactionId}:
+    get:
+      description: Render the Pix QR Code of a deposit as a binary PNG image
+      operationId: get_pix_qrcode
+      parameters:
+      - description: Obrigatório em toda chamada PayZu.
+        explode: false
+        in: header
+        name: Content-Type
+        required: true
+        schema:
+          default: application/json
+          enum:
+          - application/json
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: transactionId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            image/png:
+              schema:
+                format: binary
+                type: string
+          description: QR code image
+        "400":
+          content:
+            application/json:
+              examples:
+                error:
+                  value:
+                    statusCode: 400
+                    error: Bad Request
+                    message: "querystring/dateFrom Invalid input: expected string,\
+                      \ received undefined"
+                    requestId: cmou00000abcdef01s6ghij1k2lm
+              schema:
+                $ref: "#/components/schemas/get_pix_400_response"
+          description: Transaction is not a DEPOSIT or has no QR code
+        "404":
+          content:
+            application/json:
+              examples:
+                error:
+                  value:
+                    statusCode: 404
+                    error: Not Found
+                    message: Resource not found
+                    requestId: cmou00000abcdef01s6ghij1k2lm
+              schema:
+                $ref: "#/components/schemas/get_pix_400_response"
+          description: Transaction not found
+      security:
+      - BearerAuth: []
+      summary: Render Pix QR code (PNG)
+      tags:
+      - Pix Operations
+components:
+  schemas:
+    Transaction:
+      description: Unified transaction representation used by all endpoints.
+      example:
+        qrCodeBase64: qrCodeBase64
+        receiverDocument: receiverDocument
+        withdrawPixType: withdrawPixType
+        refundStatus: refundStatus
+        type: type
+        endToEndId: endToEndId
+        generatedName: generatedName
+        payerAccountNumber: payerAccountNumber
+        createdAt: createdAt
+        infraction:
+          reportedAt: 2000-01-23T04:56:07.000+00:00
+          analysisDetails: analysisDetails
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          protocol: protocol
+          reportDetails: reportDetails
+          analysisResult: analysisResult
+          id: id
+          type: REFUND_REQUEST
+          reportedBy: DEBITED_PARTICIPANT
+          expiresAt: 2000-01-23T04:56:07.000+00:00
+          status: WAITING_PSP
+          updatedAt: 2000-01-23T04:56:07.000+00:00
+        refundEndToEndId: refundEndToEndId
+        receiverAccountNumber: receiverAccountNumber
+        clientReference: clientReference
+        payerName: payerName
+        callbackUrl: callbackUrl
+        id: id
+        receiverInstitutionIspb: receiverInstitutionIspb
+        virtualAccount: virtualAccount
+        updatedAt: updatedAt
+        refundAmount: refundAmount
+        refundedAt: refundedAt
+        amount: 0.8008281904610115
+        cancellationReason: cancellationReason
+        receiverName: receiverName
+        refundReason: refundReason
+        generatedDocument: generatedDocument
+        withdrawPixKey: withdrawPixKey
+        generatedEmail: generatedEmail
+        receiverInstitutionName: receiverInstitutionName
+        refundDescription: refundDescription
+        payerInstitutionIspb: payerInstitutionIspb
+        payerDocument: payerDocument
+        qrCodeUrl: qrCodeUrl
+        serviceFeeCharged: 6.027456183070403
+        qrCodeText: qrCodeText
+        paidAt: paidAt
+        status: status
+        payerInstitutionName: payerInstitutionName
+      properties:
+        id:
+          type: string
+          nullable: false
+        status:
+          description: "PENDING, COMPLETED, CANCELED, WAITING_FOR_REFUND, REFUNDED,\
+            \ EXPIRED, ERROR"
+          type: string
+          nullable: false
+        amount:
+          type: number
+          nullable: false
+        type:
+          description: DEPOSIT or WITHDRAW
+          type: string
+          nullable: false
+        callbackUrl:
+          type: string
+          nullable: true
+        qrCodeText:
+          type: string
+          nullable: true
+        qrCodeBase64:
+          type: string
+          nullable: true
+        qrCodeUrl:
+          type: string
+          nullable: true
+        generatedName:
+          type: string
+          nullable: true
+        generatedDocument:
+          type: string
+          nullable: true
+        generatedEmail:
+          type: string
+          nullable: true
+        payerName:
+          type: string
+          nullable: true
+        payerDocument:
+          type: string
+          nullable: true
+        payerInstitutionIspb:
+          type: string
+          nullable: true
+        payerInstitutionName:
+          type: string
+          nullable: true
+        payerAccountNumber:
+          description: Payer's PayZu account number (6 digits). Present only on internal-transfer
+            transactions.
+          type: string
+          nullable: true
+        serviceFeeCharged:
+          type: number
+          nullable: true
+        withdrawPixKey:
+          type: string
+          nullable: true
+        withdrawPixType:
+          type: string
+          nullable: true
+        receiverName:
+          type: string
+          nullable: true
+        receiverDocument:
+          type: string
+          nullable: true
+        receiverInstitutionIspb:
+          type: string
+          nullable: true
+        receiverInstitutionName:
+          type: string
+          nullable: true
+        receiverAccountNumber:
+          description: Receiver's PayZu account number (6 digits). Present only on
+            internal-transfer transactions.
+          type: string
+          nullable: true
+        endToEndId:
+          type: string
+          nullable: true
+        createdAt:
+          type: string
+          nullable: false
+        updatedAt:
+          type: string
+          nullable: false
+        paidAt:
+          type: string
+          nullable: true
+        clientReference:
+          type: string
+          nullable: true
+        refundEndToEndId:
+          description: End-to-end ID of the refund transaction
+          type: string
+          nullable: true
+        refundAmount:
+          description: Amount refunded
+          type: string
+          nullable: true
+        refundStatus:
+          description: "Status of the refund (PENDING, COMPLETED, CANCELED, WAITING_FOR_REFUND,\
+            \ REFUNDED, EXPIRED, ERROR)"
+          type: string
+          nullable: true
+        refundReason:
+          description: Reason for the refund
+          type: string
+          nullable: true
+        refundDescription:
+          description: Description of the refund
+          type: string
+          nullable: true
+        refundedAt:
+          description: Date and time when the refund was processed
+          type: string
+          nullable: true
+        cancellationReason:
+          description: Reason for cancellation (if cancelled)
+          type: string
+          nullable: true
+        infraction:
+          $ref: "#/components/schemas/Transaction_infraction"
+        virtualAccount:
+          description: Subconta virtual informada na criação.
+          maxLength: 50
+          type: string
+          nullable: true
+    PixKeyInfo:
+      description: Information about a Pix key from DICT lookup.
+      example:
+        institutionCode: institutionCode
+        institutionIspb: institutionIspb
+        document: document
+        accountType: CACC
+        institutionName: institutionName
+        name: name
+        accountNumber: accountNumber
+        personType: PF
+        branch: branch
+        pixKey: pixKey
+      properties:
+        pixKey:
+          description: The Pix key that was looked up.
+          type: string
+        document:
+          description: CPF or CNPJ of the owner (partially masked for privacy).
+          type: string
+        name:
+          description: Name of the Pix key owner.
+          type: string
+        branch:
+          description: Bank branch number (masked).
+          type: string
+        accountNumber:
+          description: Account number (masked).
+          type: string
+        personType:
+          description: Type of person.
+          enum:
+          - PF
+          - PJ
+          type: string
+        accountType:
+          description: "Type of account (CACC = Current Account, TRAN = Transactional\
+            \ Account, SVGS = Savings)."
+          enum:
+          - CACC
+          - TRAN
+          - SVGS
+          type: string
+        institutionIspb:
+          description: ISPB code of the financial institution.
+          type: string
+        institutionCode:
+          description: COMPE code of the financial institution.
+          type: string
+        institutionName:
+          description: Name of the financial institution.
+          type: string
+    QRCodeReadResponse:
+      description: Decoded information from a Pix QR Code.
+      example:
+        expiresIn: 1.4658129805029452
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        amount: 0.8008281904610115
+        originalAmount: 6.027456183070403
+        document: document
+        name: name
+        additionalInfo: additionalInfo
+        txid: txid
+        qrCodeType: STATIC
+      properties:
+        qrCodeType:
+          description: Type of QR Code.
+          enum:
+          - STATIC
+          - DYNAMIC
+          type: string
+        name:
+          description: Name of the payment receiver.
+          type: string
+        document:
+          description: CPF or CNPJ of the receiver.
+          type: string
+        amount:
+          description: Amount to be paid (may differ from originalAmount for dynamic
+            QR Codes).
+          type: number
+          nullable: true
+        originalAmount:
+          description: Original amount embedded in the QR Code.
+          type: number
+          nullable: true
+        txid:
+          description: Transaction identifier.
+          type: string
+          nullable: true
+        additionalInfo:
+          description: Additional information or description.
+          type: string
+          nullable: true
+        expiresIn:
+          description: Seconds until QR Code expires (0 for static QR Codes).
+          type: number
+          nullable: true
+        createdAt:
+          description: Creation date of the QR Code (for dynamic QR Codes).
+          format: date-time
+          type: string
+          nullable: true
+    InfractionDetail:
+      example:
+        reportedAt: 2000-01-23T04:56:07.000+00:00
+        analysisDetails: analysisDetails
+        reportDetails: reportDetails
+        defenseHistory:
+        - createdAt: 2000-01-23T04:56:07.000+00:00
+          infractionId: infractionId
+          defense: defense
+          files:
+          - size: 6.027456183070403
+            name: name
+            mimeType: mimeType
+            url: url
+          - size: 6.027456183070403
+            name: name
+            mimeType: mimeType
+            url: url
+          id: id
+          status: PENDING
+          updatedAt: 2000-01-23T04:56:07.000+00:00
+        - createdAt: 2000-01-23T04:56:07.000+00:00
+          infractionId: infractionId
+          defense: defense
+          files:
+          - size: 6.027456183070403
+            name: name
+            mimeType: mimeType
+            url: url
+          - size: 6.027456183070403
+            name: name
+            mimeType: mimeType
+            url: url
+          id: id
+          status: PENDING
+          updatedAt: 2000-01-23T04:56:07.000+00:00
+        analysisResult: AGREED
+        type: REFUND_REQUEST
+        reportedBy: DEBITED_PARTICIPANT
+        expiresAt: 2000-01-23T04:56:07.000+00:00
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        protocol: protocol
+        id: id
+        transaction:
+          amount: 0.8008281904610115
+          payerDocument: payerDocument
+          receiverName: receiverName
+          receiverDocument: receiverDocument
+          payerName: payerName
+          id: id
+          endToEndId: endToEndId
+        status: WAITING_PSP
+        updatedAt: 2000-01-23T04:56:07.000+00:00
+      properties:
+        id:
+          type: string
+        protocol:
+          type: string
+        status:
+          enum:
+          - WAITING_PSP
+          - CLOSED
+          - OPEN
+          - CANCELLED
+          - ACKNOWLEDGED
+          - DEFENDED
+          - ANSWERED
+          - WAITING_ADJUSTMENTS
+          type: string
+        type:
+          enum:
+          - REFUND_REQUEST
+          - FRAUD
+          - REFUND_CANCELLED
+          type: string
+        reportedBy:
+          enum:
+          - DEBITED_PARTICIPANT
+          - CREDITED_PARTICIPANT
+          type: string
+        reportDetails:
+          type: string
+        analysisResult:
+          enum:
+          - AGREED
+          - DISAGREED
+          type: string
+          nullable: true
+        analysisDetails:
+          type: string
+          nullable: true
+        reportedAt:
+          format: date-time
+          type: string
+        expiresAt:
+          format: date-time
+          type: string
+          nullable: true
+        createdAt:
+          format: date-time
+          type: string
+        updatedAt:
+          format: date-time
+          type: string
+        transaction:
+          $ref: "#/components/schemas/InfractionDetail_transaction"
+        defenseHistory:
+          items:
+            $ref: "#/components/schemas/Defense"
+          type: array
+    Defense:
+      example:
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        infractionId: infractionId
+        defense: defense
+        files:
+        - size: 6.027456183070403
+          name: name
+          mimeType: mimeType
+          url: url
+        - size: 6.027456183070403
+          name: name
+          mimeType: mimeType
+          url: url
+        id: id
+        status: PENDING
+        updatedAt: 2000-01-23T04:56:07.000+00:00
+      properties:
+        id:
+          type: string
+        defense:
+          description: Defense text
+          type: string
+        status:
+          description: Defense status
+          enum:
+          - PENDING
+          - DEFENDED
+          type: string
+        infractionId:
+          type: string
+        createdAt:
+          format: date-time
+          type: string
+        updatedAt:
+          format: date-time
+          type: string
+        files:
+          items:
+            $ref: "#/components/schemas/Defense_files_inner"
+          type: array
+    InfractionListResponse:
+      example:
+        pagination:
+          totalItems: 5.637376656633329
+          limit: 5.962133916683182
+          totalPages: 2.3021358869347655
+          page: 1.4658129805029452
+        infractions:
+        - reportedAt: 2000-01-23T04:56:07.000+00:00
+          analysisDetails: analysisDetails
+          reportDetails: reportDetails
+          defenseHistory:
+          - createdAt: 2000-01-23T04:56:07.000+00:00
+            infractionId: infractionId
+            defense: defense
+            files:
+            - size: 6.027456183070403
+              name: name
+              mimeType: mimeType
+              url: url
+            - size: 6.027456183070403
+              name: name
+              mimeType: mimeType
+              url: url
+            id: id
+            status: PENDING
+            updatedAt: 2000-01-23T04:56:07.000+00:00
+          - createdAt: 2000-01-23T04:56:07.000+00:00
+            infractionId: infractionId
+            defense: defense
+            files:
+            - size: 6.027456183070403
+              name: name
+              mimeType: mimeType
+              url: url
+            - size: 6.027456183070403
+              name: name
+              mimeType: mimeType
+              url: url
+            id: id
+            status: PENDING
+            updatedAt: 2000-01-23T04:56:07.000+00:00
+          analysisResult: AGREED
+          type: REFUND_REQUEST
+          reportedBy: DEBITED_PARTICIPANT
+          expiresAt: 2000-01-23T04:56:07.000+00:00
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          protocol: protocol
+          id: id
+          transaction:
+            amount: 0.8008281904610115
+            payerDocument: payerDocument
+            receiverName: receiverName
+            receiverDocument: receiverDocument
+            payerName: payerName
+            id: id
+            endToEndId: endToEndId
+          status: WAITING_PSP
+          updatedAt: 2000-01-23T04:56:07.000+00:00
+        - reportedAt: 2000-01-23T04:56:07.000+00:00
+          analysisDetails: analysisDetails
+          reportDetails: reportDetails
+          defenseHistory:
+          - createdAt: 2000-01-23T04:56:07.000+00:00
+            infractionId: infractionId
+            defense: defense
+            files:
+            - size: 6.027456183070403
+              name: name
+              mimeType: mimeType
+              url: url
+            - size: 6.027456183070403
+              name: name
+              mimeType: mimeType
+              url: url
+            id: id
+            status: PENDING
+            updatedAt: 2000-01-23T04:56:07.000+00:00
+          - createdAt: 2000-01-23T04:56:07.000+00:00
+            infractionId: infractionId
+            defense: defense
+            files:
+            - size: 6.027456183070403
+              name: name
+              mimeType: mimeType
+              url: url
+            - size: 6.027456183070403
+              name: name
+              mimeType: mimeType
+              url: url
+            id: id
+            status: PENDING
+            updatedAt: 2000-01-23T04:56:07.000+00:00
+          analysisResult: AGREED
+          type: REFUND_REQUEST
+          reportedBy: DEBITED_PARTICIPANT
+          expiresAt: 2000-01-23T04:56:07.000+00:00
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          protocol: protocol
+          id: id
+          transaction:
+            amount: 0.8008281904610115
+            payerDocument: payerDocument
+            receiverName: receiverName
+            receiverDocument: receiverDocument
+            payerName: payerName
+            id: id
+            endToEndId: endToEndId
+          status: WAITING_PSP
+          updatedAt: 2000-01-23T04:56:07.000+00:00
+      properties:
+        infractions:
+          items:
+            $ref: "#/components/schemas/InfractionDetail"
+          type: array
+        pagination:
+          $ref: "#/components/schemas/InfractionListResponse_pagination"
+    CallbackDetail:
+      example:
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        responseBody: responseBody
+        responseHeaders: "{}"
+        responseTime: 5.962133916683182
+        id: id
+        body: "{}"
+        url: url
+        transactionId: transactionId
+        status: 1.4658129805029452
+      properties:
+        id:
+          description: Unique callback ID
+          type: string
+        url:
+          description: Webhook URL that received the callback
+          type: string
+        status:
+          description: HTTP response status code
+          type: number
+        transactionId:
+          description: Related transaction ID
+          type: string
+          nullable: true
+        createdAt:
+          description: Date and time when the callback log was created
+          format: date-time
+          type: string
+        body:
+          description: Request body sent (parsed JSON)
+          type: object
+        responseBody:
+          description: Response body received (string)
+          type: string
+        responseHeaders:
+          description: Response headers (parsed JSON)
+          type: object
+        responseTime:
+          description: Webhook round-trip time in milliseconds
+          type: number
+    CallbackListResponse:
+      example:
+        pagination:
+          hasNextPage: true
+          limit: 6.027456183070403
+          page: 0.8008281904610115
+        callbacks:
+        - createdAt: 2000-01-23T04:56:07.000+00:00
+          responseBody: responseBody
+          responseHeaders: "{}"
+          responseTime: 5.962133916683182
+          id: id
+          body: "{}"
+          url: url
+          transactionId: transactionId
+          status: 1.4658129805029452
+        - createdAt: 2000-01-23T04:56:07.000+00:00
+          responseBody: responseBody
+          responseHeaders: "{}"
+          responseTime: 5.962133916683182
+          id: id
+          body: "{}"
+          url: url
+          transactionId: transactionId
+          status: 1.4658129805029452
+      properties:
+        pagination:
+          $ref: "#/components/schemas/CallbackListResponse_pagination"
+        callbacks:
+          description: Array of callback logs
+          items:
+            $ref: "#/components/schemas/CallbackDetail"
+          type: array
+    ReportJob:
+      example:
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        expiresAt: 2000-01-23T04:56:07.000+00:00
+        status: PENDING
+        updatedAt: 2000-01-23T04:56:07.000+00:00
+      properties:
+        id:
+          format: uuid
+          type: string
+        status:
+          enum:
+          - PENDING
+          - PROCESSING
+          - COMPLETED
+          - FAILED
+          - EXPIRED
+          type: string
+        createdAt:
+          format: date-time
+          type: string
+        updatedAt:
+          format: date-time
+          type: string
+        expiresAt:
+          description: When the file expires from storage (typically 7 days after
+            creation)
+          format: date-time
+          type: string
+          nullable: true
+    get_pix_400_response:
+      example:
+        requestId: requestId
+        error: error
+        message: message
+        statusCode: 1
+      properties:
+        statusCode:
+          type: integer
+        error:
+          type: string
+        message:
+          type: string
+        requestId:
+          type: string
+    post_pix_request:
+      properties:
+        amount:
+          description: Amount in BRL. Must be >= 1.
+          example: 10.9
+          minimum: 1
+          type: number
+        callbackUrl:
+          description: URL to receive `transaction updated` webhooks.
+          example: https://webhook.cool/
+          type: string
+        generatedName:
+          description: Payer full name. Letters and spaces only.
+          example: John Doe
+          type: string
+        generatedEmail:
+          description: Payer email (optional).
+          example: john.doe@example.com
+          type: string
+        generatedDocument:
+          description: "Payer CPF (11 digits) or CNPJ (14 digits), no punctuation."
+          example: "12345678901"
+          type: string
+        expiresIn:
+          description: "Seconds until the QR Code expires. Default: 600."
+          example: 600
+          maximum: 172000
+          type: number
+        clientReference:
+          description: "External reference (order, invoice, etc.)."
+          example: order_12345
+          maxLength: 64
+          type: string
+        virtualAccount:
+          description: "Subconta virtual (até 50 caracteres) para correlacionar lojas,\
+            \ filiais, marketplaces. Volta no callback."
+          maxLength: 50
+          type: string
+      required:
+      - amount
+    get_pix_key_400_response:
+      example:
+        error: INVALID_PIX_KEY
+        message: The provided Pix key has an invalid format.
+      properties:
+        error:
+          example: INVALID_PIX_KEY
+          type: string
+        message:
+          example: The provided Pix key has an invalid format.
+          type: string
+    get_pix_key_404_response:
+      example:
+        error: PIX_KEY_NOT_FOUND
+        message: The specified Pix key was not found in DICT.
+      properties:
+        error:
+          example: PIX_KEY_NOT_FOUND
+          type: string
+        message:
+          example: The specified Pix key was not found in DICT.
+          type: string
+    post_pix_qrcode_read_request:
+      properties:
+        emv:
+          description: The EMV payload string from the Pix QR Code.
+          example: 00020101021226770014br.gov.bcb.pix2555api.payzu/pix/qr/v2/013318d6-2d7d-479e-8bb3-b5c7b9da688c5204000053039865802BR5916PAYZU
+            6007SAOPAULO6217051320260118278956304EC55
+          type: string
+      required:
+      - emv
+    post_pix_qrcode_read_400_response:
+      example:
+        error: INVALID_QR_CODE
+        message: The provided EMV payload is invalid or malformed.
+      properties:
+        error:
+          example: INVALID_QR_CODE
+          type: string
+        message:
+          example: The provided EMV payload is invalid or malformed.
+          type: string
+    get_proof_200_response:
+      example:
+        base64: base64
+      properties:
+        base64:
+          type: string
+    post_withdraw_request:
+      properties:
+        amount:
+          description: Amount in BRL. Must be >= 1.
+          example: 2
+          minimum: 0.01
+          type: number
+        pixKey:
+          description: Destination Pix key.
+          example: teste@teste.com
+          type: string
+        pixType:
+          description: Pix key type.
+          enum:
+          - cpf
+          - cnpj
+          - phone
+          - email
+          - evp
+          example: email
+          type: string
+        callbackUrl:
+          description: Webhook URL for status updates.
+          example: https://webhook.cool/
+          type: string
+        clientReference:
+          description: External reference for this withdrawal.
+          example: withdraw_98765
+          maxLength: 64
+          type: string
+        description:
+          description: Optional description.
+          example: Weekly payout
+          type: string
+        virtualAccount:
+          description: "Subconta virtual (até 50 caracteres) para correlacionar lojas,\
+            \ filiais, marketplaces. Volta no callback."
+          maxLength: 50
+          type: string
+      required:
+      - amount
+      - pixKey
+      - pixType
+    post_withdraw_qrcode_request:
+      properties:
+        qrCode:
+          description: Pix QR Code payload (EMV format).
+          example: 00020101021226770014br.gov.bcb.pix2555api.payzu/pix/qr/v2/013318d6-2d7d-479e-8bb3-b5c7b9da688c5204000053039865802BR5916PAYZU
+            6007SAOPAULO6217051320260118278956304EC55
+          type: string
+        amount:
+          description: "Amount in BRL. Optional - if not provided, uses the QR Code's\
+            \ embedded value."
+          example: 20
+          minimum: 0.1
+          type: number
+        callbackUrl:
+          description: Webhook URL for status updates.
+          example: https://webhook.cool/
+          type: string
+        description:
+          description: Optional description for the payment.
+          example: Pagamento via QR Code
+          type: string
+        clientReference:
+          description: External reference for this withdrawal.
+          example: order-123
+          type: string
+        virtualAccount:
+          description: "Subconta virtual (até 50 caracteres) para correlacionar lojas,\
+            \ filiais, marketplaces. Volta no callback."
+          maxLength: 50
+          type: string
+      required:
+      - qrCode
+    post_withdraw_qrcode_400_response:
+      example:
+        error: AMOUNT_REQUIRED
+        message: Amount is required for QR Codes without embedded value.
+      properties:
+        error:
+          example: AMOUNT_REQUIRED
+          type: string
+        message:
+          example: Amount is required for QR Codes without embedded value.
+          type: string
+    get_user_200_response_ServiceFee:
+      example:
+        cashOutFixed: 4.145608029883936
+        cashOutPercent: 7.386281948385884
+        cashOutMinimum: 2.027123023002322
+        cashInMinimum: 7.061401241503109
+        cashInFixed: 9.301444243932576
+        cashInPercent: 3.616076749251911
+      properties:
+        cashInMinimum:
+          type: number
+        cashInFixed:
+          type: number
+        cashInPercent:
+          type: number
+        cashOutMinimum:
+          type: number
+        cashOutFixed:
+          type: number
+        cashOutPercent:
+          type: number
+    get_user_200_response_DailyWithdrawLimit:
+      example:
+        limit: 1.2315135367772556
+        used: 1.0246457001441578
+        lastReset: 2000-01-23T04:56:07.000+00:00
+        updatedAt: 2000-01-23T04:56:07.000+00:00
+      properties:
+        limit:
+          type: number
+        used:
+          type: number
+        updatedAt:
+          format: date-time
+          type: string
+        lastReset:
+          format: date-time
+          type: string
+    get_user_200_response:
+      example:
+        role: role
+        balanceBlocked: 6.027456183070403
+        cashInTicketMax: 5.962133916683182
+        cashOutTicketMax: 2.3021358869347655
+        allowInfraction: true
+        balanceAvailable: 0.8008281904610115
+        cashInTicketMin: 1.4658129805029452
+        allowDeposit: true
+        accountNumber: accountNumber
+        cashOutTicketMin: 5.637376656633329
+        ServiceFee:
+          cashOutFixed: 4.145608029883936
+          cashOutPercent: 7.386281948385884
+          cashOutMinimum: 2.027123023002322
+          cashInMinimum: 7.061401241503109
+          cashInFixed: 9.301444243932576
+          cashInPercent: 3.616076749251911
+        name: name
+        DailyWithdrawLimit:
+          limit: 1.2315135367772556
+          used: 1.0246457001441578
+          lastReset: 2000-01-23T04:56:07.000+00:00
+          updatedAt: 2000-01-23T04:56:07.000+00:00
+        allowWithdraw: true
+        AutoWithdraw: "{}"
+        id: id
+        status: status
+      properties:
+        id:
+          type: string
+        accountNumber:
+          description: "Public account identifier (6 digits, unique). Used as destination\
+            \ for internal transfers."
+          type: string
+          nullable: true
+        name:
+          type: string
+        role:
+          type: string
+        balanceAvailable:
+          type: number
+        balanceBlocked:
+          type: number
+        status:
+          type: string
+        allowWithdraw:
+          type: boolean
+        allowDeposit:
+          type: boolean
+        allowInfraction:
+          type: boolean
+        cashInTicketMin:
+          type: number
+        cashInTicketMax:
+          type: number
+        cashOutTicketMin:
+          type: number
+        cashOutTicketMax:
+          type: number
+        AutoWithdraw:
+          type: object
+          nullable: true
+        ServiceFee:
+          $ref: "#/components/schemas/get_user_200_response_ServiceFee"
+        DailyWithdrawLimit:
+          $ref: "#/components/schemas/get_user_200_response_DailyWithdrawLimit"
+    get_user_balance_200_response:
+      example:
+        balanceBlocked: 6.027456183070403
+        balanceAvailable: 0.8008281904610115
+      properties:
+        balanceAvailable:
+          type: number
+        balanceBlocked:
+          type: number
+    get_user_transactions_200_response:
+      example:
+        total: 0.8008281904610115
+        pages: 6.027456183070403
+        transactions:
+        - qrCodeBase64: qrCodeBase64
+          receiverDocument: receiverDocument
+          withdrawPixType: withdrawPixType
+          refundStatus: refundStatus
+          type: type
+          endToEndId: endToEndId
+          generatedName: generatedName
+          payerAccountNumber: payerAccountNumber
+          createdAt: createdAt
+          infraction:
+            reportedAt: 2000-01-23T04:56:07.000+00:00
+            analysisDetails: analysisDetails
+            createdAt: 2000-01-23T04:56:07.000+00:00
+            protocol: protocol
+            reportDetails: reportDetails
+            analysisResult: analysisResult
+            id: id
+            type: REFUND_REQUEST
+            reportedBy: DEBITED_PARTICIPANT
+            expiresAt: 2000-01-23T04:56:07.000+00:00
+            status: WAITING_PSP
+            updatedAt: 2000-01-23T04:56:07.000+00:00
+          refundEndToEndId: refundEndToEndId
+          receiverAccountNumber: receiverAccountNumber
+          clientReference: clientReference
+          payerName: payerName
+          callbackUrl: callbackUrl
+          id: id
+          receiverInstitutionIspb: receiverInstitutionIspb
+          virtualAccount: virtualAccount
+          updatedAt: updatedAt
+          refundAmount: refundAmount
+          refundedAt: refundedAt
+          amount: 0.8008281904610115
+          cancellationReason: cancellationReason
+          receiverName: receiverName
+          refundReason: refundReason
+          generatedDocument: generatedDocument
+          withdrawPixKey: withdrawPixKey
+          generatedEmail: generatedEmail
+          receiverInstitutionName: receiverInstitutionName
+          refundDescription: refundDescription
+          payerInstitutionIspb: payerInstitutionIspb
+          payerDocument: payerDocument
+          qrCodeUrl: qrCodeUrl
+          serviceFeeCharged: 6.027456183070403
+          qrCodeText: qrCodeText
+          paidAt: paidAt
+          status: status
+          payerInstitutionName: payerInstitutionName
+        - qrCodeBase64: qrCodeBase64
+          receiverDocument: receiverDocument
+          withdrawPixType: withdrawPixType
+          refundStatus: refundStatus
+          type: type
+          endToEndId: endToEndId
+          generatedName: generatedName
+          payerAccountNumber: payerAccountNumber
+          createdAt: createdAt
+          infraction:
+            reportedAt: 2000-01-23T04:56:07.000+00:00
+            analysisDetails: analysisDetails
+            createdAt: 2000-01-23T04:56:07.000+00:00
+            protocol: protocol
+            reportDetails: reportDetails
+            analysisResult: analysisResult
+            id: id
+            type: REFUND_REQUEST
+            reportedBy: DEBITED_PARTICIPANT
+            expiresAt: 2000-01-23T04:56:07.000+00:00
+            status: WAITING_PSP
+            updatedAt: 2000-01-23T04:56:07.000+00:00
+          refundEndToEndId: refundEndToEndId
+          receiverAccountNumber: receiverAccountNumber
+          clientReference: clientReference
+          payerName: payerName
+          callbackUrl: callbackUrl
+          id: id
+          receiverInstitutionIspb: receiverInstitutionIspb
+          virtualAccount: virtualAccount
+          updatedAt: updatedAt
+          refundAmount: refundAmount
+          refundedAt: refundedAt
+          amount: 0.8008281904610115
+          cancellationReason: cancellationReason
+          receiverName: receiverName
+          refundReason: refundReason
+          generatedDocument: generatedDocument
+          withdrawPixKey: withdrawPixKey
+          generatedEmail: generatedEmail
+          receiverInstitutionName: receiverInstitutionName
+          refundDescription: refundDescription
+          payerInstitutionIspb: payerInstitutionIspb
+          payerDocument: payerDocument
+          qrCodeUrl: qrCodeUrl
+          serviceFeeCharged: 6.027456183070403
+          qrCodeText: qrCodeText
+          paidAt: paidAt
+          status: status
+          payerInstitutionName: payerInstitutionName
+      properties:
+        total:
+          type: number
+        pages:
+          type: number
+        transactions:
+          items:
+            $ref: "#/components/schemas/Transaction"
+          type: array
+    post_infractions_defense_request:
+      properties:
+        defense:
+          description: "Defense text (max: 1000 characters)"
+          maxLength: 1000
+          type: string
+        files:
+          description: "Evidence files (max: 10MB total)"
+          items:
+            format: binary
+            type: string
+          type: array
+      required:
+      - defense
+    post_internal_transfer_request:
+      properties:
+        payerAccountNumber:
+          description: Payer account number (6 digits). Must match the authenticated
+            user's accountNumber.
+          example: "513579"
+          pattern: "^\\d{6}$"
+          type: string
+        receiverAccountNumber:
+          description: Destination account number (6 digits).
+          example: "987654"
+          pattern: "^\\d{6}$"
+          type: string
+        amount:
+          description: Transfer amount in BRL.
+          example: 100.5
+          minimum: 0.01
+          type: number
+        description:
+          description: Optional transfer description.
+          example: "Pagamento referente a fatura #1234"
+          maxLength: 500
+          type: string
+        callbackUrl:
+          description: URL to receive transaction-update webhooks.
+          example: https://webhook.cool/
+          format: uri
+          type: string
+        clientReference:
+          description: External reference for idempotency / reconciliation.
+          example: transfer_abc_123
+          maxLength: 64
+          type: string
+        virtualAccount:
+          description: "Subconta virtual (até 50 caracteres) para correlacionar lojas,\
+            \ filiais, marketplaces. Volta no callback."
+          maxLength: 50
+          type: string
+      required:
+      - amount
+      - payerAccountNumber
+      - receiverAccountNumber
+    get_user_transaction_by_id_200_response_allOf_CallbackLog_inner:
+      example:
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        responseTime: 5.962133916683182
+        id: id
+        url: url
+        status: 1
+      properties:
+        id:
+          type: string
+        url:
+          type: string
+        status:
+          description: HTTP status code returned by the receiver
+          type: integer
+        responseTime:
+          description: Round-trip time in ms
+          type: number
+        createdAt:
+          format: date-time
+          type: string
+    get_user_transaction_by_id_200_response_allOf_Infraction_inner:
+      example:
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        id: id
+        status: status
+        updatedAt: 2000-01-23T04:56:07.000+00:00
+      properties:
+        id:
+          type: string
+        status:
+          type: string
+        createdAt:
+          format: date-time
+          type: string
+        updatedAt:
+          format: date-time
+          type: string
+    get_user_transaction_by_id_200_response:
+      allOf:
+      - $ref: "#/components/schemas/Transaction"
+      - properties:
+          CallbackLog:
+            description: Webhook delivery attempts for this transaction (most recent
+              first)
+            items:
+              $ref: "#/components/schemas/get_user_transaction_by_id_200_response_allOf_CallbackLog_inner"
+            type: array
+          Infraction:
+            description: Infractions linked to this transaction
+            items:
+              $ref: "#/components/schemas/get_user_transaction_by_id_200_response_allOf_Infraction_inner"
+            type: array
+      example:
+        qrCodeBase64: qrCodeBase64
+        Infraction:
+        - createdAt: 2000-01-23T04:56:07.000+00:00
+          id: id
+          status: status
+          updatedAt: 2000-01-23T04:56:07.000+00:00
+        - createdAt: 2000-01-23T04:56:07.000+00:00
+          id: id
+          status: status
+          updatedAt: 2000-01-23T04:56:07.000+00:00
+        CallbackLog:
+        - createdAt: 2000-01-23T04:56:07.000+00:00
+          responseTime: 5.962133916683182
+          id: id
+          url: url
+          status: 1
+        - createdAt: 2000-01-23T04:56:07.000+00:00
+          responseTime: 5.962133916683182
+          id: id
+          url: url
+          status: 1
+        receiverDocument: receiverDocument
+        withdrawPixType: withdrawPixType
+        refundStatus: refundStatus
+        type: type
+        endToEndId: endToEndId
+        generatedName: generatedName
+        payerAccountNumber: payerAccountNumber
+        createdAt: createdAt
+        infraction:
+          reportedAt: 2000-01-23T04:56:07.000+00:00
+          analysisDetails: analysisDetails
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          protocol: protocol
+          reportDetails: reportDetails
+          analysisResult: analysisResult
+          id: id
+          type: REFUND_REQUEST
+          reportedBy: DEBITED_PARTICIPANT
+          expiresAt: 2000-01-23T04:56:07.000+00:00
+          status: WAITING_PSP
+          updatedAt: 2000-01-23T04:56:07.000+00:00
+        refundEndToEndId: refundEndToEndId
+        receiverAccountNumber: receiverAccountNumber
+        clientReference: clientReference
+        payerName: payerName
+        callbackUrl: callbackUrl
+        id: id
+        receiverInstitutionIspb: receiverInstitutionIspb
+        virtualAccount: virtualAccount
+        updatedAt: updatedAt
+        refundAmount: refundAmount
+        refundedAt: refundedAt
+        amount: 0.8008281904610115
+        cancellationReason: cancellationReason
+        receiverName: receiverName
+        refundReason: refundReason
+        generatedDocument: generatedDocument
+        withdrawPixKey: withdrawPixKey
+        generatedEmail: generatedEmail
+        receiverInstitutionName: receiverInstitutionName
+        refundDescription: refundDescription
+        payerInstitutionIspb: payerInstitutionIspb
+        payerDocument: payerDocument
+        qrCodeUrl: qrCodeUrl
+        serviceFeeCharged: 6.027456183070403
+        qrCodeText: qrCodeText
+        paidAt: paidAt
+        status: status
+        payerInstitutionName: payerInstitutionName
+    list_user_reports_200_response:
+      example:
+        reports:
+        - createdAt: 2000-01-23T04:56:07.000+00:00
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          expiresAt: 2000-01-23T04:56:07.000+00:00
+          status: PENDING
+          updatedAt: 2000-01-23T04:56:07.000+00:00
+        - createdAt: 2000-01-23T04:56:07.000+00:00
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          expiresAt: 2000-01-23T04:56:07.000+00:00
+          status: PENDING
+          updatedAt: 2000-01-23T04:56:07.000+00:00
+        total: 0
+        pages: 6
+      properties:
+        total:
+          type: integer
+        pages:
+          type: integer
+        reports:
+          items:
+            $ref: "#/components/schemas/ReportJob"
+          type: array
+    post_user_report_request:
+      properties:
+        dateFrom:
+          format: date-time
+          type: string
+        dateTo:
+          format: date-time
+          type: string
+        status:
+          items:
+            enum:
+            - PENDING
+            - COMPLETED
+            - CANCELED
+            - WAITING_FOR_REFUND
+            - REFUNDED
+            - EXPIRED
+            - ERROR
+            type: string
+          type: array
+        type:
+          items:
+            enum:
+            - DEPOSIT
+            - WITHDRAW
+            - COMMISSION
+            type: string
+          type: array
+      required:
+      - dateFrom
+      - dateTo
+    download_user_report_200_response:
+      example:
+        url: https://openapi-generator.tech
+        expiresAt: 2000-01-23T04:56:07.000+00:00
+      properties:
+        url:
+          description: Short-lived signed URL to download the CSV (5 min validity)
+          format: uri
+          type: string
+        expiresAt:
+          description: When the signed URL expires
+          format: date-time
+          type: string
+    resend_user_callbacks_request:
+      properties:
+        createdAtFrom:
+          description: Period start (REQUIRED). Cannot be more than 30 days in the
+            past.
+          format: date-time
+          type: string
+        createdAtTo:
+          description: Period end (REQUIRED). Period span cannot exceed 7 days.
+          format: date-time
+          type: string
+        transactionIds:
+          description: Restrict to specific transaction IDs
+          items:
+            type: string
+          type: array
+        transactionTypes:
+          description: Filter by transaction type
+          items:
+            enum:
+            - DEPOSIT
+            - WITHDRAW
+            type: string
+          type: array
+        transactionStatus:
+          description: Filter by transaction status
+          items:
+            enum:
+            - PENDING
+            - COMPLETED
+            - CANCELED
+            - WAITING_FOR_REFUND
+            - REFUNDED
+            - EXPIRED
+            - ERROR
+            type: string
+          type: array
+        transactionEndToEndIds:
+          description: Restrict to specific Pix end-to-end IDs
+          items:
+            type: string
+          type: array
+      required:
+      - createdAtFrom
+      - createdAtTo
+    resend_user_callbacks_200_response:
+      example:
+        total: 0
+        message: message
+      properties:
+        message:
+          type: string
+        total:
+          description: Number of callbacks dispatched
+          type: integer
+    resend_user_callback_single_200_response:
+      example:
+        message: message
+      properties:
+        message:
+          type: string
+    Transaction_infraction:
+      description: Infraction details if the transaction has been disputed
+      example:
+        reportedAt: 2000-01-23T04:56:07.000+00:00
+        analysisDetails: analysisDetails
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        protocol: protocol
+        reportDetails: reportDetails
+        analysisResult: analysisResult
+        id: id
+        type: REFUND_REQUEST
+        reportedBy: DEBITED_PARTICIPANT
+        expiresAt: 2000-01-23T04:56:07.000+00:00
+        status: WAITING_PSP
+        updatedAt: 2000-01-23T04:56:07.000+00:00
+      properties:
+        id:
+          type: string
+        protocol:
+          type: string
+        status:
+          enum:
+          - WAITING_PSP
+          - CLOSED
+          - OPEN
+          - CANCELLED
+          - ACKNOWLEDGED
+          - DEFENDED
+          - ANSWERED
+          - WAITING_ADJUSTMENTS
+          type: string
+        type:
+          enum:
+          - REFUND_REQUEST
+          - FRAUD
+          - REFUND_CANCELLED
+          type: string
+        reportDetails:
+          type: string
+        reportedBy:
+          enum:
+          - DEBITED_PARTICIPANT
+          - CREDITED_PARTICIPANT
+          type: string
+        analysisResult:
+          type: string
+          nullable: true
+        analysisDetails:
+          type: string
+          nullable: true
+        reportedAt:
+          format: date-time
+          type: string
+        expiresAt:
+          format: date-time
+          type: string
+          nullable: true
+        createdAt:
+          format: date-time
+          type: string
+        updatedAt:
+          format: date-time
+          type: string
+      nullable: true
+    InfractionDetail_transaction:
+      example:
+        amount: 0.8008281904610115
+        payerDocument: payerDocument
+        receiverName: receiverName
+        receiverDocument: receiverDocument
+        payerName: payerName
+        id: id
+        endToEndId: endToEndId
+      properties:
+        id:
+          type: string
+        amount:
+          type: number
+        payerName:
+          type: string
+        payerDocument:
+          type: string
+        receiverName:
+          type: string
+        receiverDocument:
+          type: string
+        endToEndId:
+          type: string
+    Defense_files_inner:
+      example:
+        size: 6.027456183070403
+        name: name
+        mimeType: mimeType
+        url: url
+      properties:
+        name:
+          type: string
+        mimeType:
+          type: string
+        size:
+          type: number
+        url:
+          description: Signed URL for download (expires in 9 minutes)
+          type: string
+    InfractionListResponse_pagination:
+      example:
+        totalItems: 5.637376656633329
+        limit: 5.962133916683182
+        totalPages: 2.3021358869347655
+        page: 1.4658129805029452
+      properties:
+        page:
+          type: number
+        limit:
+          type: number
+        totalItems:
+          type: number
+        totalPages:
+          type: number
+    CallbackListResponse_pagination:
+      example:
+        hasNextPage: true
+        limit: 6.027456183070403
+        page: 0.8008281904610115
+      properties:
+        page:
+          description: Current page
+          type: number
+        limit:
+          description: Items per page
+          type: number
+        hasNextPage:
+          description: Indicates if there is a next page
+          type: boolean
+  securitySchemes:
+    BearerAuth:
+      scheme: bearer
+      type: http

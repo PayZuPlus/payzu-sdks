@@ -1913,8 +1913,7 @@
                       "type": "object",
                       "properties": {
                         "limit": {
-                          "type": "integer",
-                          "format": "int32"
+                          "type": "number"
                         },
                         "used": {
                           "type": "number"
@@ -2344,12 +2343,10 @@
                   "type": "object",
                   "properties": {
                     "total": {
-                      "type": "integer",
-                      "format": "int32"
+                      "type": "number"
                     },
                     "pages": {
-                      "type": "integer",
-                      "format": "int32"
+                      "type": "number"
                     },
                     "transactions": {
                       "type": "array",
@@ -5915,8 +5912,7 @@
                   "type": "string"
                 },
                 "size": {
-                  "type": "integer",
-                  "format": "int32"
+                  "type": "number"
                 },
                 "url": {
                   "type": "string",
@@ -5940,20 +5936,16 @@
             "type": "object",
             "properties": {
               "page": {
-                "type": "integer",
-                "format": "int32"
+                "type": "number"
               },
               "limit": {
-                "type": "integer",
-                "format": "int32"
+                "type": "number"
               },
               "totalItems": {
-                "type": "integer",
-                "format": "int32"
+                "type": "number"
               },
               "totalPages": {
-                "type": "integer",
-                "format": "int32"
+                "type": "number"
               }
             }
           }
@@ -6009,14 +6001,12 @@
             "type": "object",
             "properties": {
               "page": {
-                "type": "integer",
-                "description": "Current page",
-                "format": "int32"
+                "type": "number",
+                "description": "Current page"
               },
               "limit": {
-                "type": "integer",
-                "description": "Items per page",
-                "format": "int32"
+                "type": "number",
+                "description": "Items per page"
               },
               "hasNextPage": {
                 "type": "boolean",
