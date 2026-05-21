@@ -53,7 +53,8 @@ jobs:
           rm -rf nodejs
           openapi-generator-cli generate \
             -i openapi.json -g typescript-fetch -o nodejs \
-            --additional-properties=npmName=@payzu/pix,npmVersion=0.1.0,supportsES6=true,withInterfaces=true,typescriptThreePlus=true
+            --git-user-id=PayZuPlus --git-repo-id=payzu-sdks \
+            --additional-properties=npmName=payzu-pix,npmVersion=0.1.0,supportsES6=true,withInterfaces=true,typescriptThreePlus=true
 
       - name: Generate Python SDK
         run: |
