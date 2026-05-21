@@ -42,7 +42,7 @@ jobs:
               break
             fi
           done
-          [ -f openapi.json.new ] && rm openapi.json.new
+          rm -f openapi.json.new
 
       - name: Install openapi-generator-cli
         run: npm install -g @openapitools/openapi-generator-cli@latest
