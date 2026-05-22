@@ -4,7 +4,7 @@ REST API for Pix operations on the PayZu platform, deposits, withdrawals, intern
 
 ## SDKs oficiais
 
-- Node.js: `npm install @payzu/pix`
+- Node.js: `npm install payzu-pix`
 - Python: `pip install payzu-pix`
 - Go: `go get github.com/PayZuPlus/payzu-sdks/go`
 - PHP: `composer require payzu/pix`
