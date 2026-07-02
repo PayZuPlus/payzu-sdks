@@ -11,11 +11,11 @@ All URIs are relative to *https://api.payzu.processamento.com/v1*
 
 ## getInternalTransfer
 
-> Transaction getInternalTransfer(contentType, id, clientReference, virtualAccount)
+> Transaction getInternalTransfer(id, clientReference, virtualAccount)
 
 Get internal transfer
 
-Retorna os dados de uma transferência interna. Informe pelo menos um destes parâmetros: &#x60;id&#x60; ou &#x60;clientReference&#x60; (também aceita &#x60;virtualAccount&#x60;). Se informar mais de um, todos são aplicados como filtro (AND).
+Returns the details of an internal transfer. Provide at least one of &#x60;id&#x60; or &#x60;clientReference&#x60; (&#x60;virtualAccount&#x60; is also accepted). If more than one is provided, all are applied as filters (AND).
 
 ### Example
 
@@ -35,13 +35,11 @@ async function example() {
   const api = new InternalTransferApi(config);
 
   const body = {
-    // 'application/json' | Obrigatório em toda chamada PayZu.
-    contentType: contentType_example,
     // string | Transaction ID (optional)
     id: id_example,
     // string | External reference (optional)
     clientReference: clientReference_example,
-    // string | Subconta virtual (até 50 caracteres) usada na criação. Aceito como chave de busca alternativa. (optional)
+    // string | Virtual sub-account (up to 50 characters) used at creation. Accepted as an alternative lookup key. (optional)
     virtualAccount: virtualAccount_example,
   } satisfies GetInternalTransferRequest;
 
@@ -62,10 +60,9 @@ example().catch(console.error);
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **contentType** | `application/json` | Obrigatório em toda chamada PayZu. | [Defaults to `&#39;application/json&#39;`] [Enum: application/json] |
 | **id** | `string` | Transaction ID | [Optional] [Defaults to `undefined`] |
 | **clientReference** | `string` | External reference | [Optional] [Defaults to `undefined`] |
-| **virtualAccount** | `string` | Subconta virtual (até 50 caracteres) usada na criação. Aceito como chave de busca alternativa. | [Optional] [Defaults to `undefined`] |
+| **virtualAccount** | `string` | Virtual sub-account (up to 50 characters) used at creation. Accepted as an alternative lookup key. | [Optional] [Defaults to `undefined`] |
 
 ### Return type
 

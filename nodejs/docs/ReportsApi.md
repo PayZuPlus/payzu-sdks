@@ -5,7 +5,7 @@ All URIs are relative to *https://api.payzu.processamento.com/v1*
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
 | [**downloadUserReport**](ReportsApi.md#downloaduserreport) | **POST** /user/report/{id}/download | Download report |
-| [**getUserReport**](ReportsApi.md#getuserreport) | **GET** /user/report/{id} | Consultar status do relatório |
+| [**getUserReport**](ReportsApi.md#getuserreport) | **GET** /user/report/{id} | Get report job status |
 | [**getUserTransactionById**](ReportsApi.md#getusertransactionbyid) | **GET** /user/transactions/{id} | List transaction details |
 | [**getUserTransactions**](ReportsApi.md#getusertransactions) | **GET** /user/transactions | List Transactions |
 | [**listUserReports**](ReportsApi.md#listuserreports) | **GET** /user/report | List report jobs |
@@ -15,7 +15,7 @@ All URIs are relative to *https://api.payzu.processamento.com/v1*
 
 ## downloadUserReport
 
-> DownloadUserReport200Response downloadUserReport(contentType, id)
+> DownloadUserReport200Response downloadUserReport(id)
 
 Download report
 
@@ -39,8 +39,6 @@ async function example() {
   const api = new ReportsApi(config);
 
   const body = {
-    // 'application/json' | Obrigatório em toda chamada PayZu.
-    contentType: contentType_example,
     // string
     id: 38400000-8cf0-11bd-b23e-10b96e4ef00d,
   } satisfies DownloadUserReportRequest;
@@ -62,7 +60,6 @@ example().catch(console.error);
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **contentType** | `application/json` | Obrigatório em toda chamada PayZu. | [Defaults to `&#39;application/json&#39;`] [Enum: application/json] |
 | **id** | `string` |  | [Defaults to `undefined`] |
 
 ### Return type
@@ -92,11 +89,11 @@ example().catch(console.error);
 
 ## getUserReport
 
-> ReportJob getUserReport(contentType, id)
+> ReportJob getUserReport(id)
 
-Consultar status do relatório
+Get report job status
 
-Retorna o status e os metadados de um job de relatório específico pelo &#x60;id&#x60;.
+Returns the status and metadata of a specific report job by &#x60;id&#x60;.
 
 ### Example
 
@@ -116,8 +113,6 @@ async function example() {
   const api = new ReportsApi(config);
 
   const body = {
-    // 'application/json' | Obrigatório em toda chamada PayZu.
-    contentType: contentType_example,
     // string
     id: 38400000-8cf0-11bd-b23e-10b96e4ef00d,
   } satisfies GetUserReportRequest;
@@ -139,7 +134,6 @@ example().catch(console.error);
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **contentType** | `application/json` | Obrigatório em toda chamada PayZu. | [Defaults to `&#39;application/json&#39;`] [Enum: application/json] |
 | **id** | `string` |  | [Defaults to `undefined`] |
 
 ### Return type
@@ -167,7 +161,7 @@ example().catch(console.error);
 
 ## getUserTransactionById
 
-> GetUserTransactionById200Response getUserTransactionById(contentType, id)
+> GetUserTransactionById200Response getUserTransactionById(id)
 
 List transaction details
 
@@ -191,8 +185,6 @@ async function example() {
   const api = new ReportsApi(config);
 
   const body = {
-    // 'application/json' | Obrigatório em toda chamada PayZu.
-    contentType: contentType_example,
     // string
     id: id_example,
   } satisfies GetUserTransactionByIdRequest;
@@ -214,7 +206,6 @@ example().catch(console.error);
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **contentType** | `application/json` | Obrigatório em toda chamada PayZu. | [Defaults to `&#39;application/json&#39;`] [Enum: application/json] |
 | **id** | `string` |  | [Defaults to `undefined`] |
 
 ### Return type
@@ -242,7 +233,7 @@ example().catch(console.error);
 
 ## getUserTransactions
 
-> GetUserTransactions200Response getUserTransactions(contentType, dateFrom, dateTo, limit, page, id, status, type, amount, document, name, endToEndId, sortBy, sortDirection, clientReference, virtualAccount)
+> GetUserTransactions200Response getUserTransactions(dateFrom, dateTo, limit, page, id, status, type, amount, document, name, endToEndId, sortBy, sortDirection, clientReference, virtualAccount)
 
 List Transactions
 
@@ -266,8 +257,6 @@ async function example() {
   const api = new ReportsApi(config);
 
   const body = {
-    // 'application/json' | Obrigatório em toda chamada PayZu.
-    contentType: contentType_example,
     // string | Start date (YYYY-MM-DD). (optional)
     dateFrom: 2025-08-01,
     // string | End date (YYYY-MM-DD). (optional)
@@ -278,13 +267,13 @@ async function example() {
     page: 1,
     // string | Transaction ID. (optional)
     id: PAYZU2025081418333632CYKN8M,
-    // string | Status da transação. Aceita CSV: PENDING,COMPLETED,etc. (optional)
+    // string | Transaction status. Accepts CSV: PENDING,COMPLETED,etc. (optional)
     status: COMPLETED,
-    // string | Tipo da transação. Aceita CSV: DEPOSIT,WITHDRAW,COMMISSION. (optional)
+    // string | Transaction type. Accepts CSV: DEPOSIT,WITHDRAW,COMMISSION. (optional)
     type: DEPOSIT,
-    // number | Amount filter. Mínimo 0.01. (optional)
+    // number | Amount filter. Minimum 0.01. (optional)
     amount: 15000,
-    // string | CPF (11 dígitos) ou CNPJ (14 dígitos), apenas números sem formatação. (optional)
+    // string | CPF (11 digits) or CNPJ (14 digits), digits only, no punctuation. (optional)
     document: 12345678901,
     // string | Name filter. (optional)
     name: Alice,
@@ -296,7 +285,7 @@ async function example() {
     sortDirection: sortDirection_example,
     // string | Filter by external reference (optional)
     clientReference: clientReference_example,
-    // string | Subconta virtual (até 50 caracteres) usada na criação. Aceito como chave de busca alternativa. (optional)
+    // string | Virtual sub-account (up to 50 characters) used at creation. Accepted as an alternative lookup key. (optional)
     virtualAccount: virtualAccount_example,
   } satisfies GetUserTransactionsRequest;
 
@@ -317,22 +306,21 @@ example().catch(console.error);
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **contentType** | `application/json` | Obrigatório em toda chamada PayZu. | [Defaults to `&#39;application/json&#39;`] [Enum: application/json] |
 | **dateFrom** | `string` | Start date (YYYY-MM-DD). | [Optional] [Defaults to `undefined`] |
 | **dateTo** | `string` | End date (YYYY-MM-DD). | [Optional] [Defaults to `undefined`] |
 | **limit** | `number` | Items per page (max 1000). | [Optional] [Defaults to `10`] |
 | **page** | `number` | Page number (default 1). | [Optional] [Defaults to `1`] |
 | **id** | `string` | Transaction ID. | [Optional] [Defaults to `undefined`] |
-| **status** | `string` | Status da transação. Aceita CSV: PENDING,COMPLETED,etc. | [Optional] [Defaults to `undefined`] |
-| **type** | `string` | Tipo da transação. Aceita CSV: DEPOSIT,WITHDRAW,COMMISSION. | [Optional] [Defaults to `undefined`] |
-| **amount** | `number` | Amount filter. Mínimo 0.01. | [Optional] [Defaults to `undefined`] |
-| **document** | `string` | CPF (11 dígitos) ou CNPJ (14 dígitos), apenas números sem formatação. | [Optional] [Defaults to `undefined`] |
+| **status** | `string` | Transaction status. Accepts CSV: PENDING,COMPLETED,etc. | [Optional] [Defaults to `undefined`] |
+| **type** | `string` | Transaction type. Accepts CSV: DEPOSIT,WITHDRAW,COMMISSION. | [Optional] [Defaults to `undefined`] |
+| **amount** | `number` | Amount filter. Minimum 0.01. | [Optional] [Defaults to `undefined`] |
+| **document** | `string` | CPF (11 digits) or CNPJ (14 digits), digits only, no punctuation. | [Optional] [Defaults to `undefined`] |
 | **name** | `string` | Name filter. | [Optional] [Defaults to `undefined`] |
 | **endToEndId** | `string` | Pix end-to-end ID. | [Optional] [Defaults to `undefined`] |
 | **sortBy** | `createdAt`, `updatedAt` | Field to sort by | [Optional] [Defaults to `&#39;createdAt&#39;`] [Enum: createdAt, updatedAt] |
 | **sortDirection** | `asc`, `desc` | Sort direction | [Optional] [Defaults to `&#39;desc&#39;`] [Enum: asc, desc] |
 | **clientReference** | `string` | Filter by external reference | [Optional] [Defaults to `undefined`] |
-| **virtualAccount** | `string` | Subconta virtual (até 50 caracteres) usada na criação. Aceito como chave de busca alternativa. | [Optional] [Defaults to `undefined`] |
+| **virtualAccount** | `string` | Virtual sub-account (up to 50 characters) used at creation. Accepted as an alternative lookup key. | [Optional] [Defaults to `undefined`] |
 
 ### Return type
 
@@ -361,7 +349,7 @@ example().catch(console.error);
 
 ## listUserReports
 
-> ListUserReports200Response listUserReports(contentType, page, limit, status, createdAtFrom, createdAtTo, updatedAtFrom, updatedAtTo, sortBy, sortDirection)
+> ListUserReports200Response listUserReports(page, limit, status, createdAtFrom, createdAtTo, updatedAtFrom, updatedAtTo, sortBy, sortDirection)
 
 List report jobs
 
@@ -385,25 +373,23 @@ async function example() {
   const api = new ReportsApi(config);
 
   const body = {
-    // 'application/json' | Obrigatório em toda chamada PayZu.
-    contentType: contentType_example,
     // number (optional)
     page: 56,
     // number (optional)
     limit: 56,
     // 'PENDING' | 'RUNNING' | 'COMPLETED' | 'FAILED' (optional)
     status: status_example,
-    // Date | Filtro: criado a partir de. (optional)
+    // Date | Filter: created from. (optional)
     createdAtFrom: 2013-10-20T19:20:30+01:00,
-    // Date | Filtro: criado até. (optional)
+    // Date | Filter: created up to. (optional)
     createdAtTo: 2013-10-20T19:20:30+01:00,
-    // Date | Filtro: atualizado a partir de. (optional)
+    // Date | Filter: updated from. (optional)
     updatedAtFrom: 2013-10-20T19:20:30+01:00,
-    // Date | Filtro: atualizado até. (optional)
+    // Date | Filter: updated up to. (optional)
     updatedAtTo: 2013-10-20T19:20:30+01:00,
-    // 'createdAt' | 'updatedAt' | Campo de ordenação. (optional)
+    // 'createdAt' | 'updatedAt' | Sort field. (optional)
     sortBy: sortBy_example,
-    // 'asc' | 'desc' | Direção da ordenação. (optional)
+    // 'asc' | 'desc' | Sort direction. (optional)
     sortDirection: sortDirection_example,
   } satisfies ListUserReportsRequest;
 
@@ -424,16 +410,15 @@ example().catch(console.error);
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **contentType** | `application/json` | Obrigatório em toda chamada PayZu. | [Defaults to `&#39;application/json&#39;`] [Enum: application/json] |
 | **page** | `number` |  | [Optional] [Defaults to `1`] |
 | **limit** | `number` |  | [Optional] [Defaults to `10`] |
 | **status** | `PENDING`, `RUNNING`, `COMPLETED`, `FAILED` |  | [Optional] [Defaults to `undefined`] [Enum: PENDING, RUNNING, COMPLETED, FAILED] |
-| **createdAtFrom** | `Date` | Filtro: criado a partir de. | [Optional] [Defaults to `undefined`] |
-| **createdAtTo** | `Date` | Filtro: criado até. | [Optional] [Defaults to `undefined`] |
-| **updatedAtFrom** | `Date` | Filtro: atualizado a partir de. | [Optional] [Defaults to `undefined`] |
-| **updatedAtTo** | `Date` | Filtro: atualizado até. | [Optional] [Defaults to `undefined`] |
-| **sortBy** | `createdAt`, `updatedAt` | Campo de ordenação. | [Optional] [Defaults to `&#39;createdAt&#39;`] [Enum: createdAt, updatedAt] |
-| **sortDirection** | `asc`, `desc` | Direção da ordenação. | [Optional] [Defaults to `&#39;desc&#39;`] [Enum: asc, desc] |
+| **createdAtFrom** | `Date` | Filter: created from. | [Optional] [Defaults to `undefined`] |
+| **createdAtTo** | `Date` | Filter: created up to. | [Optional] [Defaults to `undefined`] |
+| **updatedAtFrom** | `Date` | Filter: updated from. | [Optional] [Defaults to `undefined`] |
+| **updatedAtTo** | `Date` | Filter: updated up to. | [Optional] [Defaults to `undefined`] |
+| **sortBy** | `createdAt`, `updatedAt` | Sort field. | [Optional] [Defaults to `&#39;createdAt&#39;`] [Enum: createdAt, updatedAt] |
+| **sortDirection** | `asc`, `desc` | Sort direction. | [Optional] [Defaults to `&#39;desc&#39;`] [Enum: asc, desc] |
 
 ### Return type
 

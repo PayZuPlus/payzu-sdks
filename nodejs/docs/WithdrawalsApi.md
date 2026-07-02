@@ -15,7 +15,7 @@ All URIs are relative to *https://api.payzu.processamento.com/v1*
 
 ## getPixKey
 
-> PixKeyInfo getPixKey(contentType, pixKey)
+> PixKeyInfo getPixKey(pixKey)
 
 Dict Pix Key Lookup
 
@@ -39,8 +39,6 @@ async function example() {
   const api = new WithdrawalsApi(config);
 
   const body = {
-    // 'application/json' | Obrigatório em toda chamada PayZu.
-    contentType: contentType_example,
     // string | The Pix key to lookup (CPF, CNPJ, email, phone, or EVP).
     pixKey: example@payzu.com.br,
   } satisfies GetPixKeyRequest;
@@ -62,7 +60,6 @@ example().catch(console.error);
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **contentType** | `application/json` | Obrigatório em toda chamada PayZu. | [Defaults to `&#39;application/json&#39;`] [Enum: application/json] |
 | **pixKey** | `string` | The Pix key to lookup (CPF, CNPJ, email, phone, or EVP). | [Defaults to `undefined`] |
 
 ### Return type
@@ -91,11 +88,11 @@ example().catch(console.error);
 
 ## getWithdraw
 
-> Transaction getWithdraw(contentType, id, clientReference, endToEndId, virtualAccount)
+> Transaction getWithdraw(id, clientReference, endToEndId, virtualAccount)
 
 Retrieve Withdrawal
 
-Retorna o status e os detalhes atuais de um saque. Informe pelo menos um destes parâmetros: &#x60;id&#x60;, &#x60;clientReference&#x60; ou &#x60;endToEndId&#x60;. Se informar mais de um, todos são aplicados como filtro (AND), o que pode não retornar registro caso não apontem para a mesma transação.
+Get the latest status and details for a withdrawal. Provide at least one of &#x60;id&#x60;, &#x60;clientReference&#x60;, or &#x60;endToEndId&#x60;. If more than one is provided, all are applied as filters (AND), which may return no record if they do not point to the same transaction.
 
 ### Example
 
@@ -115,15 +112,13 @@ async function example() {
   const api = new WithdrawalsApi(config);
 
   const body = {
-    // 'application/json' | Obrigatório em toda chamada PayZu.
-    contentType: contentType_example,
     // string | Transaction ID. (optional)
     id: PAYZU2025081721512946OOLK75,
     // string | External reference provided when creating the withdrawal. (optional)
     clientReference: clientReference_example,
     // string | Pix end-to-end ID. (optional)
     endToEndId: endToEndId_example,
-    // string | Subconta virtual (até 50 caracteres) usada na criação. Aceito como chave de busca alternativa. (optional)
+    // string | Virtual sub-account (up to 50 characters) used at creation. Accepted as an alternative lookup key. (optional)
     virtualAccount: virtualAccount_example,
   } satisfies GetWithdrawRequest;
 
@@ -144,11 +139,10 @@ example().catch(console.error);
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **contentType** | `application/json` | Obrigatório em toda chamada PayZu. | [Defaults to `&#39;application/json&#39;`] [Enum: application/json] |
 | **id** | `string` | Transaction ID. | [Optional] [Defaults to `undefined`] |
 | **clientReference** | `string` | External reference provided when creating the withdrawal. | [Optional] [Defaults to `undefined`] |
 | **endToEndId** | `string` | Pix end-to-end ID. | [Optional] [Defaults to `undefined`] |
-| **virtualAccount** | `string` | Subconta virtual (até 50 caracteres) usada na criação. Aceito como chave de busca alternativa. | [Optional] [Defaults to `undefined`] |
+| **virtualAccount** | `string` | Virtual sub-account (up to 50 characters) used at creation. Accepted as an alternative lookup key. | [Optional] [Defaults to `undefined`] |
 
 ### Return type
 
@@ -177,11 +171,11 @@ example().catch(console.error);
 
 ## getWithdrawProof
 
-> GetProof200Response getWithdrawProof(contentType, id, type)
+> ProofResponse getWithdrawProof(id, type)
 
 Get Withdrawal Receipt
 
-Retorna o comprovante da transação como JSON com o campo &#x60;base64&#x60; (PDF codificado). Decodifique pra exibir ou salvar como &#x60;.pdf&#x60;.
+Returns the transaction receipt as JSON with a &#x60;base64&#x60; field (encoded PDF). Decode it to display or save as &#x60;.pdf&#x60;.
 
 ### Example
 
@@ -201,8 +195,6 @@ async function example() {
   const api = new WithdrawalsApi(config);
 
   const body = {
-    // 'application/json' | Obrigatório em toda chamada PayZu.
-    contentType: contentType_example,
     // string | Transaction ID.
     id: PAYZU2025081721512946OOLK75,
     // 'pdf' | 'base64' | Return format. (optional)
@@ -226,13 +218,12 @@ example().catch(console.error);
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **contentType** | `application/json` | Obrigatório em toda chamada PayZu. | [Defaults to `&#39;application/json&#39;`] [Enum: application/json] |
 | **id** | `string` | Transaction ID. | [Defaults to `undefined`] |
 | **type** | `pdf`, `base64` | Return format. | [Optional] [Defaults to `&#39;pdf&#39;`] [Enum: pdf, base64] |
 
 ### Return type
 
-[**GetProof200Response**](GetProof200Response.md)
+[**ProofResponse**](ProofResponse.md)
 
 ### Authorization
 
@@ -261,7 +252,7 @@ example().catch(console.error);
 
 Read QR Code
 
-Decode and extract information from a Pix QR Code (EMV format) before making a payment. Returns the parsed data including receiver details, amount (if present), and other QR Code metadata. No momento a PayZu só suporta QR Code dinâmico. QR estático ainda não é processado.
+Decode and extract information from a Pix QR Code (EMV format) before making a payment. Returns the parsed data including receiver details, amount (if present), and other QR Code metadata. Currently PayZu only supports dynamic QR Codes. Static QR Codes are not processed yet.
 
 ### Example
 
@@ -406,7 +397,7 @@ example().catch(console.error);
 
 Create Withdrawal using QR Code
 
-Cash out using a **Pix QR Code** (static/dynamic). If &#x60;amount&#x60; is not provided, the QR Code\&#39;s embedded value will be used. No momento a PayZu só suporta QR Code dinâmico. QR estático ainda não é processado.
+Cash out using a **Pix QR Code** (static/dynamic). If &#x60;amount&#x60; is not provided, the QR Code\&#39;s embedded value will be used. Currently PayZu only supports dynamic QR Codes. Static QR Codes are not processed yet.
 
 ### Example
 
