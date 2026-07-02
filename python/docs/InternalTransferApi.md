@@ -9,11 +9,11 @@ Method | HTTP request | Description
 
 
 # **get_internal_transfer**
-> Transaction get_internal_transfer(content_type, id=id, client_reference=client_reference, virtual_account=virtual_account)
+> Transaction get_internal_transfer(id=id, client_reference=client_reference, virtual_account=virtual_account)
 
 Get internal transfer
 
-Retorna os dados de uma transferência interna. Informe pelo menos um destes parâmetros: `id` ou `clientReference` (também aceita `virtualAccount`). Se informar mais de um, todos são aplicados como filtro (AND).
+Returns the details of an internal transfer. Provide at least one of `id` or `clientReference` (`virtualAccount` is also accepted). If more than one is provided, all are applied as filters (AND).
 
 ### Example
 
@@ -45,14 +45,13 @@ configuration = payzu_pix.Configuration(
 with payzu_pix.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = payzu_pix.InternalTransferApi(api_client)
-    content_type = application/json # str | Obrigatório em toda chamada PayZu. (default to application/json)
     id = 'id_example' # str | Transaction ID (optional)
     client_reference = 'client_reference_example' # str | External reference (optional)
-    virtual_account = 'virtual_account_example' # str | Subconta virtual (até 50 caracteres) usada na criação. Aceito como chave de busca alternativa. (optional)
+    virtual_account = 'virtual_account_example' # str | Virtual sub-account (up to 50 characters) used at creation. Accepted as an alternative lookup key. (optional)
 
     try:
         # Get internal transfer
-        api_response = api_instance.get_internal_transfer(content_type, id=id, client_reference=client_reference, virtual_account=virtual_account)
+        api_response = api_instance.get_internal_transfer(id=id, client_reference=client_reference, virtual_account=virtual_account)
         print("The response of InternalTransferApi->get_internal_transfer:\n")
         pprint(api_response)
     except Exception as e:
@@ -66,10 +65,9 @@ with payzu_pix.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **content_type** | **str**| Obrigatório em toda chamada PayZu. | [default to application/json]
  **id** | **str**| Transaction ID | [optional] 
  **client_reference** | **str**| External reference | [optional] 
- **virtual_account** | **str**| Subconta virtual (até 50 caracteres) usada na criação. Aceito como chave de busca alternativa. | [optional] 
+ **virtual_account** | **str**| Virtual sub-account (up to 50 characters) used at creation. Accepted as an alternative lookup key. | [optional] 
 
 ### Return type
 

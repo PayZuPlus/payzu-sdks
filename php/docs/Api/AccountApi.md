@@ -13,7 +13,7 @@ All URIs are relative to https://api.payzu.processamento.com/v1, except if the o
 ## `getUser()`
 
 ```php
-getUser($content_type): \OpenAPI\Client\Model\GetUser200Response
+getUser(): \OpenAPI\Client\Model\GetUser200Response
 ```
 
 Account Info
@@ -37,10 +37,9 @@ $apiInstance = new OpenAPI\Client\Api\AccountApi(
     new GuzzleHttp\Client(),
     $config
 );
-$content_type = 'application/json'; // string | Obrigatório em toda chamada PayZu.
 
 try {
-    $result = $apiInstance->getUser($content_type);
+    $result = $apiInstance->getUser();
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling AccountApi->getUser: ', $e->getMessage(), PHP_EOL;
@@ -49,9 +48,7 @@ try {
 
 ### Parameters
 
-| Name | Type | Description  | Notes |
-| ------------- | ------------- | ------------- | ------------- |
-| **content_type** | **string**| Obrigatório em toda chamada PayZu. | [default to &#39;application/json&#39;] |
+This endpoint does not need any parameter.
 
 ### Return type
 
@@ -73,7 +70,7 @@ try {
 ## `getUserBalance()`
 
 ```php
-getUserBalance($content_type): \OpenAPI\Client\Model\GetUserBalance200Response
+getUserBalance(): \OpenAPI\Client\Model\GetUserBalance200Response
 ```
 
 Account Balance
@@ -97,10 +94,9 @@ $apiInstance = new OpenAPI\Client\Api\AccountApi(
     new GuzzleHttp\Client(),
     $config
 );
-$content_type = 'application/json'; // string | Obrigatório em toda chamada PayZu.
 
 try {
-    $result = $apiInstance->getUserBalance($content_type);
+    $result = $apiInstance->getUserBalance();
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling AccountApi->getUserBalance: ', $e->getMessage(), PHP_EOL;
@@ -109,9 +105,7 @@ try {
 
 ### Parameters
 
-| Name | Type | Description  | Notes |
-| ------------- | ------------- | ------------- | ------------- |
-| **content_type** | **string**| Obrigatório em toda chamada PayZu. | [default to &#39;application/json&#39;] |
+This endpoint does not need any parameter.
 
 ### Return type
 

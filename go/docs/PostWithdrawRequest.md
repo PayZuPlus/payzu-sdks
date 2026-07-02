@@ -10,7 +10,7 @@ Name | Type | Description | Notes
 **CallbackUrl** | Pointer to **string** | Webhook URL for status updates. | [optional] 
 **ClientReference** | Pointer to **string** | External reference for this withdrawal. | [optional] 
 **Description** | Pointer to **string** | Optional description. | [optional] 
-**VirtualAccount** | Pointer to **string** | Subconta virtual (até 50 caracteres) para correlacionar lojas, filiais, marketplaces. Volta no callback. | [optional] 
+**VirtualAccount** | Pointer to **string** | Virtual sub-account (up to 50 characters) to correlate stores, branches, marketplaces. Returned in the callback. | [optional] 
 
 ## Methods
 

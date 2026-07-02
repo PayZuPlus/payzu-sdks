@@ -10,7 +10,7 @@ Name | Type | Description | Notes
 **Description** | Pointer to **string** | Optional transfer description. | [optional] 
 **CallbackUrl** | Pointer to **string** | URL to receive transaction-update webhooks. | [optional] 
 **ClientReference** | Pointer to **string** | External reference for idempotency / reconciliation. | [optional] 
-**VirtualAccount** | Pointer to **string** | Subconta virtual (até 50 caracteres) para correlacionar lojas, filiais, marketplaces. Volta no callback. | [optional] 
+**VirtualAccount** | Pointer to **string** | Virtual sub-account (up to 50 characters) to correlate stores, branches, marketplaces. Returned in the callback. | [optional] 
 
 ## Methods
 

@@ -11,7 +11,7 @@ Name | Type | Description | Notes
 **callback_url** | **str** | Webhook URL for status updates. | [optional] 
 **client_reference** | **str** | External reference for this withdrawal. | [optional] 
 **description** | **str** | Optional description. | [optional] 
-**virtual_account** | **str** | Subconta virtual (até 50 caracteres) para correlacionar lojas, filiais, marketplaces. Volta no callback. | [optional] 
+**virtual_account** | **str** | Virtual sub-account (up to 50 characters) to correlate stores, branches, marketplaces. Returned in the callback. | [optional] 
 
 ## Example
 

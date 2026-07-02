@@ -11,7 +11,7 @@ Name | Type | Description | Notes
 **GeneratedDocument** | Pointer to **string** | Payer CPF (11 digits) or CNPJ (14 digits), no punctuation. | [optional] 
 **ExpiresIn** | Pointer to **float32** | Seconds until the QR Code expires. Default: 600. | [optional] 
 **ClientReference** | Pointer to **string** | External reference (order, invoice, etc.). | [optional] 
-**VirtualAccount** | Pointer to **string** | Subconta virtual (até 50 caracteres) para correlacionar lojas, filiais, marketplaces. Volta no callback. | [optional] 
+**VirtualAccount** | Pointer to **string** | Virtual sub-account (up to 50 characters) to correlate stores, branches, marketplaces. Returned in the callback. | [optional] 
 
 ## Methods
 

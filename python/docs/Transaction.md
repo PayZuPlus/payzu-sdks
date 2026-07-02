@@ -41,8 +41,8 @@ Name | Type | Description | Notes
 **refund_description** | **str** | Description of the refund | [optional] 
 **refunded_at** | **str** | Date and time when the refund was processed | [optional] 
 **cancellation_reason** | **str** | Reason for cancellation (if cancelled) | [optional] 
-**virtual_account** | **str** | Subconta virtual informada na criação. | [optional] 
-**method** | **str** | Método/rail da transação. | [optional] 
+**virtual_account** | **str** | Virtual sub-account provided at creation. | [optional] 
+**method** | **str** | Transaction method/rail. | [optional] 
 
 ## Example
 

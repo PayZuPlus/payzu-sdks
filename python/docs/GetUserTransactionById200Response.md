@@ -40,9 +40,9 @@ Name | Type | Description | Notes
 **refund_description** | **str** | Description of the refund | [optional] 
 **refunded_at** | **str** | Date and time when the refund was processed | [optional] 
 **cancellation_reason** | **str** | Reason for cancellation (if cancelled) | [optional] 
-**virtual_account** | **str** | Subconta virtual informada na criação. | [optional] 
-**method** | **str** | Método/rail da transação. | [optional] 
-**infraction** | [**List[GetUserTransactionById200ResponseAllOfInfractionInner]**](GetUserTransactionById200ResponseAllOfInfractionInner.md) | Histórico completo de infrações desta transação. | [optional] 
+**virtual_account** | **str** | Virtual sub-account provided at creation. | [optional] 
+**method** | **str** | Transaction method/rail. | [optional] 
+**infraction** | [**List[GetUserTransactionById200ResponseAllOfInfractionInner]**](GetUserTransactionById200ResponseAllOfInfractionInner.md) | Complete infraction history for this transaction. | [optional] 
 **callback_log** | [**List[GetUserTransactionById200ResponseAllOfCallbackLogInner]**](GetUserTransactionById200ResponseAllOfCallbackLogInner.md) | Webhook delivery attempts for this transaction (most recent first) | [optional] 
 
 ## Example

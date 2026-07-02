@@ -15,7 +15,7 @@ All URIs are relative to https://api.payzu.processamento.com/v1, except if the o
 ## `getUserCallbackById()`
 
 ```php
-getUserCallbackById($content_type, $id): \OpenAPI\Client\Model\CallbackDetail
+getUserCallbackById($id): \OpenAPI\Client\Model\CallbackDetail
 ```
 
 Get Callback
@@ -39,11 +39,10 @@ $apiInstance = new OpenAPI\Client\Api\CallbacksApi(
     new GuzzleHttp\Client(),
     $config
 );
-$content_type = 'application/json'; // string | Obrigatório em toda chamada PayZu.
 $id = 'id_example'; // string | Unique callback ID
 
 try {
-    $result = $apiInstance->getUserCallbackById($content_type, $id);
+    $result = $apiInstance->getUserCallbackById($id);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling CallbacksApi->getUserCallbackById: ', $e->getMessage(), PHP_EOL;
@@ -54,7 +53,6 @@ try {
 
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
-| **content_type** | **string**| Obrigatório em toda chamada PayZu. | [default to &#39;application/json&#39;] |
 | **id** | **string**| Unique callback ID | |
 
 ### Return type
@@ -77,7 +75,7 @@ try {
 ## `getUserCallbacks()`
 
 ```php
-getUserCallbacks($content_type, $page, $limit, $sort_by, $sort_direction, $id, $url, $status, $transaction_id, $has_error, $created_at_from, $created_at_to): \OpenAPI\Client\Model\CallbackListResponse
+getUserCallbacks($page, $limit, $sort_by, $sort_direction, $id, $url, $status, $transaction_id, $has_error, $created_at_from, $created_at_to): \OpenAPI\Client\Model\CallbackListResponse
 ```
 
 List Callbacks
@@ -101,7 +99,6 @@ $apiInstance = new OpenAPI\Client\Api\CallbacksApi(
     new GuzzleHttp\Client(),
     $config
 );
-$content_type = 'application/json'; // string | Obrigatório em toda chamada PayZu.
 $page = 1; // int
 $limit = 10; // int
 $sort_by = 'createdAt'; // string
@@ -115,7 +112,7 @@ $created_at_from = new \DateTime('2013-10-20T19:20:30+01:00'); // \DateTime
 $created_at_to = new \DateTime('2013-10-20T19:20:30+01:00'); // \DateTime
 
 try {
-    $result = $apiInstance->getUserCallbacks($content_type, $page, $limit, $sort_by, $sort_direction, $id, $url, $status, $transaction_id, $has_error, $created_at_from, $created_at_to);
+    $result = $apiInstance->getUserCallbacks($page, $limit, $sort_by, $sort_direction, $id, $url, $status, $transaction_id, $has_error, $created_at_from, $created_at_to);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling CallbacksApi->getUserCallbacks: ', $e->getMessage(), PHP_EOL;
@@ -126,7 +123,6 @@ try {
 
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
-| **content_type** | **string**| Obrigatório em toda chamada PayZu. | [default to &#39;application/json&#39;] |
 | **page** | **int**|  | [optional] [default to 1] |
 | **limit** | **int**|  | [optional] [default to 10] |
 | **sort_by** | **string**|  | [optional] [default to &#39;createdAt&#39;] |
@@ -159,7 +155,7 @@ try {
 ## `resendUserCallbackSingle()`
 
 ```php
-resendUserCallbackSingle($content_type, $transaction_id): \OpenAPI\Client\Model\ResendUserCallbackSingle200Response
+resendUserCallbackSingle($transaction_id): \OpenAPI\Client\Model\ResendUserCallbackSingle200Response
 ```
 
 Re-send callback (single)
@@ -183,11 +179,10 @@ $apiInstance = new OpenAPI\Client\Api\CallbacksApi(
     new GuzzleHttp\Client(),
     $config
 );
-$content_type = 'application/json'; // string | Obrigatório em toda chamada PayZu.
 $transaction_id = 'transaction_id_example'; // string
 
 try {
-    $result = $apiInstance->resendUserCallbackSingle($content_type, $transaction_id);
+    $result = $apiInstance->resendUserCallbackSingle($transaction_id);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling CallbacksApi->resendUserCallbackSingle: ', $e->getMessage(), PHP_EOL;
@@ -198,7 +193,6 @@ try {
 
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
-| **content_type** | **string**| Obrigatório em toda chamada PayZu. | [default to &#39;application/json&#39;] |
 | **transaction_id** | **string**|  | |
 
 ### Return type

@@ -15,7 +15,7 @@ Method | HTTP request | Description
 
 ## GetPixKey
 
-> PixKeyInfo GetPixKey(ctx).ContentType(contentType).PixKey(pixKey).Execute()
+> PixKeyInfo GetPixKey(ctx).PixKey(pixKey).Execute()
 
 Dict Pix Key Lookup
 
@@ -30,16 +30,15 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/PayZuPlus/payzu-sdks/payzupix"
+	openapiclient "github.com/PayZuPlus/payzu-sdks/go"
 )
 
 func main() {
-	contentType := "contentType_example" // string | Obrigatório em toda chamada PayZu. (default to "application/json")
 	pixKey := "example@payzu.com.br" // string | The Pix key to lookup (CPF, CNPJ, email, phone, or EVP).
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.WithdrawalsAPI.GetPixKey(context.Background()).ContentType(contentType).PixKey(pixKey).Execute()
+	resp, r, err := apiClient.WithdrawalsAPI.GetPixKey(context.Background()).PixKey(pixKey).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `WithdrawalsAPI.GetPixKey``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -60,7 +59,6 @@ Other parameters are passed through a pointer to a apiGetPixKeyRequest struct vi
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **contentType** | **string** | Obrigatório em toda chamada PayZu. | [default to &quot;application/json&quot;]
  **pixKey** | **string** | The Pix key to lookup (CPF, CNPJ, email, phone, or EVP). | 
 
 ### Return type
@@ -83,7 +81,7 @@ Name | Type | Description  | Notes
 
 ## GetWithdraw
 
-> Transaction GetWithdraw(ctx).ContentType(contentType).Id(id).ClientReference(clientReference).EndToEndId(endToEndId).VirtualAccount(virtualAccount).Execute()
+> Transaction GetWithdraw(ctx).Id(id).ClientReference(clientReference).EndToEndId(endToEndId).VirtualAccount(virtualAccount).Execute()
 
 Retrieve Withdrawal
 
@@ -98,19 +96,18 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/PayZuPlus/payzu-sdks/payzupix"
+	openapiclient "github.com/PayZuPlus/payzu-sdks/go"
 )
 
 func main() {
-	contentType := "contentType_example" // string | Obrigatório em toda chamada PayZu. (default to "application/json")
 	id := "PAYZU2025081721512946OOLK75" // string | Transaction ID. (optional)
 	clientReference := "clientReference_example" // string | External reference provided when creating the withdrawal. (optional)
 	endToEndId := "endToEndId_example" // string | Pix end-to-end ID. (optional)
-	virtualAccount := "virtualAccount_example" // string | Subconta virtual (até 50 caracteres) usada na criação. Aceito como chave de busca alternativa. (optional)
+	virtualAccount := "virtualAccount_example" // string | Virtual sub-account (up to 50 characters) used at creation. Accepted as an alternative lookup key. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.WithdrawalsAPI.GetWithdraw(context.Background()).ContentType(contentType).Id(id).ClientReference(clientReference).EndToEndId(endToEndId).VirtualAccount(virtualAccount).Execute()
+	resp, r, err := apiClient.WithdrawalsAPI.GetWithdraw(context.Background()).Id(id).ClientReference(clientReference).EndToEndId(endToEndId).VirtualAccount(virtualAccount).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `WithdrawalsAPI.GetWithdraw``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -131,11 +128,10 @@ Other parameters are passed through a pointer to a apiGetWithdrawRequest struct 
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **contentType** | **string** | Obrigatório em toda chamada PayZu. | [default to &quot;application/json&quot;]
  **id** | **string** | Transaction ID. | 
  **clientReference** | **string** | External reference provided when creating the withdrawal. | 
  **endToEndId** | **string** | Pix end-to-end ID. | 
- **virtualAccount** | **string** | Subconta virtual (até 50 caracteres) usada na criação. Aceito como chave de busca alternativa. | 
+ **virtualAccount** | **string** | Virtual sub-account (up to 50 characters) used at creation. Accepted as an alternative lookup key. | 
 
 ### Return type
 
@@ -157,7 +153,7 @@ Name | Type | Description  | Notes
 
 ## GetWithdrawProof
 
-> GetProof200Response GetWithdrawProof(ctx, id).ContentType(contentType).Type_(type_).Execute()
+> ProofResponse GetWithdrawProof(ctx, id).Type_(type_).Execute()
 
 Get Withdrawal Receipt
 
@@ -172,22 +168,21 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/PayZuPlus/payzu-sdks/payzupix"
+	openapiclient "github.com/PayZuPlus/payzu-sdks/go"
 )
 
 func main() {
-	contentType := "contentType_example" // string | Obrigatório em toda chamada PayZu. (default to "application/json")
 	id := "PAYZU2025081721512946OOLK75" // string | Transaction ID.
 	type_ := "pdf" // string | Return format. (optional) (default to "pdf")
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.WithdrawalsAPI.GetWithdrawProof(context.Background(), id).ContentType(contentType).Type_(type_).Execute()
+	resp, r, err := apiClient.WithdrawalsAPI.GetWithdrawProof(context.Background(), id).Type_(type_).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `WithdrawalsAPI.GetWithdrawProof``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `GetWithdrawProof`: GetProof200Response
+	// response from `GetWithdrawProof`: ProofResponse
 	fmt.Fprintf(os.Stdout, "Response from `WithdrawalsAPI.GetWithdrawProof`: %v\n", resp)
 }
 ```
@@ -207,13 +202,12 @@ Other parameters are passed through a pointer to a apiGetWithdrawProofRequest st
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **contentType** | **string** | Obrigatório em toda chamada PayZu. | [default to &quot;application/json&quot;]
 
  **type_** | **string** | Return format. | [default to &quot;pdf&quot;]
 
 ### Return type
 
-[**GetProof200Response**](GetProof200Response.md)
+[**ProofResponse**](ProofResponse.md)
 
 ### Authorization
 
@@ -246,7 +240,7 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/PayZuPlus/payzu-sdks/payzupix"
+	openapiclient "github.com/PayZuPlus/payzu-sdks/go"
 )
 
 func main() {
@@ -312,7 +306,7 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/PayZuPlus/payzu-sdks/payzupix"
+	openapiclient "github.com/PayZuPlus/payzu-sdks/go"
 )
 
 func main() {
@@ -378,7 +372,7 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/PayZuPlus/payzu-sdks/payzupix"
+	openapiclient "github.com/PayZuPlus/payzu-sdks/go"
 )
 
 func main() {

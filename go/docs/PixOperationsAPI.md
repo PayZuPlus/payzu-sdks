@@ -13,7 +13,7 @@ Method | HTTP request | Description
 
 ## GetPix
 
-> Transaction GetPix(ctx).ContentType(contentType).Id(id).ClientReference(clientReference).EndToEndId(endToEndId).VirtualAccount(virtualAccount).Execute()
+> Transaction GetPix(ctx).Id(id).ClientReference(clientReference).EndToEndId(endToEndId).VirtualAccount(virtualAccount).Execute()
 
 Retrieve Charge
 
@@ -28,19 +28,18 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/PayZuPlus/payzu-sdks/payzupix"
+	openapiclient "github.com/PayZuPlus/payzu-sdks/go"
 )
 
 func main() {
-	contentType := "contentType_example" // string | Obrigatório em toda chamada PayZu. (default to "application/json")
 	id := "PAYZU20250817215911F49RDOBJ" // string | Transaction ID. (optional)
 	clientReference := "clientReference_example" // string | External reference provided when creating the charge. (optional)
 	endToEndId := "endToEndId_example" // string | Pix end-to-end ID. (optional)
-	virtualAccount := "virtualAccount_example" // string | Subconta virtual (até 50 caracteres) usada na criação. Aceito como chave de busca alternativa. (optional)
+	virtualAccount := "virtualAccount_example" // string | Virtual sub-account (up to 50 characters) used at creation. Accepted as an alternative lookup key. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.PixOperationsAPI.GetPix(context.Background()).ContentType(contentType).Id(id).ClientReference(clientReference).EndToEndId(endToEndId).VirtualAccount(virtualAccount).Execute()
+	resp, r, err := apiClient.PixOperationsAPI.GetPix(context.Background()).Id(id).ClientReference(clientReference).EndToEndId(endToEndId).VirtualAccount(virtualAccount).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `PixOperationsAPI.GetPix``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -61,11 +60,10 @@ Other parameters are passed through a pointer to a apiGetPixRequest struct via t
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **contentType** | **string** | Obrigatório em toda chamada PayZu. | [default to &quot;application/json&quot;]
  **id** | **string** | Transaction ID. | 
  **clientReference** | **string** | External reference provided when creating the charge. | 
  **endToEndId** | **string** | Pix end-to-end ID. | 
- **virtualAccount** | **string** | Subconta virtual (até 50 caracteres) usada na criação. Aceito como chave de busca alternativa. | 
+ **virtualAccount** | **string** | Virtual sub-account (up to 50 characters) used at creation. Accepted as an alternative lookup key. | 
 
 ### Return type
 
@@ -87,7 +85,7 @@ Name | Type | Description  | Notes
 
 ## GetPixQrcode
 
-> *os.File GetPixQrcode(ctx, transactionId).ContentType(contentType).Execute()
+> *os.File GetPixQrcode(ctx, transactionId).Execute()
 
 Render Pix QR code (PNG)
 
@@ -102,16 +100,15 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/PayZuPlus/payzu-sdks/payzupix"
+	openapiclient "github.com/PayZuPlus/payzu-sdks/go"
 )
 
 func main() {
-	contentType := "contentType_example" // string | Obrigatório em toda chamada PayZu. (default to "application/json")
 	transactionId := "transactionId_example" // string | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.PixOperationsAPI.GetPixQrcode(context.Background(), transactionId).ContentType(contentType).Execute()
+	resp, r, err := apiClient.PixOperationsAPI.GetPixQrcode(context.Background(), transactionId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `PixOperationsAPI.GetPixQrcode``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -136,7 +133,6 @@ Other parameters are passed through a pointer to a apiGetPixQrcodeRequest struct
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **contentType** | **string** | Obrigatório em toda chamada PayZu. | [default to &quot;application/json&quot;]
 
 
 ### Return type
@@ -159,7 +155,7 @@ Name | Type | Description  | Notes
 
 ## GetProof
 
-> GetProof200Response GetProof(ctx, id).ContentType(contentType).Type_(type_).Execute()
+> ProofResponse GetProof(ctx, id).Type_(type_).Execute()
 
 Get Transaction Receipt
 
@@ -174,22 +170,21 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/PayZuPlus/payzu-sdks/payzupix"
+	openapiclient "github.com/PayZuPlus/payzu-sdks/go"
 )
 
 func main() {
-	contentType := "contentType_example" // string | Obrigatório em toda chamada PayZu. (default to "application/json")
 	id := "PAYZU2025081418333632CYKN8M" // string | Transaction ID.
 	type_ := "pdf" // string | Return format. (optional) (default to "pdf")
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.PixOperationsAPI.GetProof(context.Background(), id).ContentType(contentType).Type_(type_).Execute()
+	resp, r, err := apiClient.PixOperationsAPI.GetProof(context.Background(), id).Type_(type_).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `PixOperationsAPI.GetProof``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `GetProof`: GetProof200Response
+	// response from `GetProof`: ProofResponse
 	fmt.Fprintf(os.Stdout, "Response from `PixOperationsAPI.GetProof`: %v\n", resp)
 }
 ```
@@ -209,13 +204,12 @@ Other parameters are passed through a pointer to a apiGetProofRequest struct via
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **contentType** | **string** | Obrigatório em toda chamada PayZu. | [default to &quot;application/json&quot;]
 
  **type_** | **string** | Return format. | [default to &quot;pdf&quot;]
 
 ### Return type
 
-[**GetProof200Response**](GetProof200Response.md)
+[**ProofResponse**](ProofResponse.md)
 
 ### Authorization
 
@@ -248,7 +242,7 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/PayZuPlus/payzu-sdks/payzupix"
+	openapiclient "github.com/PayZuPlus/payzu-sdks/go"
 )
 
 func main() {

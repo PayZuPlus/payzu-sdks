@@ -1,12 +1,10 @@
-# GetPix400Response
+# ApiErrorDetailsInner
 
 ## Properties
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**status_code** | **int** |  | [optional]
-**error** | **string** |  | [optional]
-**message** | **string** |  | [optional]
-**request_id** | **string** |  | [optional]
+**field** | **string** |  |
+**message** | **string** |  |
 
 [[Back to Model list]](../../README.md#models) [[Back to API list]](../../README.md#endpoints) [[Back to README]](../../README.md)

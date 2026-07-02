@@ -11,11 +11,11 @@ Method | HTTP request | Description
 
 
 # **get_pix**
-> Transaction get_pix(content_type, id=id, client_reference=client_reference, end_to_end_id=end_to_end_id, virtual_account=virtual_account)
+> Transaction get_pix(id=id, client_reference=client_reference, end_to_end_id=end_to_end_id, virtual_account=virtual_account)
 
 Retrieve Charge
 
-Get the latest status and details for a Pix **deposit (charge)**. Provide **one** of `id`, `clientReference`, or `endToEndId`. Use apenas um destes parâmetros: id, clientReference, endToEndId. Combinar mais de um retorna erro.
+Get the latest status and details for a Pix **deposit (charge)**. Provide **one** of `id`, `clientReference`, or `endToEndId`. Combining more than one returns an error.
 
 ### Example
 
@@ -47,15 +47,14 @@ configuration = payzu_pix.Configuration(
 with payzu_pix.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = payzu_pix.PixOperationsApi(api_client)
-    content_type = application/json # str | Obrigatório em toda chamada PayZu. (default to application/json)
     id = 'PAYZU20250817215911F49RDOBJ' # str | Transaction ID. (optional)
     client_reference = 'client_reference_example' # str | External reference provided when creating the charge. (optional)
     end_to_end_id = 'end_to_end_id_example' # str | Pix end-to-end ID. (optional)
-    virtual_account = 'virtual_account_example' # str | Subconta virtual (até 50 caracteres) usada na criação. Aceito como chave de busca alternativa. (optional)
+    virtual_account = 'virtual_account_example' # str | Virtual sub-account (up to 50 characters) used at creation. Accepted as an alternative lookup key. (optional)
 
     try:
         # Retrieve Charge
-        api_response = api_instance.get_pix(content_type, id=id, client_reference=client_reference, end_to_end_id=end_to_end_id, virtual_account=virtual_account)
+        api_response = api_instance.get_pix(id=id, client_reference=client_reference, end_to_end_id=end_to_end_id, virtual_account=virtual_account)
         print("The response of PixOperationsApi->get_pix:\n")
         pprint(api_response)
     except Exception as e:
@@ -69,11 +68,10 @@ with payzu_pix.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **content_type** | **str**| Obrigatório em toda chamada PayZu. | [default to application/json]
  **id** | **str**| Transaction ID. | [optional] 
  **client_reference** | **str**| External reference provided when creating the charge. | [optional] 
  **end_to_end_id** | **str**| Pix end-to-end ID. | [optional] 
- **virtual_account** | **str**| Subconta virtual (até 50 caracteres) usada na criação. Aceito como chave de busca alternativa. | [optional] 
+ **virtual_account** | **str**| Virtual sub-account (up to 50 characters) used at creation. Accepted as an alternative lookup key. | [optional] 
 
 ### Return type
 
@@ -100,7 +98,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_pix_qrcode**
-> bytes get_pix_qrcode(content_type, transaction_id)
+> bytes get_pix_qrcode(transaction_id)
 
 Render Pix QR code (PNG)
 
@@ -135,12 +133,11 @@ configuration = payzu_pix.Configuration(
 with payzu_pix.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = payzu_pix.PixOperationsApi(api_client)
-    content_type = application/json # str | Obrigatório em toda chamada PayZu. (default to application/json)
     transaction_id = 'transaction_id_example' # str | 
 
     try:
         # Render Pix QR code (PNG)
-        api_response = api_instance.get_pix_qrcode(content_type, transaction_id)
+        api_response = api_instance.get_pix_qrcode(transaction_id)
         print("The response of PixOperationsApi->get_pix_qrcode:\n")
         pprint(api_response)
     except Exception as e:
@@ -154,7 +151,6 @@ with payzu_pix.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **content_type** | **str**| Obrigatório em toda chamada PayZu. | [default to application/json]
  **transaction_id** | **str**|  | 
 
 ### Return type
@@ -181,11 +177,11 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_proof**
-> GetProof200Response get_proof(content_type, id, type=type)
+> ProofResponse get_proof(id, type=type)
 
 Get Transaction Receipt
 
-Retorna o comprovante da transação como JSON com o campo `base64` (PDF codificado). Decodifique pra exibir ou salvar como `.pdf`.
+Returns the transaction receipt as JSON with a `base64` field (encoded PDF). Decode it to display or save as `.pdf`.
 
 ### Example
 
@@ -193,7 +189,7 @@ Retorna o comprovante da transação como JSON com o campo `base64` (PDF codific
 
 ```python
 import payzu_pix
-from payzu_pix.models.get_proof200_response import GetProof200Response
+from payzu_pix.models.proof_response import ProofResponse
 from payzu_pix.rest import ApiException
 from pprint import pprint
 
@@ -217,13 +213,12 @@ configuration = payzu_pix.Configuration(
 with payzu_pix.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = payzu_pix.PixOperationsApi(api_client)
-    content_type = application/json # str | Obrigatório em toda chamada PayZu. (default to application/json)
     id = 'PAYZU2025081418333632CYKN8M' # str | Transaction ID.
     type = pdf # str | Return format. (optional) (default to pdf)
 
     try:
         # Get Transaction Receipt
-        api_response = api_instance.get_proof(content_type, id, type=type)
+        api_response = api_instance.get_proof(id, type=type)
         print("The response of PixOperationsApi->get_proof:\n")
         pprint(api_response)
     except Exception as e:
@@ -237,13 +232,12 @@ with payzu_pix.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **content_type** | **str**| Obrigatório em toda chamada PayZu. | [default to application/json]
  **id** | **str**| Transaction ID. | 
  **type** | **str**| Return format. | [optional] [default to pdf]
 
 ### Return type
 
-[**GetProof200Response**](GetProof200Response.md)
+[**ProofResponse**](ProofResponse.md)
 
 ### Authorization
 
