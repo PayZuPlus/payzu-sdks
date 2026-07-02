@@ -11,7 +11,7 @@ All URIs are relative to *https://api.payzu.processamento.com/v1*
 
 ## getUser
 
-> GetUser200Response getUser(contentType)
+> GetUser200Response getUser()
 
 Account Info
 
@@ -34,13 +34,8 @@ async function example() {
   });
   const api = new AccountApi(config);
 
-  const body = {
-    // 'application/json' | Obrigatório em toda chamada PayZu.
-    contentType: contentType_example,
-  } satisfies GetUserRequest;
-
   try {
-    const data = await api.getUser(body);
+    const data = await api.getUser();
     console.log(data);
   } catch (error) {
     console.error(error);
@@ -53,10 +48,7 @@ example().catch(console.error);
 
 ### Parameters
 
-
-| Name | Type | Description  | Notes |
-|------------- | ------------- | ------------- | -------------|
-| **contentType** | `application/json` | Obrigatório em toda chamada PayZu. | [Defaults to `&#39;application/json&#39;`] [Enum: application/json] |
+This endpoint does not need any parameter.
 
 ### Return type
 
@@ -84,7 +76,7 @@ example().catch(console.error);
 
 ## getUserBalance
 
-> GetUserBalance200Response getUserBalance(contentType)
+> GetUserBalance200Response getUserBalance()
 
 Account Balance
 
@@ -107,13 +99,8 @@ async function example() {
   });
   const api = new AccountApi(config);
 
-  const body = {
-    // 'application/json' | Obrigatório em toda chamada PayZu.
-    contentType: contentType_example,
-  } satisfies GetUserBalanceRequest;
-
   try {
-    const data = await api.getUserBalance(body);
+    const data = await api.getUserBalance();
     console.log(data);
   } catch (error) {
     console.error(error);
@@ -126,10 +113,7 @@ example().catch(console.error);
 
 ### Parameters
 
-
-| Name | Type | Description  | Notes |
-|------------- | ------------- | ------------- | -------------|
-| **contentType** | `application/json` | Obrigatório em toda chamada PayZu. | [Defaults to `&#39;application/json&#39;`] [Enum: application/json] |
+This endpoint does not need any parameter.
 
 ### Return type
 

@@ -13,11 +13,11 @@ All URIs are relative to *https://api.payzu.processamento.com/v1*
 
 ## getPix
 
-> Transaction getPix(contentType, id, clientReference, endToEndId, virtualAccount)
+> Transaction getPix(id, clientReference, endToEndId, virtualAccount)
 
 Retrieve Charge
 
-Get the latest status and details for a Pix **deposit (charge)**. Provide **one** of &#x60;id&#x60;, &#x60;clientReference&#x60;, or &#x60;endToEndId&#x60;. Use apenas um destes parâmetros: id, clientReference, endToEndId. Combinar mais de um retorna erro.
+Get the latest status and details for a Pix **deposit (charge)**. Provide **one** of &#x60;id&#x60;, &#x60;clientReference&#x60;, or &#x60;endToEndId&#x60;. Combining more than one returns an error.
 
 ### Example
 
@@ -37,15 +37,13 @@ async function example() {
   const api = new PixOperationsApi(config);
 
   const body = {
-    // 'application/json' | Obrigatório em toda chamada PayZu.
-    contentType: contentType_example,
     // string | Transaction ID. (optional)
     id: PAYZU20250817215911F49RDOBJ,
     // string | External reference provided when creating the charge. (optional)
     clientReference: clientReference_example,
     // string | Pix end-to-end ID. (optional)
     endToEndId: endToEndId_example,
-    // string | Subconta virtual (até 50 caracteres) usada na criação. Aceito como chave de busca alternativa. (optional)
+    // string | Virtual sub-account (up to 50 characters) used at creation. Accepted as an alternative lookup key. (optional)
     virtualAccount: virtualAccount_example,
   } satisfies GetPixRequest;
 
@@ -66,11 +64,10 @@ example().catch(console.error);
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **contentType** | `application/json` | Obrigatório em toda chamada PayZu. | [Defaults to `&#39;application/json&#39;`] [Enum: application/json] |
 | **id** | `string` | Transaction ID. | [Optional] [Defaults to `undefined`] |
 | **clientReference** | `string` | External reference provided when creating the charge. | [Optional] [Defaults to `undefined`] |
 | **endToEndId** | `string` | Pix end-to-end ID. | [Optional] [Defaults to `undefined`] |
-| **virtualAccount** | `string` | Subconta virtual (até 50 caracteres) usada na criação. Aceito como chave de busca alternativa. | [Optional] [Defaults to `undefined`] |
+| **virtualAccount** | `string` | Virtual sub-account (up to 50 characters) used at creation. Accepted as an alternative lookup key. | [Optional] [Defaults to `undefined`] |
 
 ### Return type
 
@@ -99,7 +96,7 @@ example().catch(console.error);
 
 ## getPixQrcode
 
-> Blob getPixQrcode(contentType, transactionId)
+> Blob getPixQrcode(transactionId)
 
 Render Pix QR code (PNG)
 
@@ -123,8 +120,6 @@ async function example() {
   const api = new PixOperationsApi(config);
 
   const body = {
-    // 'application/json' | Obrigatório em toda chamada PayZu.
-    contentType: contentType_example,
     // string
     transactionId: transactionId_example,
   } satisfies GetPixQrcodeRequest;
@@ -146,7 +141,6 @@ example().catch(console.error);
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **contentType** | `application/json` | Obrigatório em toda chamada PayZu. | [Defaults to `&#39;application/json&#39;`] [Enum: application/json] |
 | **transactionId** | `string` |  | [Defaults to `undefined`] |
 
 ### Return type
@@ -175,11 +169,11 @@ example().catch(console.error);
 
 ## getProof
 
-> GetProof200Response getProof(contentType, id, type)
+> ProofResponse getProof(id, type)
 
 Get Transaction Receipt
 
-Retorna o comprovante da transação como JSON com o campo &#x60;base64&#x60; (PDF codificado). Decodifique pra exibir ou salvar como &#x60;.pdf&#x60;.
+Returns the transaction receipt as JSON with a &#x60;base64&#x60; field (encoded PDF). Decode it to display or save as &#x60;.pdf&#x60;.
 
 ### Example
 
@@ -199,8 +193,6 @@ async function example() {
   const api = new PixOperationsApi(config);
 
   const body = {
-    // 'application/json' | Obrigatório em toda chamada PayZu.
-    contentType: contentType_example,
     // string | Transaction ID.
     id: PAYZU2025081418333632CYKN8M,
     // 'pdf' | 'base64' | Return format. (optional)
@@ -224,13 +216,12 @@ example().catch(console.error);
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **contentType** | `application/json` | Obrigatório em toda chamada PayZu. | [Defaults to `&#39;application/json&#39;`] [Enum: application/json] |
 | **id** | `string` | Transaction ID. | [Defaults to `undefined`] |
 | **type** | `pdf`, `base64` | Return format. | [Optional] [Defaults to `&#39;pdf&#39;`] [Enum: pdf, base64] |
 
 ### Return type
 
-[**GetProof200Response**](GetProof200Response.md)
+[**ProofResponse**](ProofResponse.md)
 
 ### Authorization
 
