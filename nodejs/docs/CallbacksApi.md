@@ -13,7 +13,7 @@ All URIs are relative to *https://api.payzu.processamento.com/v1*
 
 ## getUserCallbackById
 
-> CallbackDetail getUserCallbackById(contentType, id)
+> CallbackDetail getUserCallbackById(id)
 
 Get Callback
 
@@ -37,8 +37,6 @@ async function example() {
   const api = new CallbacksApi(config);
 
   const body = {
-    // 'application/json' | Obrigatório em toda chamada PayZu.
-    contentType: contentType_example,
     // string | Unique callback ID
     id: id_example,
   } satisfies GetUserCallbackByIdRequest;
@@ -60,7 +58,6 @@ example().catch(console.error);
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **contentType** | `application/json` | Obrigatório em toda chamada PayZu. | [Defaults to `&#39;application/json&#39;`] [Enum: application/json] |
 | **id** | `string` | Unique callback ID | [Defaults to `undefined`] |
 
 ### Return type
@@ -88,7 +85,7 @@ example().catch(console.error);
 
 ## getUserCallbacks
 
-> CallbackListResponse getUserCallbacks(contentType, page, limit, sortBy, sortDirection, id, url, status, transactionId, hasError, createdAtFrom, createdAtTo)
+> CallbackListResponse getUserCallbacks(page, limit, sortBy, sortDirection, id, url, status, transactionId, hasError, createdAtFrom, createdAtTo)
 
 List Callbacks
 
@@ -112,8 +109,6 @@ async function example() {
   const api = new CallbacksApi(config);
 
   const body = {
-    // 'application/json' | Obrigatório em toda chamada PayZu.
-    contentType: contentType_example,
     // number (optional)
     page: 56,
     // number (optional)
@@ -155,7 +150,6 @@ example().catch(console.error);
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **contentType** | `application/json` | Obrigatório em toda chamada PayZu. | [Defaults to `&#39;application/json&#39;`] [Enum: application/json] |
 | **page** | `number` |  | [Optional] [Defaults to `1`] |
 | **limit** | `number` |  | [Optional] [Defaults to `10`] |
 | **sortBy** | `createdAt`, `status` |  | [Optional] [Defaults to `&#39;createdAt&#39;`] [Enum: createdAt, status] |
@@ -195,7 +189,7 @@ example().catch(console.error);
 
 ## resendUserCallbackSingle
 
-> ResendUserCallbackSingle200Response resendUserCallbackSingle(contentType, transactionId)
+> ResendUserCallbackSingle200Response resendUserCallbackSingle(transactionId)
 
 Re-send callback (single)
 
@@ -219,8 +213,6 @@ async function example() {
   const api = new CallbacksApi(config);
 
   const body = {
-    // 'application/json' | Obrigatório em toda chamada PayZu.
-    contentType: contentType_example,
     // string
     transactionId: transactionId_example,
   } satisfies ResendUserCallbackSingleRequest;
@@ -242,7 +234,6 @@ example().catch(console.error);
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **contentType** | `application/json` | Obrigatório em toda chamada PayZu. | [Defaults to `&#39;application/json&#39;`] [Enum: application/json] |
 | **transactionId** | `string` |  | [Defaults to `undefined`] |
 
 ### Return type

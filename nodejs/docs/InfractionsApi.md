@@ -14,7 +14,7 @@ All URIs are relative to *https://api.payzu.processamento.com/v1*
 
 ## getInfractions
 
-> InfractionListResponse getInfractions(contentType, page, limit, status, type, endToEndId, transactionId, amountMin, amountMax, analysisResult, reportedBy, participantDocument, participantName, sortBy, sortDirection, reportedAtFrom, reportedAtTo, createdAtFrom, createdAtTo, expiresAtFrom, expiresAtTo, updatedAtFrom, updatedAtTo, needsManualReview, id, protocol)
+> InfractionListResponse getInfractions(page, limit, status, type, endToEndId, transactionId, amountMin, amountMax, analysisResult, reportedBy, participantDocument, participantName, sortBy, sortDirection, reportedAtFrom, reportedAtTo, createdAtFrom, createdAtTo, expiresAtFrom, expiresAtTo, updatedAtFrom, updatedAtTo, needsManualReview, id, protocol)
 
 List Infractions
 
@@ -38,8 +38,6 @@ async function example() {
   const api = new InfractionsApi(config);
 
   const body = {
-    // 'application/json' | Obrigatório em toda chamada PayZu.
-    contentType: contentType_example,
     // number (optional)
     page: 56,
     // number (optional)
@@ -64,31 +62,31 @@ async function example() {
     participantDocument: participantDocument_example,
     // string (optional)
     participantName: participantName_example,
-    // string | Campo de ordenação. (optional)
+    // string | Sort field. (optional)
     sortBy: sortBy_example,
-    // 'asc' | 'desc' | Direção da ordenação. (optional)
+    // 'asc' | 'desc' | Sort direction. (optional)
     sortDirection: sortDirection_example,
-    // Date | Filtro: reportedAt a partir de. (optional)
+    // Date | Filter: reportedAt from. (optional)
     reportedAtFrom: 2013-10-20T19:20:30+01:00,
-    // Date | Filtro: reportedAt até. (optional)
+    // Date | Filter: reportedAt up to. (optional)
     reportedAtTo: 2013-10-20T19:20:30+01:00,
-    // Date | Filtro: createdAt a partir de. (optional)
+    // Date | Filter: createdAt from. (optional)
     createdAtFrom: 2013-10-20T19:20:30+01:00,
-    // Date | Filtro: createdAt até. (optional)
+    // Date | Filter: createdAt up to. (optional)
     createdAtTo: 2013-10-20T19:20:30+01:00,
-    // Date | Filtro: expiresAt a partir de. (optional)
+    // Date | Filter: expiresAt from. (optional)
     expiresAtFrom: 2013-10-20T19:20:30+01:00,
-    // Date | Filtro: expiresAt até. (optional)
+    // Date | Filter: expiresAt up to. (optional)
     expiresAtTo: 2013-10-20T19:20:30+01:00,
-    // Date | Filtro: updatedAt a partir de. (optional)
+    // Date | Filter: updatedAt from. (optional)
     updatedAtFrom: 2013-10-20T19:20:30+01:00,
-    // Date | Filtro: updatedAt até. (optional)
+    // Date | Filter: updatedAt up to. (optional)
     updatedAtTo: 2013-10-20T19:20:30+01:00,
-    // boolean | Filtro: precisa de revisão manual. (optional)
+    // boolean | Filter: needs manual review. (optional)
     needsManualReview: true,
-    // string | Filtro por ID da infração. (optional)
+    // string | Filter by infraction ID. (optional)
     id: id_example,
-    // string | Filtro por protocolo. (optional)
+    // string | Filter by protocol. (optional)
     protocol: protocol_example,
   } satisfies GetInfractionsRequest;
 
@@ -109,7 +107,6 @@ example().catch(console.error);
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **contentType** | `application/json` | Obrigatório em toda chamada PayZu. | [Defaults to `&#39;application/json&#39;`] [Enum: application/json] |
 | **page** | `number` |  | [Optional] [Defaults to `1`] |
 | **limit** | `number` |  | [Optional] [Defaults to `10`] |
 | **status** | `string` | Comma-separated InfractionStatus (WAITING_PSP,CLOSED,OPEN,CANCELLED,ACKNOWLEDGED,DEFENDED,ANSWERED,WAITING_ADJUSTMENTS) | [Optional] [Defaults to `undefined`] |
@@ -122,19 +119,19 @@ example().catch(console.error);
 | **reportedBy** | `string` | Comma-separated ReportedType (DEBITED_PARTICIPANT,CREDITED_PARTICIPANT) | [Optional] [Defaults to `undefined`] |
 | **participantDocument** | `string` |  | [Optional] [Defaults to `undefined`] |
 | **participantName** | `string` |  | [Optional] [Defaults to `undefined`] |
-| **sortBy** | `string` | Campo de ordenação. | [Optional] [Defaults to `undefined`] |
-| **sortDirection** | `asc`, `desc` | Direção da ordenação. | [Optional] [Defaults to `undefined`] [Enum: asc, desc] |
-| **reportedAtFrom** | `Date` | Filtro: reportedAt a partir de. | [Optional] [Defaults to `undefined`] |
-| **reportedAtTo** | `Date` | Filtro: reportedAt até. | [Optional] [Defaults to `undefined`] |
-| **createdAtFrom** | `Date` | Filtro: createdAt a partir de. | [Optional] [Defaults to `undefined`] |
-| **createdAtTo** | `Date` | Filtro: createdAt até. | [Optional] [Defaults to `undefined`] |
-| **expiresAtFrom** | `Date` | Filtro: expiresAt a partir de. | [Optional] [Defaults to `undefined`] |
-| **expiresAtTo** | `Date` | Filtro: expiresAt até. | [Optional] [Defaults to `undefined`] |
-| **updatedAtFrom** | `Date` | Filtro: updatedAt a partir de. | [Optional] [Defaults to `undefined`] |
-| **updatedAtTo** | `Date` | Filtro: updatedAt até. | [Optional] [Defaults to `undefined`] |
-| **needsManualReview** | `boolean` | Filtro: precisa de revisão manual. | [Optional] [Defaults to `undefined`] |
-| **id** | `string` | Filtro por ID da infração. | [Optional] [Defaults to `undefined`] |
-| **protocol** | `string` | Filtro por protocolo. | [Optional] [Defaults to `undefined`] |
+| **sortBy** | `string` | Sort field. | [Optional] [Defaults to `undefined`] |
+| **sortDirection** | `asc`, `desc` | Sort direction. | [Optional] [Defaults to `undefined`] [Enum: asc, desc] |
+| **reportedAtFrom** | `Date` | Filter: reportedAt from. | [Optional] [Defaults to `undefined`] |
+| **reportedAtTo** | `Date` | Filter: reportedAt up to. | [Optional] [Defaults to `undefined`] |
+| **createdAtFrom** | `Date` | Filter: createdAt from. | [Optional] [Defaults to `undefined`] |
+| **createdAtTo** | `Date` | Filter: createdAt up to. | [Optional] [Defaults to `undefined`] |
+| **expiresAtFrom** | `Date` | Filter: expiresAt from. | [Optional] [Defaults to `undefined`] |
+| **expiresAtTo** | `Date` | Filter: expiresAt up to. | [Optional] [Defaults to `undefined`] |
+| **updatedAtFrom** | `Date` | Filter: updatedAt from. | [Optional] [Defaults to `undefined`] |
+| **updatedAtTo** | `Date` | Filter: updatedAt up to. | [Optional] [Defaults to `undefined`] |
+| **needsManualReview** | `boolean` | Filter: needs manual review. | [Optional] [Defaults to `undefined`] |
+| **id** | `string` | Filter by infraction ID. | [Optional] [Defaults to `undefined`] |
+| **protocol** | `string` | Filter by protocol. | [Optional] [Defaults to `undefined`] |
 
 ### Return type
 
@@ -163,7 +160,7 @@ example().catch(console.error);
 
 ## getInfractionsById
 
-> InfractionDetail getInfractionsById(contentType, id)
+> InfractionDetail getInfractionsById(id)
 
 Get Infraction
 
@@ -187,8 +184,6 @@ async function example() {
   const api = new InfractionsApi(config);
 
   const body = {
-    // 'application/json' | Obrigatório em toda chamada PayZu.
-    contentType: contentType_example,
     // string | Infraction ID
     id: id_example,
   } satisfies GetInfractionsByIdRequest;
@@ -210,7 +205,6 @@ example().catch(console.error);
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **contentType** | `application/json` | Obrigatório em toda chamada PayZu. | [Defaults to `&#39;application/json&#39;`] [Enum: application/json] |
 | **id** | `string` | Infraction ID | [Defaults to `undefined`] |
 
 ### Return type
@@ -238,7 +232,7 @@ example().catch(console.error);
 
 ## getInfractionsDefenseById
 
-> Defense getInfractionsDefenseById(contentType, infractionId, defenseId)
+> Defense getInfractionsDefenseById(infractionId, defenseId)
 
 Get Defense
 
@@ -262,8 +256,6 @@ async function example() {
   const api = new InfractionsApi(config);
 
   const body = {
-    // 'application/json' | Obrigatório em toda chamada PayZu.
-    contentType: contentType_example,
     // string | Infraction ID
     infractionId: infractionId_example,
     // string | Defense ID
@@ -287,7 +279,6 @@ example().catch(console.error);
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **contentType** | `application/json` | Obrigatório em toda chamada PayZu. | [Defaults to `&#39;application/json&#39;`] [Enum: application/json] |
 | **infractionId** | `string` | Infraction ID | [Defaults to `undefined`] |
 | **defenseId** | `string` | Defense ID | [Defaults to `undefined`] |
 
@@ -316,7 +307,7 @@ example().catch(console.error);
 
 ## getInfractionsDefenses
 
-> Array&lt;Defense&gt; getInfractionsDefenses(contentType, id)
+> Array&lt;Defense&gt; getInfractionsDefenses(id)
 
 List Defenses
 
@@ -340,8 +331,6 @@ async function example() {
   const api = new InfractionsApi(config);
 
   const body = {
-    // 'application/json' | Obrigatório em toda chamada PayZu.
-    contentType: contentType_example,
     // string | Infraction ID
     id: id_example,
   } satisfies GetInfractionsDefensesRequest;
@@ -363,7 +352,6 @@ example().catch(console.error);
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **contentType** | `application/json` | Obrigatório em toda chamada PayZu. | [Defaults to `&#39;application/json&#39;`] [Enum: application/json] |
 | **id** | `string` | Infraction ID | [Defaults to `undefined`] |
 
 ### Return type
