@@ -95,7 +95,7 @@ example().catch(console.error);
 
 Retrieve Withdrawal
 
-Get the latest status and details for a **withdrawal**. You can provide any **one** of the following parameters: &#x60;id&#x60;, &#x60;clientReference&#x60;, or &#x60;endToEndId&#x60;. All three are optional and you can use any one of them to retrieve the withdrawal. Use apenas um destes parâmetros: id, clientReference, endToEndId. Combinar mais de um retorna erro.
+Retorna o status e os detalhes atuais de um saque. Informe pelo menos um destes parâmetros: &#x60;id&#x60;, &#x60;clientReference&#x60; ou &#x60;endToEndId&#x60;. Se informar mais de um, todos são aplicados como filtro (AND), o que pode não retornar registro caso não apontem para a mesma transação.
 
 ### Example
 
@@ -241,7 +241,7 @@ example().catch(console.error);
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: `application/json`
+- **Accept**: `application/json`, `application/pdf`
 
 
 ### HTTP response details

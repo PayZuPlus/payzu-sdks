@@ -10,7 +10,6 @@ Name | Type | Description | Notes
 **status** | **str** | PENDING, COMPLETED, CANCELED, WAITING_FOR_REFUND, REFUNDED, EXPIRED, ERROR | [optional] 
 **amount** | **float** |  | [optional] 
 **type** | **str** | DEPOSIT or WITHDRAW | [optional] 
-**callback_url** | **str** |  | [optional] 
 **qr_code_text** | **str** |  | [optional] 
 **qr_code_base64** | **str** |  | [optional] 
 **qr_code_url** | **str** |  | [optional] 
@@ -36,14 +35,14 @@ Name | Type | Description | Notes
 **paid_at** | **str** |  | [optional] 
 **client_reference** | **str** |  | [optional] 
 **refund_end_to_end_id** | **str** | End-to-end ID of the refund transaction | [optional] 
-**refund_amount** | **str** | Amount refunded | [optional] 
+**refund_amount** | **float** | Amount refunded | [optional] 
 **refund_status** | **str** | Status of the refund (PENDING, COMPLETED, CANCELED, WAITING_FOR_REFUND, REFUNDED, EXPIRED, ERROR) | [optional] 
 **refund_reason** | **str** | Reason for the refund | [optional] 
 **refund_description** | **str** | Description of the refund | [optional] 
 **refunded_at** | **str** | Date and time when the refund was processed | [optional] 
 **cancellation_reason** | **str** | Reason for cancellation (if cancelled) | [optional] 
-**infraction** | [**TransactionInfraction**](TransactionInfraction.md) |  | [optional] 
 **virtual_account** | **str** | Subconta virtual informada na criação. | [optional] 
+**method** | **str** | Método/rail da transação. | [optional] 
 
 ## Example
 

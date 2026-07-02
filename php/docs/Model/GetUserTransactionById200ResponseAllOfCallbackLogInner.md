@@ -1,4 +1,4 @@
-# GetUserTransactionById200ResponseAllOfCallbackLogsInner
+# GetUserTransactionById200ResponseAllOfCallbackLogInner
 
 ## Properties
 

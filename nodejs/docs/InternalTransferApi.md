@@ -15,7 +15,7 @@ All URIs are relative to *https://api.payzu.processamento.com/v1*
 
 Get internal transfer
 
-Retrieve an internal transfer by id or clientReference Use apenas um destes parâmetros: id, clientReference. Combinar mais de um retorna erro.
+Retorna os dados de uma transferência interna. Informe pelo menos um destes parâmetros: &#x60;id&#x60; ou &#x60;clientReference&#x60; (também aceita &#x60;virtualAccount&#x60;). Se informar mais de um, todos são aplicados como filtro (AND).
 
 ### Example
 

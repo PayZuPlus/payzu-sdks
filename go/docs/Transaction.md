@@ -8,7 +8,6 @@ Name | Type | Description | Notes
 **Status** | Pointer to **string** | PENDING, COMPLETED, CANCELED, WAITING_FOR_REFUND, REFUNDED, EXPIRED, ERROR | [optional] 
 **Amount** | Pointer to **float32** |  | [optional] 
 **Type** | Pointer to **string** | DEPOSIT or WITHDRAW | [optional] 
-**CallbackUrl** | Pointer to **string** |  | [optional] 
 **QrCodeText** | Pointer to **string** |  | [optional] 
 **QrCodeBase64** | Pointer to **string** |  | [optional] 
 **QrCodeUrl** | Pointer to **string** |  | [optional] 
@@ -34,14 +33,14 @@ Name | Type | Description | Notes
 **PaidAt** | Pointer to **string** |  | [optional] 
 **ClientReference** | Pointer to **string** |  | [optional] 
 **RefundEndToEndId** | Pointer to **string** | End-to-end ID of the refund transaction | [optional] 
-**RefundAmount** | Pointer to **string** | Amount refunded | [optional] 
+**RefundAmount** | Pointer to **float32** | Amount refunded | [optional] 
 **RefundStatus** | Pointer to **string** | Status of the refund (PENDING, COMPLETED, CANCELED, WAITING_FOR_REFUND, REFUNDED, EXPIRED, ERROR) | [optional] 
 **RefundReason** | Pointer to **string** | Reason for the refund | [optional] 
 **RefundDescription** | Pointer to **string** | Description of the refund | [optional] 
 **RefundedAt** | Pointer to **string** | Date and time when the refund was processed | [optional] 
 **CancellationReason** | Pointer to **string** | Reason for cancellation (if cancelled) | [optional] 
-**Infraction** | Pointer to [**TransactionInfraction**](TransactionInfraction.md) |  | [optional] 
 **VirtualAccount** | Pointer to **string** | Subconta virtual informada na criação. | [optional] 
+**Method** | Pointer to **string** | Método/rail da transação. | [optional] 
 
 ## Methods
 
@@ -161,31 +160,6 @@ SetType sets Type field to given value.
 `func (o *Transaction) HasType() bool`
 
 HasType returns a boolean if a field has been set.
-
-### GetCallbackUrl
-
-`func (o *Transaction) GetCallbackUrl() string`
-
-GetCallbackUrl returns the CallbackUrl field if non-nil, zero value otherwise.
-
-### GetCallbackUrlOk
-
-`func (o *Transaction) GetCallbackUrlOk() (*string, bool)`
-
-GetCallbackUrlOk returns a tuple with the CallbackUrl field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetCallbackUrl
-
-`func (o *Transaction) SetCallbackUrl(v string)`
-
-SetCallbackUrl sets CallbackUrl field to given value.
-
-### HasCallbackUrl
-
-`func (o *Transaction) HasCallbackUrl() bool`
-
-HasCallbackUrl returns a boolean if a field has been set.
 
 ### GetQrCodeText
 
@@ -814,20 +788,20 @@ HasRefundEndToEndId returns a boolean if a field has been set.
 
 ### GetRefundAmount
 
-`func (o *Transaction) GetRefundAmount() string`
+`func (o *Transaction) GetRefundAmount() float32`
 
 GetRefundAmount returns the RefundAmount field if non-nil, zero value otherwise.
 
 ### GetRefundAmountOk
 
-`func (o *Transaction) GetRefundAmountOk() (*string, bool)`
+`func (o *Transaction) GetRefundAmountOk() (*float32, bool)`
 
 GetRefundAmountOk returns a tuple with the RefundAmount field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetRefundAmount
 
-`func (o *Transaction) SetRefundAmount(v string)`
+`func (o *Transaction) SetRefundAmount(v float32)`
 
 SetRefundAmount sets RefundAmount field to given value.
 
@@ -962,31 +936,6 @@ SetCancellationReason sets CancellationReason field to given value.
 
 HasCancellationReason returns a boolean if a field has been set.
 
-### GetInfraction
-
-`func (o *Transaction) GetInfraction() TransactionInfraction`
-
-GetInfraction returns the Infraction field if non-nil, zero value otherwise.
-
-### GetInfractionOk
-
-`func (o *Transaction) GetInfractionOk() (*TransactionInfraction, bool)`
-
-GetInfractionOk returns a tuple with the Infraction field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetInfraction
-
-`func (o *Transaction) SetInfraction(v TransactionInfraction)`
-
-SetInfraction sets Infraction field to given value.
-
-### HasInfraction
-
-`func (o *Transaction) HasInfraction() bool`
-
-HasInfraction returns a boolean if a field has been set.
-
 ### GetVirtualAccount
 
 `func (o *Transaction) GetVirtualAccount() string`
@@ -1011,6 +960,31 @@ SetVirtualAccount sets VirtualAccount field to given value.
 `func (o *Transaction) HasVirtualAccount() bool`
 
 HasVirtualAccount returns a boolean if a field has been set.
+
+### GetMethod
+
+`func (o *Transaction) GetMethod() string`
+
+GetMethod returns the Method field if non-nil, zero value otherwise.
+
+### GetMethodOk
+
+`func (o *Transaction) GetMethodOk() (*string, bool)`
+
+GetMethodOk returns a tuple with the Method field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetMethod
+
+`func (o *Transaction) SetMethod(v string)`
+
+SetMethod sets Method field to given value.
+
+### HasMethod
+
+`func (o *Transaction) HasMethod() bool`
+
+HasMethod returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

@@ -99,7 +99,7 @@ Name | Type | Description  | Notes
 
 Retrieve Withdrawal
 
-Get the latest status and details for a **withdrawal**. You can provide any **one** of the following parameters: `id`, `clientReference`, or `endToEndId`. All three are optional and you can use any one of them to retrieve the withdrawal. Use apenas um destes parâmetros: id, clientReference, endToEndId. Combinar mais de um retorna erro.
+Retorna o status e os detalhes atuais de um saque. Informe pelo menos um destes parâmetros: `id`, `clientReference` ou `endToEndId`. Se informar mais de um, todos são aplicados como filtro (AND), o que pode não retornar registro caso não apontem para a mesma transação.
 
 ### Example
 
@@ -255,7 +255,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json
+ - **Accept**: application/json, application/pdf
 
 ### HTTP response details
 

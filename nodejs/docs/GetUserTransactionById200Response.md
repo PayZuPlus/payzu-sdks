@@ -10,7 +10,6 @@ Name | Type
 `status` | string
 `amount` | number
 `type` | string
-`callbackUrl` | string
 `qrCodeText` | string
 `qrCodeBase64` | string
 `qrCodeUrl` | string
@@ -36,16 +35,16 @@ Name | Type
 `paidAt` | string
 `clientReference` | string
 `refundEndToEndId` | string
-`refundAmount` | string
+`refundAmount` | number
 `refundStatus` | string
 `refundReason` | string
 `refundDescription` | string
 `refundedAt` | string
 `cancellationReason` | string
-`infraction` | [TransactionInfraction](TransactionInfraction.md)
 `virtualAccount` | string
-`infractions` | [Array&lt;GetUserTransactionById200ResponseAllOfInfractionsInner&gt;](GetUserTransactionById200ResponseAllOfInfractionsInner.md)
-`callbackLogs` | [Array&lt;GetUserTransactionById200ResponseAllOfCallbackLogsInner&gt;](GetUserTransactionById200ResponseAllOfCallbackLogsInner.md)
+`method` | string
+`infraction` | [Array&lt;GetUserTransactionById200ResponseAllOfInfractionInner&gt;](GetUserTransactionById200ResponseAllOfInfractionInner.md)
+`callbackLog` | [Array&lt;GetUserTransactionById200ResponseAllOfCallbackLogInner&gt;](GetUserTransactionById200ResponseAllOfCallbackLogInner.md)
 
 ## Example
 
@@ -58,7 +57,6 @@ const example = {
   "status": null,
   "amount": null,
   "type": null,
-  "callbackUrl": null,
   "qrCodeText": null,
   "qrCodeBase64": null,
   "qrCodeUrl": null,
@@ -90,10 +88,10 @@ const example = {
   "refundDescription": null,
   "refundedAt": null,
   "cancellationReason": null,
-  "infraction": null,
   "virtualAccount": null,
-  "infractions": null,
-  "callbackLogs": null,
+  "method": null,
+  "infraction": null,
+  "callbackLog": null,
 } satisfies GetUserTransactionById200Response
 
 console.log(example)

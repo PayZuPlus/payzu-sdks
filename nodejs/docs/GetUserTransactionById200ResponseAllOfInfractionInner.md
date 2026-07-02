@@ -1,45 +1,28 @@
 
-# TransactionInfraction
+# GetUserTransactionById200ResponseAllOfInfractionInner
 
-Infraction details if the transaction has been disputed
 
 ## Properties
 
 Name | Type
 ------------ | -------------
 `id` | string
-`protocol` | string
 `status` | string
-`type` | string
-`reportDetails` | string
-`reportedBy` | string
-`analysisResult` | string
-`analysisDetails` | string
-`reportedAt` | Date
-`expiresAt` | Date
 `createdAt` | Date
 `updatedAt` | Date
 
 ## Example
 
 ```typescript
-import type { TransactionInfraction } from 'payzu-pix'
+import type { GetUserTransactionById200ResponseAllOfInfractionInner } from 'payzu-pix'
 
 // TODO: Update the object below with actual values
 const example = {
   "id": null,
-  "protocol": null,
   "status": null,
-  "type": null,
-  "reportDetails": null,
-  "reportedBy": null,
-  "analysisResult": null,
-  "analysisDetails": null,
-  "reportedAt": null,
-  "expiresAt": null,
   "createdAt": null,
   "updatedAt": null,
-} satisfies TransactionInfraction
+} satisfies GetUserTransactionById200ResponseAllOfInfractionInner
 
 console.log(example)
 
@@ -48,7 +31,7 @@ const exampleJSON: string = JSON.stringify(example)
 console.log(exampleJSON)
 
 // Parse the JSON string back to an object
-const exampleParsed = JSON.parse(exampleJSON) as TransactionInfraction
+const exampleParsed = JSON.parse(exampleJSON) as GetUserTransactionById200ResponseAllOfInfractionInner
 console.log(exampleParsed)
 ```
 

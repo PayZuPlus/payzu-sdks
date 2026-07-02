@@ -14,7 +14,7 @@ All URIs are relative to *https://api.payzu.processamento.com/v1*
 
 ## getInfractions
 
-> InfractionListResponse getInfractions(contentType, page, limit, status, type, endToEndId, transactionId, amountMin, amountMax, analysisResult, reportedBy, participantDocument, participantName)
+> InfractionListResponse getInfractions(contentType, page, limit, status, type, endToEndId, transactionId, amountMin, amountMax, analysisResult, reportedBy, participantDocument, participantName, sortBy, sortDirection, reportedAtFrom, reportedAtTo, createdAtFrom, createdAtTo, expiresAtFrom, expiresAtTo, updatedAtFrom, updatedAtTo, needsManualReview, id, protocol)
 
 List Infractions
 
@@ -64,6 +64,32 @@ async function example() {
     participantDocument: participantDocument_example,
     // string (optional)
     participantName: participantName_example,
+    // string | Campo de ordenação. (optional)
+    sortBy: sortBy_example,
+    // 'asc' | 'desc' | Direção da ordenação. (optional)
+    sortDirection: sortDirection_example,
+    // Date | Filtro: reportedAt a partir de. (optional)
+    reportedAtFrom: 2013-10-20T19:20:30+01:00,
+    // Date | Filtro: reportedAt até. (optional)
+    reportedAtTo: 2013-10-20T19:20:30+01:00,
+    // Date | Filtro: createdAt a partir de. (optional)
+    createdAtFrom: 2013-10-20T19:20:30+01:00,
+    // Date | Filtro: createdAt até. (optional)
+    createdAtTo: 2013-10-20T19:20:30+01:00,
+    // Date | Filtro: expiresAt a partir de. (optional)
+    expiresAtFrom: 2013-10-20T19:20:30+01:00,
+    // Date | Filtro: expiresAt até. (optional)
+    expiresAtTo: 2013-10-20T19:20:30+01:00,
+    // Date | Filtro: updatedAt a partir de. (optional)
+    updatedAtFrom: 2013-10-20T19:20:30+01:00,
+    // Date | Filtro: updatedAt até. (optional)
+    updatedAtTo: 2013-10-20T19:20:30+01:00,
+    // boolean | Filtro: precisa de revisão manual. (optional)
+    needsManualReview: true,
+    // string | Filtro por ID da infração. (optional)
+    id: id_example,
+    // string | Filtro por protocolo. (optional)
+    protocol: protocol_example,
   } satisfies GetInfractionsRequest;
 
   try {
@@ -96,6 +122,19 @@ example().catch(console.error);
 | **reportedBy** | `string` | Comma-separated ReportedType (DEBITED_PARTICIPANT,CREDITED_PARTICIPANT) | [Optional] [Defaults to `undefined`] |
 | **participantDocument** | `string` |  | [Optional] [Defaults to `undefined`] |
 | **participantName** | `string` |  | [Optional] [Defaults to `undefined`] |
+| **sortBy** | `string` | Campo de ordenação. | [Optional] [Defaults to `undefined`] |
+| **sortDirection** | `asc`, `desc` | Direção da ordenação. | [Optional] [Defaults to `undefined`] [Enum: asc, desc] |
+| **reportedAtFrom** | `Date` | Filtro: reportedAt a partir de. | [Optional] [Defaults to `undefined`] |
+| **reportedAtTo** | `Date` | Filtro: reportedAt até. | [Optional] [Defaults to `undefined`] |
+| **createdAtFrom** | `Date` | Filtro: createdAt a partir de. | [Optional] [Defaults to `undefined`] |
+| **createdAtTo** | `Date` | Filtro: createdAt até. | [Optional] [Defaults to `undefined`] |
+| **expiresAtFrom** | `Date` | Filtro: expiresAt a partir de. | [Optional] [Defaults to `undefined`] |
+| **expiresAtTo** | `Date` | Filtro: expiresAt até. | [Optional] [Defaults to `undefined`] |
+| **updatedAtFrom** | `Date` | Filtro: updatedAt a partir de. | [Optional] [Defaults to `undefined`] |
+| **updatedAtTo** | `Date` | Filtro: updatedAt até. | [Optional] [Defaults to `undefined`] |
+| **needsManualReview** | `boolean` | Filtro: precisa de revisão manual. | [Optional] [Defaults to `undefined`] |
+| **id** | `string` | Filtro por ID da infração. | [Optional] [Defaults to `undefined`] |
+| **protocol** | `string` | Filtro por protocolo. | [Optional] [Defaults to `undefined`] |
 
 ### Return type
 

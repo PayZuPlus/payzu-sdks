@@ -7,7 +7,7 @@ Name | Type | Description | Notes
 **Name** | Pointer to **string** |  | [optional] 
 **MimeType** | Pointer to **string** |  | [optional] 
 **Size** | Pointer to **int32** |  | [optional] 
-**Url** | Pointer to **string** | Signed URL for download (expires in 9 minutes) | [optional] 
+**Url** | Pointer to **string** | URL assinada para download (expira em 9 minutos). Presente apenas ao buscar a defesa individual; ausente na listagem. | [optional] 
 
 ## Methods
 

@@ -8,7 +8,7 @@ Name | Type | Description | Notes
 **name** | **str** |  | [optional] 
 **mime_type** | **str** |  | [optional] 
 **size** | **int** |  | [optional] 
-**url** | **str** | Signed URL for download (expires in 9 minutes) | [optional] 
+**url** | **str** | URL assinada para download (expira em 9 minutos). Presente apenas ao buscar a defesa individual; ausente na listagem. | [optional] 
 
 ## Example
 
