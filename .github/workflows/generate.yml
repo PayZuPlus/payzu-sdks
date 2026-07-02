@@ -30,6 +30,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: nodejs/package-lock.json
 
       - name: Sync openapi.json
         run: |
@@ -37,8 +39,6 @@ jobs:
             if curl -sf "$url" -o openapi.json.new; then
               if ! cmp -s openapi.json openapi.json.new; then
                 mv openapi.json.new openapi.json
-              else
-                rm openapi.json.new
               fi
               break
             fi
@@ -46,35 +46,47 @@ jobs:
           rm -f openapi.json.new
 
       - name: Install openapi-generator-cli
-        run: npm install -g @openapitools/openapi-generator-cli@latest
+        run: npm install --no-save @openapitools/openapi-generator-cli@2.39.1
 
-      - name: Generate Node.js SDK
+      - name: Generate Node.js core
         run: |
-          rm -rf nodejs
-          openapi-generator-cli generate \
-            -i openapi.json -g typescript-fetch -o nodejs \
+          rm -rf nodejs-gen
+          npx openapi-generator-cli generate \
+            -i openapi.json -g typescript-fetch -o nodejs-gen \
             --git-user-id=PayZuPlus --git-repo-id=payzu-sdks \
-            --additional-properties=npmName=payzu-pix,npmVersion=0.1.0,supportsES6=true,withInterfaces=true,typescriptThreePlus=true
+            --additional-properties=npmName=payzu-pix,supportsES6=true,withInterfaces=true,typescriptThreePlus=true,importFileExtension=.js
+          rm -rf nodejs/src/generated nodejs/docs
+          mkdir -p nodejs/src/generated nodejs/docs
+          cp -R nodejs-gen/src/. nodejs/src/generated/
+          cp -R nodejs-gen/docs/. nodejs/docs/
+          rm -rf nodejs-gen
+
+      - name: Validate Node.js SDK
+        working-directory: nodejs
+        run: |
+          npm ci
+          npm run build
+          npm test
 
       - name: Generate Python SDK
         run: |
           rm -rf python
-          openapi-generator-cli generate \
+          npx openapi-generator-cli generate \
             -i openapi.json -g python -o python \
             --additional-properties=packageName=payzu_pix,projectName=payzu-pix,packageVersion=0.1.0
 
       - name: Generate Go SDK
         run: |
           rm -rf go
-          openapi-generator-cli generate \
+          npx openapi-generator-cli generate \
             -i openapi.json -g go -o go \
-            --git-user-id=PayZuPlus --git-repo-id=payzu-sdks \
-            --additional-properties=packageName=payzupix,packageVersion=0.1.0,isGoSubmodule=true
+            --git-user-id=PayZuPlus --git-repo-id=payzu-sdks/go \
+            --additional-properties=packageName=payzupix,packageVersion=0.1.0
 
       - name: Generate PHP SDK
         run: |
           rm -rf php
-          openapi-generator-cli generate \
+          npx openapi-generator-cli generate \
             -i openapi.json -g php -o php \
             --git-user-id=PayZuPlus --git-repo-id=payzu-sdks \
             --additional-properties=composerVendorName=payzu,composerProjectName=pix,packageName=PayZuPix,artifactVersion=0.1.0
