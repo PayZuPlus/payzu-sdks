@@ -8,7 +8,6 @@ Name | Type | Description | Notes
 **Status** | Pointer to **string** | PENDING, COMPLETED, CANCELED, WAITING_FOR_REFUND, REFUNDED, EXPIRED, ERROR | [optional] 
 **Amount** | Pointer to **float32** |  | [optional] 
 **Type** | Pointer to **string** | DEPOSIT or WITHDRAW | [optional] 
-**CallbackUrl** | Pointer to **string** |  | [optional] 
 **QrCodeText** | Pointer to **string** |  | [optional] 
 **QrCodeBase64** | Pointer to **string** |  | [optional] 
 **QrCodeUrl** | Pointer to **string** |  | [optional] 
@@ -34,16 +33,16 @@ Name | Type | Description | Notes
 **PaidAt** | Pointer to **string** |  | [optional] 
 **ClientReference** | Pointer to **string** |  | [optional] 
 **RefundEndToEndId** | Pointer to **string** | End-to-end ID of the refund transaction | [optional] 
-**RefundAmount** | Pointer to **string** | Amount refunded | [optional] 
+**RefundAmount** | Pointer to **float32** | Amount refunded | [optional] 
 **RefundStatus** | Pointer to **string** | Status of the refund (PENDING, COMPLETED, CANCELED, WAITING_FOR_REFUND, REFUNDED, EXPIRED, ERROR) | [optional] 
 **RefundReason** | Pointer to **string** | Reason for the refund | [optional] 
 **RefundDescription** | Pointer to **string** | Description of the refund | [optional] 
 **RefundedAt** | Pointer to **string** | Date and time when the refund was processed | [optional] 
 **CancellationReason** | Pointer to **string** | Reason for cancellation (if cancelled) | [optional] 
-**Infraction** | Pointer to [**TransactionInfraction**](TransactionInfraction.md) |  | [optional] 
 **VirtualAccount** | Pointer to **string** | Subconta virtual informada na criação. | [optional] 
-**Infractions** | Pointer to [**[]GetUserTransactionById200ResponseAllOfInfractionsInner**](GetUserTransactionById200ResponseAllOfInfractionsInner.md) | Histórico completo de infrações desta transação. | [optional] 
-**CallbackLogs** | Pointer to [**[]GetUserTransactionById200ResponseAllOfCallbackLogsInner**](GetUserTransactionById200ResponseAllOfCallbackLogsInner.md) | Webhook delivery attempts for this transaction (most recent first) | [optional] 
+**Method** | Pointer to **string** | Método/rail da transação. | [optional] 
+**Infraction** | Pointer to [**[]GetUserTransactionById200ResponseAllOfInfractionInner**](GetUserTransactionById200ResponseAllOfInfractionInner.md) | Histórico completo de infrações desta transação. | [optional] 
+**CallbackLog** | Pointer to [**[]GetUserTransactionById200ResponseAllOfCallbackLogInner**](GetUserTransactionById200ResponseAllOfCallbackLogInner.md) | Webhook delivery attempts for this transaction (most recent first) | [optional] 
 
 ## Methods
 
@@ -163,31 +162,6 @@ SetType sets Type field to given value.
 `func (o *GetUserTransactionById200Response) HasType() bool`
 
 HasType returns a boolean if a field has been set.
-
-### GetCallbackUrl
-
-`func (o *GetUserTransactionById200Response) GetCallbackUrl() string`
-
-GetCallbackUrl returns the CallbackUrl field if non-nil, zero value otherwise.
-
-### GetCallbackUrlOk
-
-`func (o *GetUserTransactionById200Response) GetCallbackUrlOk() (*string, bool)`
-
-GetCallbackUrlOk returns a tuple with the CallbackUrl field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetCallbackUrl
-
-`func (o *GetUserTransactionById200Response) SetCallbackUrl(v string)`
-
-SetCallbackUrl sets CallbackUrl field to given value.
-
-### HasCallbackUrl
-
-`func (o *GetUserTransactionById200Response) HasCallbackUrl() bool`
-
-HasCallbackUrl returns a boolean if a field has been set.
 
 ### GetQrCodeText
 
@@ -816,20 +790,20 @@ HasRefundEndToEndId returns a boolean if a field has been set.
 
 ### GetRefundAmount
 
-`func (o *GetUserTransactionById200Response) GetRefundAmount() string`
+`func (o *GetUserTransactionById200Response) GetRefundAmount() float32`
 
 GetRefundAmount returns the RefundAmount field if non-nil, zero value otherwise.
 
 ### GetRefundAmountOk
 
-`func (o *GetUserTransactionById200Response) GetRefundAmountOk() (*string, bool)`
+`func (o *GetUserTransactionById200Response) GetRefundAmountOk() (*float32, bool)`
 
 GetRefundAmountOk returns a tuple with the RefundAmount field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetRefundAmount
 
-`func (o *GetUserTransactionById200Response) SetRefundAmount(v string)`
+`func (o *GetUserTransactionById200Response) SetRefundAmount(v float32)`
 
 SetRefundAmount sets RefundAmount field to given value.
 
@@ -964,31 +938,6 @@ SetCancellationReason sets CancellationReason field to given value.
 
 HasCancellationReason returns a boolean if a field has been set.
 
-### GetInfraction
-
-`func (o *GetUserTransactionById200Response) GetInfraction() TransactionInfraction`
-
-GetInfraction returns the Infraction field if non-nil, zero value otherwise.
-
-### GetInfractionOk
-
-`func (o *GetUserTransactionById200Response) GetInfractionOk() (*TransactionInfraction, bool)`
-
-GetInfractionOk returns a tuple with the Infraction field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetInfraction
-
-`func (o *GetUserTransactionById200Response) SetInfraction(v TransactionInfraction)`
-
-SetInfraction sets Infraction field to given value.
-
-### HasInfraction
-
-`func (o *GetUserTransactionById200Response) HasInfraction() bool`
-
-HasInfraction returns a boolean if a field has been set.
-
 ### GetVirtualAccount
 
 `func (o *GetUserTransactionById200Response) GetVirtualAccount() string`
@@ -1014,55 +963,80 @@ SetVirtualAccount sets VirtualAccount field to given value.
 
 HasVirtualAccount returns a boolean if a field has been set.
 
-### GetInfractions
+### GetMethod
 
-`func (o *GetUserTransactionById200Response) GetInfractions() []GetUserTransactionById200ResponseAllOfInfractionsInner`
+`func (o *GetUserTransactionById200Response) GetMethod() string`
 
-GetInfractions returns the Infractions field if non-nil, zero value otherwise.
+GetMethod returns the Method field if non-nil, zero value otherwise.
 
-### GetInfractionsOk
+### GetMethodOk
 
-`func (o *GetUserTransactionById200Response) GetInfractionsOk() (*[]GetUserTransactionById200ResponseAllOfInfractionsInner, bool)`
+`func (o *GetUserTransactionById200Response) GetMethodOk() (*string, bool)`
 
-GetInfractionsOk returns a tuple with the Infractions field if it's non-nil, zero value otherwise
+GetMethodOk returns a tuple with the Method field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetInfractions
+### SetMethod
 
-`func (o *GetUserTransactionById200Response) SetInfractions(v []GetUserTransactionById200ResponseAllOfInfractionsInner)`
+`func (o *GetUserTransactionById200Response) SetMethod(v string)`
 
-SetInfractions sets Infractions field to given value.
+SetMethod sets Method field to given value.
 
-### HasInfractions
+### HasMethod
 
-`func (o *GetUserTransactionById200Response) HasInfractions() bool`
+`func (o *GetUserTransactionById200Response) HasMethod() bool`
 
-HasInfractions returns a boolean if a field has been set.
+HasMethod returns a boolean if a field has been set.
 
-### GetCallbackLogs
+### GetInfraction
 
-`func (o *GetUserTransactionById200Response) GetCallbackLogs() []GetUserTransactionById200ResponseAllOfCallbackLogsInner`
+`func (o *GetUserTransactionById200Response) GetInfraction() []GetUserTransactionById200ResponseAllOfInfractionInner`
 
-GetCallbackLogs returns the CallbackLogs field if non-nil, zero value otherwise.
+GetInfraction returns the Infraction field if non-nil, zero value otherwise.
 
-### GetCallbackLogsOk
+### GetInfractionOk
 
-`func (o *GetUserTransactionById200Response) GetCallbackLogsOk() (*[]GetUserTransactionById200ResponseAllOfCallbackLogsInner, bool)`
+`func (o *GetUserTransactionById200Response) GetInfractionOk() (*[]GetUserTransactionById200ResponseAllOfInfractionInner, bool)`
 
-GetCallbackLogsOk returns a tuple with the CallbackLogs field if it's non-nil, zero value otherwise
+GetInfractionOk returns a tuple with the Infraction field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetCallbackLogs
+### SetInfraction
 
-`func (o *GetUserTransactionById200Response) SetCallbackLogs(v []GetUserTransactionById200ResponseAllOfCallbackLogsInner)`
+`func (o *GetUserTransactionById200Response) SetInfraction(v []GetUserTransactionById200ResponseAllOfInfractionInner)`
 
-SetCallbackLogs sets CallbackLogs field to given value.
+SetInfraction sets Infraction field to given value.
 
-### HasCallbackLogs
+### HasInfraction
 
-`func (o *GetUserTransactionById200Response) HasCallbackLogs() bool`
+`func (o *GetUserTransactionById200Response) HasInfraction() bool`
 
-HasCallbackLogs returns a boolean if a field has been set.
+HasInfraction returns a boolean if a field has been set.
+
+### GetCallbackLog
+
+`func (o *GetUserTransactionById200Response) GetCallbackLog() []GetUserTransactionById200ResponseAllOfCallbackLogInner`
+
+GetCallbackLog returns the CallbackLog field if non-nil, zero value otherwise.
+
+### GetCallbackLogOk
+
+`func (o *GetUserTransactionById200Response) GetCallbackLogOk() (*[]GetUserTransactionById200ResponseAllOfCallbackLogInner, bool)`
+
+GetCallbackLogOk returns a tuple with the CallbackLog field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCallbackLog
+
+`func (o *GetUserTransactionById200Response) SetCallbackLog(v []GetUserTransactionById200ResponseAllOfCallbackLogInner)`
+
+SetCallbackLog sets CallbackLog field to given value.
+
+### HasCallbackLog
+
+`func (o *GetUserTransactionById200Response) HasCallbackLog() bool`
+
+HasCallbackLog returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

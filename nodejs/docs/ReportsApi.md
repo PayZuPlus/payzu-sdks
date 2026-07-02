@@ -5,7 +5,7 @@ All URIs are relative to *https://api.payzu.processamento.com/v1*
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
 | [**downloadUserReport**](ReportsApi.md#downloaduserreport) | **POST** /user/report/{id}/download | Download report |
-| [**getUserReport**](ReportsApi.md#getuserreport) | **GET** /user/report/{id} | List report job status |
+| [**getUserReport**](ReportsApi.md#getuserreport) | **GET** /user/report/{id} | Consultar status do relatório |
 | [**getUserTransactionById**](ReportsApi.md#getusertransactionbyid) | **GET** /user/transactions/{id} | List transaction details |
 | [**getUserTransactions**](ReportsApi.md#getusertransactions) | **GET** /user/transactions | List Transactions |
 | [**listUserReports**](ReportsApi.md#listuserreports) | **GET** /user/report | List report jobs |
@@ -94,9 +94,9 @@ example().catch(console.error);
 
 > ReportJob getUserReport(contentType, id)
 
-List report job status
+Consultar status do relatório
 
-List report jobs created by the authenticated user.
+Retorna o status e os metadados de um job de relatório específico pelo &#x60;id&#x60;.
 
 ### Example
 
@@ -282,7 +282,7 @@ async function example() {
     status: COMPLETED,
     // string | Tipo da transação. Aceita CSV: DEPOSIT,WITHDRAW,COMMISSION. (optional)
     type: DEPOSIT,
-    // number | Amount filter. (optional)
+    // number | Amount filter. Mínimo 0.01. (optional)
     amount: 15000,
     // string | CPF (11 dígitos) ou CNPJ (14 dígitos), apenas números sem formatação. (optional)
     document: 12345678901,
@@ -325,7 +325,7 @@ example().catch(console.error);
 | **id** | `string` | Transaction ID. | [Optional] [Defaults to `undefined`] |
 | **status** | `string` | Status da transação. Aceita CSV: PENDING,COMPLETED,etc. | [Optional] [Defaults to `undefined`] |
 | **type** | `string` | Tipo da transação. Aceita CSV: DEPOSIT,WITHDRAW,COMMISSION. | [Optional] [Defaults to `undefined`] |
-| **amount** | `number` | Amount filter. | [Optional] [Defaults to `undefined`] |
+| **amount** | `number` | Amount filter. Mínimo 0.01. | [Optional] [Defaults to `undefined`] |
 | **document** | `string` | CPF (11 dígitos) ou CNPJ (14 dígitos), apenas números sem formatação. | [Optional] [Defaults to `undefined`] |
 | **name** | `string` | Name filter. | [Optional] [Defaults to `undefined`] |
 | **endToEndId** | `string` | Pix end-to-end ID. | [Optional] [Defaults to `undefined`] |
@@ -361,7 +361,7 @@ example().catch(console.error);
 
 ## listUserReports
 
-> ListUserReports200Response listUserReports(contentType, page, limit, status)
+> ListUserReports200Response listUserReports(contentType, page, limit, status, createdAtFrom, createdAtTo, updatedAtFrom, updatedAtTo, sortBy, sortDirection)
 
 List report jobs
 
@@ -391,8 +391,20 @@ async function example() {
     page: 56,
     // number (optional)
     limit: 56,
-    // 'PENDING' | 'PROCESSING' | 'COMPLETED' | 'FAILED' | 'EXPIRED' (optional)
+    // 'PENDING' | 'RUNNING' | 'COMPLETED' | 'FAILED' (optional)
     status: status_example,
+    // Date | Filtro: criado a partir de. (optional)
+    createdAtFrom: 2013-10-20T19:20:30+01:00,
+    // Date | Filtro: criado até. (optional)
+    createdAtTo: 2013-10-20T19:20:30+01:00,
+    // Date | Filtro: atualizado a partir de. (optional)
+    updatedAtFrom: 2013-10-20T19:20:30+01:00,
+    // Date | Filtro: atualizado até. (optional)
+    updatedAtTo: 2013-10-20T19:20:30+01:00,
+    // 'createdAt' | 'updatedAt' | Campo de ordenação. (optional)
+    sortBy: sortBy_example,
+    // 'asc' | 'desc' | Direção da ordenação. (optional)
+    sortDirection: sortDirection_example,
   } satisfies ListUserReportsRequest;
 
   try {
@@ -415,7 +427,13 @@ example().catch(console.error);
 | **contentType** | `application/json` | Obrigatório em toda chamada PayZu. | [Defaults to `&#39;application/json&#39;`] [Enum: application/json] |
 | **page** | `number` |  | [Optional] [Defaults to `1`] |
 | **limit** | `number` |  | [Optional] [Defaults to `10`] |
-| **status** | `PENDING`, `PROCESSING`, `COMPLETED`, `FAILED`, `EXPIRED` |  | [Optional] [Defaults to `undefined`] [Enum: PENDING, PROCESSING, COMPLETED, FAILED, EXPIRED] |
+| **status** | `PENDING`, `RUNNING`, `COMPLETED`, `FAILED` |  | [Optional] [Defaults to `undefined`] [Enum: PENDING, RUNNING, COMPLETED, FAILED] |
+| **createdAtFrom** | `Date` | Filtro: criado a partir de. | [Optional] [Defaults to `undefined`] |
+| **createdAtTo** | `Date` | Filtro: criado até. | [Optional] [Defaults to `undefined`] |
+| **updatedAtFrom** | `Date` | Filtro: atualizado a partir de. | [Optional] [Defaults to `undefined`] |
+| **updatedAtTo** | `Date` | Filtro: atualizado até. | [Optional] [Defaults to `undefined`] |
+| **sortBy** | `createdAt`, `updatedAt` | Campo de ordenação. | [Optional] [Defaults to `&#39;createdAt&#39;`] [Enum: createdAt, updatedAt] |
+| **sortDirection** | `asc`, `desc` | Direção da ordenação. | [Optional] [Defaults to `&#39;desc&#39;`] [Enum: asc, desc] |
 
 ### Return type
 
@@ -508,7 +526,7 @@ example().catch(console.error);
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **201** | Report job enqueued |  -  |
+| **202** | Report job aceito (job enfileirado) |  -  |
 | **422** | No transactions match the filter / concurrency limit reached |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)

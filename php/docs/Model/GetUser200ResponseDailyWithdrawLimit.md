@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**limit** | **int** |  | [optional]
+**limit** | **float** |  | [optional]
 **used** | **float** |  | [optional]
 **updated_at** | **\DateTime** |  | [optional]
 **last_reset** | **\DateTime** |  | [optional]

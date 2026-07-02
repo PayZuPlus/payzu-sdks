@@ -1,9 +1,9 @@
 {
   "openapi": "3.1.0",
   "info": {
-    "version": "1.5.0",
+    "version": "1.6.0",
     "title": "PayZu Pix API",
-    "description": "REST API for Pix operations on the PayZu platform, deposits, withdrawals, internal transfers, infractions, reports, and callback inspection. All amounts are in BRL (reais) unless explicitly noted. Authentication uses a Bearer token issued during onboarding.\n\n## SDKs oficiais\n\n- Node.js: `npm install @payzu/pix`\n- Python: `pip install payzu-pix`\n- Go: `go get github.com/PayZuPlus/payzu-sdks/go`\n- PHP: `composer require payzu/pix`\n\nRepo: https://github.com/PayZuPlus/payzu-sdks\n",
+    "description": "REST API for Pix operations on the PayZu platform, deposits, withdrawals, internal transfers, infractions, reports, and callback inspection. All amounts are in BRL (reais) unless explicitly noted. Authentication uses a Bearer token issued during onboarding.\n\n## SDKs oficiais\n\n- Node.js: `npm install payzu-pix`\n- Python: `pip install payzu-pix`\n- Go: `go get github.com/PayZuPlus/payzu-sdks/go`\n- PHP: `composer require payzu/pix`\n\nRepo: https://github.com/PayZuPlus/payzu-sdks\n",
     "contact": {
       "name": "Suporte PayZu",
       "url": "https://suporte.payzu.com.br"
@@ -133,7 +133,6 @@
                       "status": "PENDING",
                       "amount": 10,
                       "type": "DEPOSIT",
-                      "callbackUrl": "https://webhook.cool/",
                       "qrCodeText": "00020126870014br.gov.bcb.pix2565qrcode.payzu.com.br/dynamic/d7790b91-3979-4ad5-9d96-ee941e5a42765204000053039865802BR5908PAYZUPLUS6009SAO PAULO62070503***63047EE4",
                       "qrCodeBase64": "iVBORw0KGgoAAAANSUhEUgAAAZAAAAGQCAYAAAC...",
                       "qrCodeUrl": "https://pix.payzu.com.br/v1/pix/qr-code/PAYZU20250817215911F49RDOBJ",
@@ -323,7 +322,6 @@
                       "status": "PENDING",
                       "amount": 10,
                       "type": "DEPOSIT",
-                      "callbackUrl": "https://webhook.cool/",
                       "qrCodeText": "00020126870014br.gov.bcb.pix2565qrcode.payzu.com.br/dynamic/d7790b91-3979-4ad5-9d96-ee941e5a42765204000053039865802BR5908PAYZUPLUS6009SAO PAULO62070503***63047EE4",
                       "qrCodeBase64": "iVBORw0KGgoAAAANSUhEUgAAAZAAAAGQCAYAAAC...",
                       "qrCodeUrl": "https://pix.payzu.com.br/v1/pix/qr-code/PAYZU20250817215911F49RDOBJ",
@@ -364,7 +362,6 @@
                       "status": "COMPLETED",
                       "amount": 10,
                       "type": "DEPOSIT",
-                      "callbackUrl": "https://webhook.cool/",
                       "qrCodeText": null,
                       "qrCodeBase64": null,
                       "qrCodeUrl": null,
@@ -835,6 +832,13 @@
                     }
                   }
                 }
+              },
+              "application/pdf": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary",
+                  "description": "PDF binário (formato padrão, quando `type=pdf`)."
+                }
               }
             }
           },
@@ -864,7 +868,7 @@
                     "value": {
                       "statusCode": 400,
                       "error": "Bad Request",
-                      "message": "querystring/dateFrom Invalid input: expected string, received undefined",
+                      "message": "querystring/type Invalid input",
                       "requestId": "cmou00000abcdef01s6ghij1k2lm"
                     }
                   }
@@ -1073,7 +1077,6 @@
                       "status": "COMPLETED",
                       "amount": 2,
                       "type": "WITHDRAW",
-                      "callbackUrl": "https://webhook.cool/",
                       "qrCodeText": null,
                       "qrCodeBase64": null,
                       "qrCodeUrl": null,
@@ -1184,7 +1187,7 @@
       },
       "get": {
         "summary": "Retrieve Withdrawal",
-        "description": "Get the latest status and details for a **withdrawal**. You can provide any **one** of the following parameters: `id`, `clientReference`, or `endToEndId`. All three are optional and you can use any one of them to retrieve the withdrawal. Use apenas um destes parâmetros: id, clientReference, endToEndId. Combinar mais de um retorna erro.",
+        "description": "Retorna o status e os detalhes atuais de um saque. Informe pelo menos um destes parâmetros: `id`, `clientReference` ou `endToEndId`. Se informar mais de um, todos são aplicados como filtro (AND), o que pode não retornar registro caso não apontem para a mesma transação.",
         "operationId": "get_withdraw",
         "tags": [
           "Withdrawals"
@@ -1263,7 +1266,6 @@
                       "status": "PENDING",
                       "amount": 2,
                       "type": "WITHDRAW",
-                      "callbackUrl": "https://webhook.cool/",
                       "qrCodeText": null,
                       "qrCodeBase64": null,
                       "qrCodeUrl": null,
@@ -1304,7 +1306,6 @@
                       "status": "COMPLETED",
                       "amount": 2,
                       "type": "WITHDRAW",
-                      "callbackUrl": "https://webhook.cool/",
                       "qrCodeText": null,
                       "qrCodeBase64": null,
                       "qrCodeUrl": null,
@@ -1522,7 +1523,6 @@
                       "status": "PENDING",
                       "amount": 20,
                       "type": "WITHDRAW",
-                      "callbackUrl": "https://bright-lightning-66.webhook.cool",
                       "qrCodeText": null,
                       "qrCodeBase64": null,
                       "qrCodeUrl": null,
@@ -1563,7 +1563,6 @@
                       "status": "PENDING",
                       "amount": 150,
                       "type": "WITHDRAW",
-                      "callbackUrl": "https://bright-lightning-66.webhook.cool",
                       "qrCodeText": null,
                       "qrCodeBase64": null,
                       "qrCodeUrl": null,
@@ -1709,6 +1708,13 @@
                     }
                   }
                 }
+              },
+              "application/pdf": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary",
+                  "description": "PDF binário (formato padrão, quando `type=pdf`)."
+                }
               }
             }
           },
@@ -1738,7 +1744,7 @@
                     "value": {
                       "statusCode": 400,
                       "error": "Bad Request",
-                      "message": "querystring/dateFrom Invalid input: expected string, received undefined",
+                      "message": "querystring/type Invalid input",
                       "requestId": "cmou00000abcdef01s6ghij1k2lm"
                     }
                   }
@@ -1913,8 +1919,7 @@
                       "type": "object",
                       "properties": {
                         "limit": {
-                          "type": "integer",
-                          "format": "int32"
+                          "type": "number"
                         },
                         "used": {
                           "type": "number"
@@ -2253,9 +2258,10 @@
             "in": "query",
             "name": "amount",
             "required": false,
-            "description": "Amount filter.",
+            "description": "Amount filter. Mínimo 0.01.",
             "schema": {
-              "type": "number"
+              "type": "number",
+              "minimum": 0.01
             },
             "example": 15000
           },
@@ -2371,7 +2377,6 @@
                           "amount": 10,
                           "status": "PENDING",
                           "type": "DEPOSIT",
-                          "callbackUrl": "https://webhook.site/9cdd5879-5767-4e95-bf57-1ac29e0ad3d7",
                           "qrCodeText": "00020126860014br.gov.bcb.pix2564qrcode.payzu.com.br/pix/84f95c33-3c86-4708-87f1-0e09b96b35795204000053039865802BR5908PAYZPLUS6009SAO PAULO62070503***63048227",
                           "qrCodeBase64": null,
                           "qrCodeUrl": "https://pix.payzu.com.br/v1/pix/qr-code/PAYZU202511061998787515D0PH2Y",
@@ -2407,7 +2412,6 @@
                           "amount": 5.5,
                           "status": "ERROR",
                           "type": "WITHDRAW",
-                          "callbackUrl": "https://webhook.site/9cdd5879-5767-4e95-bf57-1ac29e0ad3d7",
                           "qrCodeText": null,
                           "qrCodeBase64": null,
                           "qrCodeUrl": null,
@@ -3046,6 +3050,135 @@
           {
             "name": "participantName",
             "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sortBy",
+            "in": "query",
+            "required": false,
+            "description": "Campo de ordenação.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sortDirection",
+            "in": "query",
+            "required": false,
+            "description": "Direção da ordenação.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "asc",
+                "desc"
+              ]
+            }
+          },
+          {
+            "name": "reportedAtFrom",
+            "in": "query",
+            "required": false,
+            "description": "Filtro: reportedAt a partir de.",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "reportedAtTo",
+            "in": "query",
+            "required": false,
+            "description": "Filtro: reportedAt até.",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "createdAtFrom",
+            "in": "query",
+            "required": false,
+            "description": "Filtro: createdAt a partir de.",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "createdAtTo",
+            "in": "query",
+            "required": false,
+            "description": "Filtro: createdAt até.",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "expiresAtFrom",
+            "in": "query",
+            "required": false,
+            "description": "Filtro: expiresAt a partir de.",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "expiresAtTo",
+            "in": "query",
+            "required": false,
+            "description": "Filtro: expiresAt até.",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "updatedAtFrom",
+            "in": "query",
+            "required": false,
+            "description": "Filtro: updatedAt a partir de.",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "updatedAtTo",
+            "in": "query",
+            "required": false,
+            "description": "Filtro: updatedAt até.",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "needsManualReview",
+            "in": "query",
+            "required": false,
+            "description": "Filtro: precisa de revisão manual.",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "id",
+            "in": "query",
+            "required": false,
+            "description": "Filtro por ID da infração.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "protocol",
+            "in": "query",
+            "required": false,
+            "description": "Filtro por protocolo.",
             "schema": {
               "type": "string"
             }
@@ -3858,7 +3991,8 @@
                   "virtualAccount": {
                     "type": "string",
                     "maxLength": 50,
-                    "description": "Subconta virtual (até 50 caracteres) para correlacionar lojas, filiais, marketplaces. Volta no callback."
+                    "description": "Subconta virtual (até 50 caracteres) para correlacionar lojas, filiais, marketplaces. Volta no callback.",
+                    "minLength": 1
                   }
                 }
               }
@@ -3881,7 +4015,6 @@
                       "status": "COMPLETED",
                       "amount": 100.5,
                       "type": "WITHDRAW",
-                      "callbackUrl": null,
                       "qrCodeText": null,
                       "qrCodeBase64": null,
                       "qrCodeUrl": null,
@@ -4060,7 +4193,7 @@
       },
       "get": {
         "summary": "Get internal transfer",
-        "description": "Retrieve an internal transfer by id or clientReference Use apenas um destes parâmetros: id, clientReference. Combinar mais de um retorna erro.",
+        "description": "Retorna os dados de uma transferência interna. Informe pelo menos um destes parâmetros: `id` ou `clientReference` (também aceita `virtualAccount`). Se informar mais de um, todos são aplicados como filtro (AND).",
         "operationId": "get_internal_transfer",
         "tags": [
           "Internal Transfer"
@@ -4128,7 +4261,6 @@
                       "status": "COMPLETED",
                       "amount": 100.5,
                       "type": "WITHDRAW",
-                      "callbackUrl": null,
                       "qrCodeText": null,
                       "qrCodeBase64": null,
                       "qrCodeUrl": null,
@@ -4286,7 +4418,7 @@
                     {
                       "type": "object",
                       "properties": {
-                        "infractions": {
+                        "Infraction": {
                           "type": "array",
                           "description": "Histórico completo de infrações desta transação.",
                           "items": {
@@ -4309,7 +4441,7 @@
                             }
                           }
                         },
-                        "callbackLogs": {
+                        "CallbackLog": {
                           "type": "array",
                           "description": "Webhook delivery attempts for this transaction (most recent first)",
                           "items": {
@@ -4444,8 +4576,8 @@
           }
         },
         "responses": {
-          "201": {
-            "description": "Report job enqueued",
+          "202": {
+            "description": "Report job aceito (job enfileirado)",
             "content": {
               "application/json": {
                 "schema": {
@@ -4542,11 +4674,78 @@
               "type": "string",
               "enum": [
                 "PENDING",
-                "PROCESSING",
+                "RUNNING",
                 "COMPLETED",
-                "FAILED",
-                "EXPIRED"
+                "FAILED"
               ]
+            }
+          },
+          {
+            "name": "createdAtFrom",
+            "in": "query",
+            "required": false,
+            "description": "Filtro: criado a partir de.",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "createdAtTo",
+            "in": "query",
+            "required": false,
+            "description": "Filtro: criado até.",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "updatedAtFrom",
+            "in": "query",
+            "required": false,
+            "description": "Filtro: atualizado a partir de.",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "updatedAtTo",
+            "in": "query",
+            "required": false,
+            "description": "Filtro: atualizado até.",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "sortBy",
+            "in": "query",
+            "required": false,
+            "description": "Campo de ordenação.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "createdAt",
+                "updatedAt"
+              ],
+              "default": "createdAt"
+            }
+          },
+          {
+            "name": "sortDirection",
+            "in": "query",
+            "required": false,
+            "description": "Direção da ordenação.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "asc",
+                "desc"
+              ],
+              "default": "desc"
             }
           }
         ],
@@ -4700,7 +4899,7 @@
     },
     "/user/report/{id}": {
       "get": {
-        "summary": "List report job status",
+        "summary": "Consultar status do relatório",
         "operationId": "get_user_report",
         "tags": [
           "Reports"
@@ -4791,7 +4990,7 @@
             }
           }
         },
-        "description": "List report jobs created by the authenticated user."
+        "description": "Retorna o status e os metadados de um job de relatório específico pelo `id`."
       }
     },
     "/user/report/{id}/download": {
@@ -5014,7 +5213,8 @@
                       "type": "string",
                       "enum": [
                         "DEPOSIT",
-                        "WITHDRAW"
+                        "WITHDRAW",
+                        "COMMISSION"
                       ]
                     },
                     "description": "Filter by transaction type"
@@ -5448,10 +5648,6 @@
             "nullable": false,
             "description": "DEPOSIT or WITHDRAW"
           },
-          "callbackUrl": {
-            "type": "string",
-            "nullable": true
-          },
           "qrCodeText": {
             "type": "string",
             "nullable": true
@@ -5556,7 +5752,7 @@
             "description": "End-to-end ID of the refund transaction"
           },
           "refundAmount": {
-            "type": "string",
+            "type": "number",
             "nullable": true,
             "description": "Amount refunded"
           },
@@ -5585,80 +5781,20 @@
             "nullable": true,
             "description": "Reason for cancellation (if cancelled)"
           },
-          "infraction": {
-            "type": "object",
-            "nullable": true,
-            "description": "Infraction details if the transaction has been disputed",
-            "properties": {
-              "id": {
-                "type": "string"
-              },
-              "protocol": {
-                "type": "string"
-              },
-              "status": {
-                "type": "string",
-                "enum": [
-                  "WAITING_PSP",
-                  "CLOSED",
-                  "OPEN",
-                  "CANCELLED",
-                  "ACKNOWLEDGED",
-                  "DEFENDED",
-                  "ANSWERED",
-                  "WAITING_ADJUSTMENTS"
-                ]
-              },
-              "type": {
-                "type": "string",
-                "enum": [
-                  "REFUND_REQUEST",
-                  "FRAUD",
-                  "REFUND_CANCELLED"
-                ]
-              },
-              "reportDetails": {
-                "type": "string"
-              },
-              "reportedBy": {
-                "type": "string",
-                "enum": [
-                  "DEBITED_PARTICIPANT",
-                  "CREDITED_PARTICIPANT"
-                ]
-              },
-              "analysisResult": {
-                "type": "string",
-                "nullable": true
-              },
-              "analysisDetails": {
-                "type": "string",
-                "nullable": true
-              },
-              "reportedAt": {
-                "type": "string",
-                "format": "date-time"
-              },
-              "expiresAt": {
-                "type": "string",
-                "format": "date-time",
-                "nullable": true
-              },
-              "createdAt": {
-                "type": "string",
-                "format": "date-time"
-              },
-              "updatedAt": {
-                "type": "string",
-                "format": "date-time"
-              }
-            }
-          },
           "virtualAccount": {
             "type": "string",
             "nullable": true,
             "maxLength": 50,
             "description": "Subconta virtual informada na criação."
+          },
+          "method": {
+            "type": "string",
+            "enum": [
+              "PIX",
+              "BANK_SLIP",
+              "INTERNAL_TRANSFER"
+            ],
+            "description": "Método/rail da transação."
           }
         },
         "description": "Unified transaction representation used by all endpoints."
@@ -5809,7 +5945,8 @@
             ]
           },
           "reportDetails": {
-            "type": "string"
+            "type": "string",
+            "nullable": true
           },
           "analysisResult": {
             "type": "string",
@@ -5850,19 +5987,24 @@
                 "type": "number"
               },
               "payerName": {
-                "type": "string"
+                "type": "string",
+                "nullable": true
               },
               "payerDocument": {
-                "type": "string"
+                "type": "string",
+                "nullable": true
               },
               "receiverName": {
-                "type": "string"
+                "type": "string",
+                "nullable": true
               },
               "receiverDocument": {
-                "type": "string"
+                "type": "string",
+                "nullable": true
               },
               "endToEndId": {
-                "type": "string"
+                "type": "string",
+                "nullable": true
               }
             }
           },
@@ -5920,7 +6062,8 @@
                 },
                 "url": {
                   "type": "string",
-                  "description": "Signed URL for download (expires in 9 minutes)"
+                  "description": "URL assinada para download (expira em 9 minutos). Presente apenas ao buscar a defesa individual; ausente na listagem.",
+                  "nullable": true
                 }
               }
             }
@@ -6044,10 +6187,9 @@
             "type": "string",
             "enum": [
               "PENDING",
-              "PROCESSING",
+              "RUNNING",
               "COMPLETED",
-              "FAILED",
-              "EXPIRED"
+              "FAILED"
             ]
           },
           "createdAt": {

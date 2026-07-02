@@ -8,14 +8,14 @@ info:
 
     ## SDKs oficiais
 
-    - Node.js: `npm install @payzu/pix`
+    - Node.js: `npm install payzu-pix`
     - Python: `pip install payzu-pix`
     - Go: `go get github.com/PayZuPlus/payzu-sdks/go`
     - PHP: `composer require payzu/pix`
 
     Repo: https://github.com/PayZuPlus/payzu-sdks
   title: PayZu Pix API
-  version: 1.5.0
+  version: 1.6.0
 externalDocs:
   description: Documentação completa
   url: https://docs.payzu.com.br/docs/pix-processamento
@@ -104,7 +104,6 @@ paths:
                     status: PENDING
                     amount: 10
                     type: DEPOSIT
-                    callbackUrl: https://webhook.cool/
                     qrCodeText: 00020126870014br.gov.bcb.pix2565qrcode.payzu.com.br/dynamic/d7790b91-3979-4ad5-9d96-ee941e5a42765204000053039865802BR5908PAYZUPLUS6009SAO
                       PAULO62070503***63047EE4
                     qrCodeBase64: iVBORw0KGgoAAAANSUhEUgAAAZAAAAGQCAYAAAC...
@@ -144,7 +143,6 @@ paths:
                     status: COMPLETED
                     amount: 10
                     type: DEPOSIT
-                    callbackUrl: https://webhook.cool/
                     qrCodeText: null
                     qrCodeBase64: null
                     qrCodeUrl: null
@@ -248,7 +246,6 @@ paths:
                     status: PENDING
                     amount: 10
                     type: DEPOSIT
-                    callbackUrl: https://webhook.cool/
                     qrCodeText: 00020126870014br.gov.bcb.pix2565qrcode.payzu.com.br/dynamic/d7790b91-3979-4ad5-9d96-ee941e5a42765204000053039865802BR5908PAYZUPLUS6009SAO
                       PAULO62070503***63047EE4
                     qrCodeBase64: iVBORw0KGgoAAAANSUhEUgAAAZAAAAGQCAYAAAC...
@@ -527,6 +524,11 @@ paths:
                     base64: JVBERi0xLjQKJ...
               schema:
                 $ref: "#/components/schemas/get_proof_200_response"
+            application/pdf:
+              schema:
+                description: "PDF binário (formato padrão, quando `type=pdf`)."
+                format: binary
+                type: string
           description: "Base64 if `type=base64`, otherwise binary PDF."
         "400":
           content:
@@ -536,8 +538,7 @@ paths:
                   value:
                     statusCode: 400
                     error: Bad Request
-                    message: "querystring/dateFrom Invalid input: expected string,\
-                      \ received undefined"
+                    message: querystring/type Invalid input
                     requestId: cmou00000abcdef01s6ghij1k2lm
               schema:
                 $ref: "#/components/schemas/get_pix_400_response"
@@ -576,11 +577,10 @@ paths:
       - Pix Operations
   /withdraw:
     get:
-      description: "Get the latest status and details for a **withdrawal**. You can\
-        \ provide any **one** of the following parameters: `id`, `clientReference`,\
-        \ or `endToEndId`. All three are optional and you can use any one of them\
-        \ to retrieve the withdrawal. Use apenas um destes parâmetros: id, clientReference,\
-        \ endToEndId. Combinar mais de um retorna erro."
+      description: "Retorna o status e os detalhes atuais de um saque. Informe pelo\
+        \ menos um destes parâmetros: `id`, `clientReference` ou `endToEndId`. Se\
+        \ informar mais de um, todos são aplicados como filtro (AND), o que pode nã\
+        o retornar registro caso não apontem para a mesma transação."
       operationId: get_withdraw
       parameters:
       - description: Obrigatório em toda chamada PayZu.
@@ -641,7 +641,6 @@ paths:
                     status: PENDING
                     amount: 2
                     type: WITHDRAW
-                    callbackUrl: https://webhook.cool/
                     qrCodeText: null
                     qrCodeBase64: null
                     qrCodeUrl: null
@@ -680,7 +679,6 @@ paths:
                     status: COMPLETED
                     amount: 2
                     type: WITHDRAW
-                    callbackUrl: https://webhook.cool/
                     qrCodeText: null
                     qrCodeBase64: null
                     qrCodeUrl: null
@@ -821,7 +819,6 @@ paths:
                     status: COMPLETED
                     amount: 2
                     type: WITHDRAW
-                    callbackUrl: https://webhook.cool/
                     qrCodeText: null
                     qrCodeBase64: null
                     qrCodeUrl: null
@@ -914,7 +911,6 @@ paths:
                     status: PENDING
                     amount: 20
                     type: WITHDRAW
-                    callbackUrl: https://bright-lightning-66.webhook.cool
                     qrCodeText: null
                     qrCodeBase64: null
                     qrCodeUrl: null
@@ -953,7 +949,6 @@ paths:
                     status: PENDING
                     amount: 150
                     type: WITHDRAW
-                    callbackUrl: https://bright-lightning-66.webhook.cool
                     qrCodeText: null
                     qrCodeBase64: null
                     qrCodeUrl: null
@@ -1058,6 +1053,11 @@ paths:
                     base64: JVBERi0xLjQKJ...
               schema:
                 $ref: "#/components/schemas/get_proof_200_response"
+            application/pdf:
+              schema:
+                description: "PDF binário (formato padrão, quando `type=pdf`)."
+                format: binary
+                type: string
           description: "Base64 if `type=base64`, otherwise binary PDF."
         "400":
           content:
@@ -1067,8 +1067,7 @@ paths:
                   value:
                     statusCode: 400
                     error: Bad Request
-                    message: "querystring/dateFrom Invalid input: expected string,\
-                      \ received undefined"
+                    message: querystring/type Invalid input
                     requestId: cmou00000abcdef01s6ghij1k2lm
               schema:
                 $ref: "#/components/schemas/get_pix_400_response"
@@ -1321,13 +1320,14 @@ paths:
           example: "DEPOSIT,WITHDRAW"
           type: string
         style: form
-      - description: Amount filter.
+      - description: Amount filter. Mínimo 0.01.
         example: 15000
         explode: true
         in: query
         name: amount
         required: false
         schema:
+          minimum: 0.01
           type: number
         style: form
       - description: "CPF (11 dígitos) ou CNPJ (14 dígitos), apenas números sem formataç\
@@ -1416,7 +1416,6 @@ paths:
                       amount: 10
                       status: PENDING
                       type: DEPOSIT
-                      callbackUrl: https://webhook.site/9cdd5879-5767-4e95-bf57-1ac29e0ad3d7
                       qrCodeText: 00020126860014br.gov.bcb.pix2564qrcode.payzu.com.br/pix/84f95c33-3c86-4708-87f1-0e09b96b35795204000053039865802BR5908PAYZPLUS6009SAO
                         PAULO62070503***63048227
                       qrCodeBase64: null
@@ -1451,7 +1450,6 @@ paths:
                       amount: 5.5
                       status: ERROR
                       type: WITHDRAW
-                      callbackUrl: https://webhook.site/9cdd5879-5767-4e95-bf57-1ac29e0ad3d7
                       qrCodeText: null
                       qrCodeBase64: null
                       qrCodeUrl: null
@@ -1894,6 +1892,121 @@ paths:
         schema:
           type: string
         style: form
+      - description: Campo de ordenação.
+        explode: true
+        in: query
+        name: sortBy
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: Direção da ordenação.
+        explode: true
+        in: query
+        name: sortDirection
+        required: false
+        schema:
+          enum:
+          - asc
+          - desc
+          type: string
+        style: form
+      - description: "Filtro: reportedAt a partir de."
+        explode: true
+        in: query
+        name: reportedAtFrom
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "Filtro: reportedAt até."
+        explode: true
+        in: query
+        name: reportedAtTo
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "Filtro: createdAt a partir de."
+        explode: true
+        in: query
+        name: createdAtFrom
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "Filtro: createdAt até."
+        explode: true
+        in: query
+        name: createdAtTo
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "Filtro: expiresAt a partir de."
+        explode: true
+        in: query
+        name: expiresAtFrom
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "Filtro: expiresAt até."
+        explode: true
+        in: query
+        name: expiresAtTo
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "Filtro: updatedAt a partir de."
+        explode: true
+        in: query
+        name: updatedAtFrom
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "Filtro: updatedAt até."
+        explode: true
+        in: query
+        name: updatedAtTo
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "Filtro: precisa de revisão manual."
+        explode: true
+        in: query
+        name: needsManualReview
+        required: false
+        schema:
+          type: boolean
+        style: form
+      - description: Filtro por ID da infração.
+        explode: true
+        in: query
+        name: id
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: Filtro por protocolo.
+        explode: true
+        in: query
+        name: protocol
+        required: false
+        schema:
+          type: string
+        style: form
       responses:
         "200":
           content:
@@ -2303,8 +2416,9 @@ paths:
       - Infractions
   /internal-transfer:
     get:
-      description: "Retrieve an internal transfer by id or clientReference Use apenas\
-        \ um destes parâmetros: id, clientReference. Combinar mais de um retorna erro."
+      description: "Retorna os dados de uma transferência interna. Informe pelo menos\
+        \ um destes parâmetros: `id` ou `clientReference` (também aceita `virtualAccount`).\
+        \ Se informar mais de um, todos são aplicados como filtro (AND)."
       operationId: get_internal_transfer
       parameters:
       - description: Obrigatório em toda chamada PayZu.
@@ -2357,7 +2471,6 @@ paths:
                     status: COMPLETED
                     amount: 100.5
                     type: WITHDRAW
-                    callbackUrl: null
                     qrCodeText: null
                     qrCodeBase64: null
                     qrCodeUrl: null
@@ -2447,7 +2560,6 @@ paths:
                     status: COMPLETED
                     amount: 100.5
                     type: WITHDRAW
-                    callbackUrl: null
                     qrCodeText: null
                     qrCodeBase64: null
                     qrCodeUrl: null
@@ -2632,10 +2744,69 @@ paths:
         schema:
           enum:
           - PENDING
-          - PROCESSING
+          - RUNNING
           - COMPLETED
           - FAILED
-          - EXPIRED
+          type: string
+        style: form
+      - description: "Filtro: criado a partir de."
+        explode: true
+        in: query
+        name: createdAtFrom
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "Filtro: criado até."
+        explode: true
+        in: query
+        name: createdAtTo
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "Filtro: atualizado a partir de."
+        explode: true
+        in: query
+        name: updatedAtFrom
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "Filtro: atualizado até."
+        explode: true
+        in: query
+        name: updatedAtTo
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: Campo de ordenação.
+        explode: true
+        in: query
+        name: sortBy
+        required: false
+        schema:
+          default: createdAt
+          enum:
+          - createdAt
+          - updatedAt
+          type: string
+        style: form
+      - description: Direção da ordenação.
+        explode: true
+        in: query
+        name: sortDirection
+        required: false
+        schema:
+          default: desc
+          enum:
+          - asc
+          - desc
           type: string
         style: form
       responses:
@@ -2714,12 +2885,12 @@ paths:
               $ref: "#/components/schemas/post_user_report_request"
         required: true
       responses:
-        "201":
+        "202":
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/ReportJob"
-          description: Report job enqueued
+          description: Report job aceito (job enfileirado)
         "422":
           content:
             application/json:
@@ -2740,7 +2911,8 @@ paths:
       - Reports
   /user/report/{id}:
     get:
-      description: List report jobs created by the authenticated user.
+      description: Retorna o status e os metadados de um job de relatório específico
+        pelo `id`.
       operationId: get_user_report
       parameters:
       - description: Obrigatório em toda chamada PayZu.
@@ -2792,7 +2964,7 @@ paths:
           description: Report not found
       security:
       - BearerAuth: []
-      summary: List report job status
+      summary: Consultar status do relatório
       tags:
       - Reports
   /user/report/{id}/download:
@@ -3086,31 +3258,18 @@ components:
         generatedName: generatedName
         payerAccountNumber: payerAccountNumber
         createdAt: createdAt
-        infraction:
-          reportedAt: 2000-01-23T04:56:07.000+00:00
-          analysisDetails: analysisDetails
-          createdAt: 2000-01-23T04:56:07.000+00:00
-          protocol: protocol
-          reportDetails: reportDetails
-          analysisResult: analysisResult
-          id: id
-          type: REFUND_REQUEST
-          reportedBy: DEBITED_PARTICIPANT
-          expiresAt: 2000-01-23T04:56:07.000+00:00
-          status: WAITING_PSP
-          updatedAt: 2000-01-23T04:56:07.000+00:00
         refundEndToEndId: refundEndToEndId
         receiverAccountNumber: receiverAccountNumber
         clientReference: clientReference
         payerName: payerName
-        callbackUrl: callbackUrl
         id: id
         receiverInstitutionIspb: receiverInstitutionIspb
         virtualAccount: virtualAccount
         updatedAt: updatedAt
-        refundAmount: refundAmount
+        refundAmount: 1.4658129805029452
         refundedAt: refundedAt
         amount: 0.8008281904610115
+        method: PIX
         cancellationReason: cancellationReason
         receiverName: receiverName
         refundReason: refundReason
@@ -3143,9 +3302,6 @@ components:
           description: DEPOSIT or WITHDRAW
           type: string
           nullable: false
-        callbackUrl:
-          type: string
-          nullable: true
         qrCodeText:
           type: string
           nullable: true
@@ -3228,7 +3384,7 @@ components:
           nullable: true
         refundAmount:
           description: Amount refunded
-          type: string
+          type: number
           nullable: true
         refundStatus:
           description: "Status of the refund (PENDING, COMPLETED, CANCELED, WAITING_FOR_REFUND,\
@@ -3251,13 +3407,18 @@ components:
           description: Reason for cancellation (if cancelled)
           type: string
           nullable: true
-        infraction:
-          $ref: "#/components/schemas/Transaction_infraction"
         virtualAccount:
           description: Subconta virtual informada na criação.
           maxLength: 50
           type: string
           nullable: true
+        method:
+          description: Método/rail da transação.
+          enum:
+          - PIX
+          - BANK_SLIP
+          - INTERNAL_TRANSFER
+          type: string
     PixKeyInfo:
       description: Information about a Pix key from DICT lookup.
       example:
@@ -3443,6 +3604,7 @@ components:
           type: string
         reportDetails:
           type: string
+          nullable: true
         analysisResult:
           enum:
           - AGREED
@@ -3717,10 +3879,9 @@ components:
         status:
           enum:
           - PENDING
-          - PROCESSING
+          - RUNNING
           - COMPLETED
           - FAILED
-          - EXPIRED
           type: string
         createdAt:
           format: date-time
@@ -3739,7 +3900,7 @@ components:
         requestId: requestId
         error: error
         message: message
-        statusCode: 1
+        statusCode: 5
       properties:
         statusCode:
           type: integer
@@ -3946,14 +4107,13 @@ components:
           type: number
     get_user_200_response_DailyWithdrawLimit:
       example:
-        limit: 1
+        limit: 1.2315135367772556
         used: 1.0246457001441578
         lastReset: 2000-01-23T04:56:07.000+00:00
         updatedAt: 2000-01-23T04:56:07.000+00:00
       properties:
         limit:
-          format: int32
-          type: integer
+          type: number
         used:
           type: number
         updatedAt:
@@ -3983,7 +4143,7 @@ components:
           cashInPercent: 3.616076749251911
         name: name
         DailyWithdrawLimit:
-          limit: 1
+          limit: 1.2315135367772556
           used: 1.0246457001441578
           lastReset: 2000-01-23T04:56:07.000+00:00
           updatedAt: 2000-01-23T04:56:07.000+00:00
@@ -4053,31 +4213,18 @@ components:
           generatedName: generatedName
           payerAccountNumber: payerAccountNumber
           createdAt: createdAt
-          infraction:
-            reportedAt: 2000-01-23T04:56:07.000+00:00
-            analysisDetails: analysisDetails
-            createdAt: 2000-01-23T04:56:07.000+00:00
-            protocol: protocol
-            reportDetails: reportDetails
-            analysisResult: analysisResult
-            id: id
-            type: REFUND_REQUEST
-            reportedBy: DEBITED_PARTICIPANT
-            expiresAt: 2000-01-23T04:56:07.000+00:00
-            status: WAITING_PSP
-            updatedAt: 2000-01-23T04:56:07.000+00:00
           refundEndToEndId: refundEndToEndId
           receiverAccountNumber: receiverAccountNumber
           clientReference: clientReference
           payerName: payerName
-          callbackUrl: callbackUrl
           id: id
           receiverInstitutionIspb: receiverInstitutionIspb
           virtualAccount: virtualAccount
           updatedAt: updatedAt
-          refundAmount: refundAmount
+          refundAmount: 1.4658129805029452
           refundedAt: refundedAt
           amount: 0.8008281904610115
+          method: PIX
           cancellationReason: cancellationReason
           receiverName: receiverName
           refundReason: refundReason
@@ -4103,31 +4250,18 @@ components:
           generatedName: generatedName
           payerAccountNumber: payerAccountNumber
           createdAt: createdAt
-          infraction:
-            reportedAt: 2000-01-23T04:56:07.000+00:00
-            analysisDetails: analysisDetails
-            createdAt: 2000-01-23T04:56:07.000+00:00
-            protocol: protocol
-            reportDetails: reportDetails
-            analysisResult: analysisResult
-            id: id
-            type: REFUND_REQUEST
-            reportedBy: DEBITED_PARTICIPANT
-            expiresAt: 2000-01-23T04:56:07.000+00:00
-            status: WAITING_PSP
-            updatedAt: 2000-01-23T04:56:07.000+00:00
           refundEndToEndId: refundEndToEndId
           receiverAccountNumber: receiverAccountNumber
           clientReference: clientReference
           payerName: payerName
-          callbackUrl: callbackUrl
           id: id
           receiverInstitutionIspb: receiverInstitutionIspb
           virtualAccount: virtualAccount
           updatedAt: updatedAt
-          refundAmount: refundAmount
+          refundAmount: 1.4658129805029452
           refundedAt: refundedAt
           amount: 0.8008281904610115
+          method: PIX
           cancellationReason: cancellationReason
           receiverName: receiverName
           refundReason: refundReason
@@ -4206,12 +4340,13 @@ components:
           description: "Subconta virtual (até 50 caracteres) para correlacionar lojas,\
             \ filiais, marketplaces. Volta no callback."
           maxLength: 50
+          minLength: 1
           type: string
       required:
       - amount
       - payerAccountNumber
       - receiverAccountNumber
-    get_user_transaction_by_id_200_response_allOf_infractions_inner:
+    get_user_transaction_by_id_200_response_allOf_Infraction_inner:
       example:
         createdAt: 2000-01-23T04:56:07.000+00:00
         id: id
@@ -4228,13 +4363,13 @@ components:
         updatedAt:
           format: date-time
           type: string
-    get_user_transaction_by_id_200_response_allOf_callbackLogs_inner:
+    get_user_transaction_by_id_200_response_allOf_CallbackLog_inner:
       example:
         createdAt: 2000-01-23T04:56:07.000+00:00
-        responseTime: 5.962133916683182
+        responseTime: 5.637376656633329
         id: id
         url: url
-        status: 1
+        status: 5
       properties:
         id:
           type: string
@@ -4253,72 +4388,59 @@ components:
       allOf:
       - $ref: "#/components/schemas/Transaction"
       - properties:
-          infractions:
+          Infraction:
             description: Histórico completo de infrações desta transação.
             items:
-              $ref: "#/components/schemas/get_user_transaction_by_id_200_response_allOf_infractions_inner"
+              $ref: "#/components/schemas/get_user_transaction_by_id_200_response_allOf_Infraction_inner"
             type: array
-          callbackLogs:
+          CallbackLog:
             description: Webhook delivery attempts for this transaction (most recent
               first)
             items:
-              $ref: "#/components/schemas/get_user_transaction_by_id_200_response_allOf_callbackLogs_inner"
+              $ref: "#/components/schemas/get_user_transaction_by_id_200_response_allOf_CallbackLog_inner"
             type: array
       example:
         qrCodeBase64: qrCodeBase64
+        Infraction:
+        - createdAt: 2000-01-23T04:56:07.000+00:00
+          id: id
+          status: status
+          updatedAt: 2000-01-23T04:56:07.000+00:00
+        - createdAt: 2000-01-23T04:56:07.000+00:00
+          id: id
+          status: status
+          updatedAt: 2000-01-23T04:56:07.000+00:00
+        CallbackLog:
+        - createdAt: 2000-01-23T04:56:07.000+00:00
+          responseTime: 5.637376656633329
+          id: id
+          url: url
+          status: 5
+        - createdAt: 2000-01-23T04:56:07.000+00:00
+          responseTime: 5.637376656633329
+          id: id
+          url: url
+          status: 5
         receiverDocument: receiverDocument
-        callbackLogs:
-        - createdAt: 2000-01-23T04:56:07.000+00:00
-          responseTime: 5.962133916683182
-          id: id
-          url: url
-          status: 1
-        - createdAt: 2000-01-23T04:56:07.000+00:00
-          responseTime: 5.962133916683182
-          id: id
-          url: url
-          status: 1
         withdrawPixType: withdrawPixType
         refundStatus: refundStatus
-        infractions:
-        - createdAt: 2000-01-23T04:56:07.000+00:00
-          id: id
-          status: status
-          updatedAt: 2000-01-23T04:56:07.000+00:00
-        - createdAt: 2000-01-23T04:56:07.000+00:00
-          id: id
-          status: status
-          updatedAt: 2000-01-23T04:56:07.000+00:00
         type: type
         endToEndId: endToEndId
         generatedName: generatedName
         payerAccountNumber: payerAccountNumber
         createdAt: createdAt
-        infraction:
-          reportedAt: 2000-01-23T04:56:07.000+00:00
-          analysisDetails: analysisDetails
-          createdAt: 2000-01-23T04:56:07.000+00:00
-          protocol: protocol
-          reportDetails: reportDetails
-          analysisResult: analysisResult
-          id: id
-          type: REFUND_REQUEST
-          reportedBy: DEBITED_PARTICIPANT
-          expiresAt: 2000-01-23T04:56:07.000+00:00
-          status: WAITING_PSP
-          updatedAt: 2000-01-23T04:56:07.000+00:00
         refundEndToEndId: refundEndToEndId
         receiverAccountNumber: receiverAccountNumber
         clientReference: clientReference
         payerName: payerName
-        callbackUrl: callbackUrl
         id: id
         receiverInstitutionIspb: receiverInstitutionIspb
         virtualAccount: virtualAccount
         updatedAt: updatedAt
-        refundAmount: refundAmount
+        refundAmount: 1.4658129805029452
         refundedAt: refundedAt
         amount: 0.8008281904610115
+        method: PIX
         cancellationReason: cancellationReason
         receiverName: receiverName
         refundReason: refundReason
@@ -4425,6 +4547,7 @@ components:
             enum:
             - DEPOSIT
             - WITHDRAW
+            - COMMISSION
             type: string
           type: array
         transactionStatus:
@@ -4464,70 +4587,6 @@ components:
       properties:
         message:
           type: string
-    Transaction_infraction:
-      description: Infraction details if the transaction has been disputed
-      example:
-        reportedAt: 2000-01-23T04:56:07.000+00:00
-        analysisDetails: analysisDetails
-        createdAt: 2000-01-23T04:56:07.000+00:00
-        protocol: protocol
-        reportDetails: reportDetails
-        analysisResult: analysisResult
-        id: id
-        type: REFUND_REQUEST
-        reportedBy: DEBITED_PARTICIPANT
-        expiresAt: 2000-01-23T04:56:07.000+00:00
-        status: WAITING_PSP
-        updatedAt: 2000-01-23T04:56:07.000+00:00
-      properties:
-        id:
-          type: string
-        protocol:
-          type: string
-        status:
-          enum:
-          - WAITING_PSP
-          - CLOSED
-          - OPEN
-          - CANCELLED
-          - ACKNOWLEDGED
-          - DEFENDED
-          - ANSWERED
-          - WAITING_ADJUSTMENTS
-          type: string
-        type:
-          enum:
-          - REFUND_REQUEST
-          - FRAUD
-          - REFUND_CANCELLED
-          type: string
-        reportDetails:
-          type: string
-        reportedBy:
-          enum:
-          - DEBITED_PARTICIPANT
-          - CREDITED_PARTICIPANT
-          type: string
-        analysisResult:
-          type: string
-          nullable: true
-        analysisDetails:
-          type: string
-          nullable: true
-        reportedAt:
-          format: date-time
-          type: string
-        expiresAt:
-          format: date-time
-          type: string
-          nullable: true
-        createdAt:
-          format: date-time
-          type: string
-        updatedAt:
-          format: date-time
-          type: string
-      nullable: true
     InfractionDetail_transaction:
       example:
         amount: 0.8008281904610115
@@ -4544,14 +4603,19 @@ components:
           type: number
         payerName:
           type: string
+          nullable: true
         payerDocument:
           type: string
+          nullable: true
         receiverName:
           type: string
+          nullable: true
         receiverDocument:
           type: string
+          nullable: true
         endToEndId:
           type: string
+          nullable: true
     Defense_files_inner:
       example:
         size: 6
@@ -4567,8 +4631,10 @@ components:
           format: int32
           type: integer
         url:
-          description: Signed URL for download (expires in 9 minutes)
+          description: URL assinada para download (expira em 9 minutos). Presente
+            apenas ao buscar a defesa individual; ausente na listagem.
           type: string
+          nullable: true
     InfractionListResponse_pagination:
       example:
         totalItems: 5

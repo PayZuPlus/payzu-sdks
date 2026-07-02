@@ -5,7 +5,7 @@ All URIs are relative to *https://api.payzu.processamento.com/v1*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**download_user_report**](ReportsApi.md#download_user_report) | **POST** /user/report/{id}/download | Download report
-[**get_user_report**](ReportsApi.md#get_user_report) | **GET** /user/report/{id} | List report job status
+[**get_user_report**](ReportsApi.md#get_user_report) | **GET** /user/report/{id} | Consultar status do relatório
 [**get_user_transaction_by_id**](ReportsApi.md#get_user_transaction_by_id) | **GET** /user/transactions/{id} | List transaction details
 [**get_user_transactions**](ReportsApi.md#get_user_transactions) | **GET** /user/transactions | List Transactions
 [**list_user_reports**](ReportsApi.md#list_user_reports) | **GET** /user/report | List report jobs
@@ -98,9 +98,9 @@ Name | Type | Description  | Notes
 # **get_user_report**
 > ReportJob get_user_report(content_type, id)
 
-List report job status
+Consultar status do relatório
 
-List report jobs created by the authenticated user.
+Retorna o status e os metadados de um job de relatório específico pelo `id`.
 
 ### Example
 
@@ -136,7 +136,7 @@ with payzu_pix.ApiClient(configuration) as api_client:
     id = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
 
     try:
-        # List report job status
+        # Consultar status do relatório
         api_response = api_instance.get_user_report(content_type, id)
         print("The response of ReportsApi->get_user_report:\n")
         pprint(api_response)
@@ -302,7 +302,7 @@ with payzu_pix.ApiClient(configuration) as api_client:
     id = 'PAYZU2025081418333632CYKN8M' # str | Transaction ID. (optional)
     status = 'COMPLETED' # str | Status da transação. Aceita CSV: PENDING,COMPLETED,etc. (optional)
     type = 'DEPOSIT' # str | Tipo da transação. Aceita CSV: DEPOSIT,WITHDRAW,COMMISSION. (optional)
-    amount = 15000 # float | Amount filter. (optional)
+    amount = 15000 # float | Amount filter. Mínimo 0.01. (optional)
     document = '12345678901' # str | CPF (11 dígitos) ou CNPJ (14 dígitos), apenas números sem formatação. (optional)
     name = 'Alice' # str | Name filter. (optional)
     end_to_end_id = 'E00360305202508141833bcf1f37b487' # str | Pix end-to-end ID. (optional)
@@ -335,7 +335,7 @@ Name | Type | Description  | Notes
  **id** | **str**| Transaction ID. | [optional] 
  **status** | **str**| Status da transação. Aceita CSV: PENDING,COMPLETED,etc. | [optional] 
  **type** | **str**| Tipo da transação. Aceita CSV: DEPOSIT,WITHDRAW,COMMISSION. | [optional] 
- **amount** | **float**| Amount filter. | [optional] 
+ **amount** | **float**| Amount filter. Mínimo 0.01. | [optional] 
  **document** | **str**| CPF (11 dígitos) ou CNPJ (14 dígitos), apenas números sem formatação. | [optional] 
  **name** | **str**| Name filter. | [optional] 
  **end_to_end_id** | **str**| Pix end-to-end ID. | [optional] 
@@ -369,7 +369,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **list_user_reports**
-> ListUserReports200Response list_user_reports(content_type, page=page, limit=limit, status=status)
+> ListUserReports200Response list_user_reports(content_type, page=page, limit=limit, status=status, created_at_from=created_at_from, created_at_to=created_at_to, updated_at_from=updated_at_from, updated_at_to=updated_at_to, sort_by=sort_by, sort_direction=sort_direction)
 
 List report jobs
 
@@ -409,10 +409,16 @@ with payzu_pix.ApiClient(configuration) as api_client:
     page = 1 # int |  (optional) (default to 1)
     limit = 10 # int |  (optional) (default to 10)
     status = 'status_example' # str |  (optional)
+    created_at_from = '2013-10-20T19:20:30+01:00' # datetime | Filtro: criado a partir de. (optional)
+    created_at_to = '2013-10-20T19:20:30+01:00' # datetime | Filtro: criado até. (optional)
+    updated_at_from = '2013-10-20T19:20:30+01:00' # datetime | Filtro: atualizado a partir de. (optional)
+    updated_at_to = '2013-10-20T19:20:30+01:00' # datetime | Filtro: atualizado até. (optional)
+    sort_by = createdAt # str | Campo de ordenação. (optional) (default to createdAt)
+    sort_direction = desc # str | Direção da ordenação. (optional) (default to desc)
 
     try:
         # List report jobs
-        api_response = api_instance.list_user_reports(content_type, page=page, limit=limit, status=status)
+        api_response = api_instance.list_user_reports(content_type, page=page, limit=limit, status=status, created_at_from=created_at_from, created_at_to=created_at_to, updated_at_from=updated_at_from, updated_at_to=updated_at_to, sort_by=sort_by, sort_direction=sort_direction)
         print("The response of ReportsApi->list_user_reports:\n")
         pprint(api_response)
     except Exception as e:
@@ -430,6 +436,12 @@ Name | Type | Description  | Notes
  **page** | **int**|  | [optional] [default to 1]
  **limit** | **int**|  | [optional] [default to 10]
  **status** | **str**|  | [optional] 
+ **created_at_from** | **datetime**| Filtro: criado a partir de. | [optional] 
+ **created_at_to** | **datetime**| Filtro: criado até. | [optional] 
+ **updated_at_from** | **datetime**| Filtro: atualizado a partir de. | [optional] 
+ **updated_at_to** | **datetime**| Filtro: atualizado até. | [optional] 
+ **sort_by** | **str**| Campo de ordenação. | [optional] [default to createdAt]
+ **sort_direction** | **str**| Direção da ordenação. | [optional] [default to desc]
 
 ### Return type
 
@@ -530,7 +542,7 @@ Name | Type | Description  | Notes
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**201** | Report job enqueued |  -  |
+**202** | Report job aceito (job enfileirado) |  -  |
 **422** | No transactions match the filter / concurrency limit reached |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)

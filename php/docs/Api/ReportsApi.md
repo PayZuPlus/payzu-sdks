@@ -7,7 +7,7 @@ All URIs are relative to https://api.payzu.processamento.com/v1, except if the o
 | Method | HTTP request | Description |
 | ------------- | ------------- | ------------- |
 | [**downloadUserReport()**](ReportsApi.md#downloadUserReport) | **POST** /user/report/{id}/download | Download report |
-| [**getUserReport()**](ReportsApi.md#getUserReport) | **GET** /user/report/{id} | List report job status |
+| [**getUserReport()**](ReportsApi.md#getUserReport) | **GET** /user/report/{id} | Consultar status do relatório |
 | [**getUserTransactionById()**](ReportsApi.md#getUserTransactionById) | **GET** /user/transactions/{id} | List transaction details |
 | [**getUserTransactions()**](ReportsApi.md#getUserTransactions) | **GET** /user/transactions | List Transactions |
 | [**listUserReports()**](ReportsApi.md#listUserReports) | **GET** /user/report | List report jobs |
@@ -82,9 +82,9 @@ try {
 getUserReport($content_type, $id): \OpenAPI\Client\Model\ReportJob
 ```
 
-List report job status
+Consultar status do relatório
 
-List report jobs created by the authenticated user.
+Retorna o status e os metadados de um job de relatório específico pelo `id`.
 
 ### Example
 
@@ -235,7 +235,7 @@ $page = 1; // float | Page number (default 1).
 $id = PAYZU2025081418333632CYKN8M; // string | Transaction ID.
 $status = COMPLETED; // string | Status da transação. Aceita CSV: PENDING,COMPLETED,etc.
 $type = DEPOSIT; // string | Tipo da transação. Aceita CSV: DEPOSIT,WITHDRAW,COMMISSION.
-$amount = 15000; // float | Amount filter.
+$amount = 15000; // float | Amount filter. Mínimo 0.01.
 $document = 12345678901; // string | CPF (11 dígitos) ou CNPJ (14 dígitos), apenas números sem formatação.
 $name = Alice; // string | Name filter.
 $end_to_end_id = E00360305202508141833bcf1f37b487; // string | Pix end-to-end ID.
@@ -264,7 +264,7 @@ try {
 | **id** | **string**| Transaction ID. | [optional] |
 | **status** | **string**| Status da transação. Aceita CSV: PENDING,COMPLETED,etc. | [optional] |
 | **type** | **string**| Tipo da transação. Aceita CSV: DEPOSIT,WITHDRAW,COMMISSION. | [optional] |
-| **amount** | **float**| Amount filter. | [optional] |
+| **amount** | **float**| Amount filter. Mínimo 0.01. | [optional] |
 | **document** | **string**| CPF (11 dígitos) ou CNPJ (14 dígitos), apenas números sem formatação. | [optional] |
 | **name** | **string**| Name filter. | [optional] |
 | **end_to_end_id** | **string**| Pix end-to-end ID. | [optional] |
@@ -293,7 +293,7 @@ try {
 ## `listUserReports()`
 
 ```php
-listUserReports($content_type, $page, $limit, $status): \OpenAPI\Client\Model\ListUserReports200Response
+listUserReports($content_type, $page, $limit, $status, $created_at_from, $created_at_to, $updated_at_from, $updated_at_to, $sort_by, $sort_direction): \OpenAPI\Client\Model\ListUserReports200Response
 ```
 
 List report jobs
@@ -321,9 +321,15 @@ $content_type = 'application/json'; // string | Obrigatório em toda chamada Pay
 $page = 1; // int
 $limit = 10; // int
 $status = 'status_example'; // string
+$created_at_from = new \DateTime('2013-10-20T19:20:30+01:00'); // \DateTime | Filtro: criado a partir de.
+$created_at_to = new \DateTime('2013-10-20T19:20:30+01:00'); // \DateTime | Filtro: criado até.
+$updated_at_from = new \DateTime('2013-10-20T19:20:30+01:00'); // \DateTime | Filtro: atualizado a partir de.
+$updated_at_to = new \DateTime('2013-10-20T19:20:30+01:00'); // \DateTime | Filtro: atualizado até.
+$sort_by = 'createdAt'; // string | Campo de ordenação.
+$sort_direction = 'desc'; // string | Direção da ordenação.
 
 try {
-    $result = $apiInstance->listUserReports($content_type, $page, $limit, $status);
+    $result = $apiInstance->listUserReports($content_type, $page, $limit, $status, $created_at_from, $created_at_to, $updated_at_from, $updated_at_to, $sort_by, $sort_direction);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling ReportsApi->listUserReports: ', $e->getMessage(), PHP_EOL;
@@ -338,6 +344,12 @@ try {
 | **page** | **int**|  | [optional] [default to 1] |
 | **limit** | **int**|  | [optional] [default to 10] |
 | **status** | **string**|  | [optional] |
+| **created_at_from** | **\DateTime**| Filtro: criado a partir de. | [optional] |
+| **created_at_to** | **\DateTime**| Filtro: criado até. | [optional] |
+| **updated_at_from** | **\DateTime**| Filtro: atualizado a partir de. | [optional] |
+| **updated_at_to** | **\DateTime**| Filtro: atualizado até. | [optional] |
+| **sort_by** | **string**| Campo de ordenação. | [optional] [default to &#39;createdAt&#39;] |
+| **sort_direction** | **string**| Direção da ordenação. | [optional] [default to &#39;desc&#39;] |
 
 ### Return type
 

@@ -18,7 +18,7 @@ getInternalTransfer($content_type, $id, $client_reference, $virtual_account): \O
 
 Get internal transfer
 
-Retrieve an internal transfer by id or clientReference Use apenas um destes parâmetros: id, clientReference. Combinar mais de um retorna erro.
+Retorna os dados de uma transferência interna. Informe pelo menos um destes parâmetros: `id` ou `clientReference` (também aceita `virtualAccount`). Se informar mais de um, todos são aplicados como filtro (AND).
 
 ### Example
 

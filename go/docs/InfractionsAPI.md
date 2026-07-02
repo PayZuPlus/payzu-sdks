@@ -14,7 +14,7 @@ Method | HTTP request | Description
 
 ## GetInfractions
 
-> InfractionListResponse GetInfractions(ctx).ContentType(contentType).Page(page).Limit(limit).Status(status).Type_(type_).EndToEndId(endToEndId).TransactionId(transactionId).AmountMin(amountMin).AmountMax(amountMax).AnalysisResult(analysisResult).ReportedBy(reportedBy).ParticipantDocument(participantDocument).ParticipantName(participantName).Execute()
+> InfractionListResponse GetInfractions(ctx).ContentType(contentType).Page(page).Limit(limit).Status(status).Type_(type_).EndToEndId(endToEndId).TransactionId(transactionId).AmountMin(amountMin).AmountMax(amountMax).AnalysisResult(analysisResult).ReportedBy(reportedBy).ParticipantDocument(participantDocument).ParticipantName(participantName).SortBy(sortBy).SortDirection(sortDirection).ReportedAtFrom(reportedAtFrom).ReportedAtTo(reportedAtTo).CreatedAtFrom(createdAtFrom).CreatedAtTo(createdAtTo).ExpiresAtFrom(expiresAtFrom).ExpiresAtTo(expiresAtTo).UpdatedAtFrom(updatedAtFrom).UpdatedAtTo(updatedAtTo).NeedsManualReview(needsManualReview).Id(id).Protocol(protocol).Execute()
 
 List Infractions
 
@@ -29,6 +29,7 @@ import (
 	"context"
 	"fmt"
 	"os"
+    "time"
 	openapiclient "github.com/PayZuPlus/payzu-sdks/payzupix"
 )
 
@@ -46,10 +47,23 @@ func main() {
 	reportedBy := "reportedBy_example" // string | Comma-separated ReportedType (DEBITED_PARTICIPANT,CREDITED_PARTICIPANT) (optional)
 	participantDocument := "participantDocument_example" // string |  (optional)
 	participantName := "participantName_example" // string |  (optional)
+	sortBy := "sortBy_example" // string | Campo de ordenação. (optional)
+	sortDirection := "sortDirection_example" // string | Direção da ordenação. (optional)
+	reportedAtFrom := time.Now() // time.Time | Filtro: reportedAt a partir de. (optional)
+	reportedAtTo := time.Now() // time.Time | Filtro: reportedAt até. (optional)
+	createdAtFrom := time.Now() // time.Time | Filtro: createdAt a partir de. (optional)
+	createdAtTo := time.Now() // time.Time | Filtro: createdAt até. (optional)
+	expiresAtFrom := time.Now() // time.Time | Filtro: expiresAt a partir de. (optional)
+	expiresAtTo := time.Now() // time.Time | Filtro: expiresAt até. (optional)
+	updatedAtFrom := time.Now() // time.Time | Filtro: updatedAt a partir de. (optional)
+	updatedAtTo := time.Now() // time.Time | Filtro: updatedAt até. (optional)
+	needsManualReview := true // bool | Filtro: precisa de revisão manual. (optional)
+	id := "id_example" // string | Filtro por ID da infração. (optional)
+	protocol := "protocol_example" // string | Filtro por protocolo. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.InfractionsAPI.GetInfractions(context.Background()).ContentType(contentType).Page(page).Limit(limit).Status(status).Type_(type_).EndToEndId(endToEndId).TransactionId(transactionId).AmountMin(amountMin).AmountMax(amountMax).AnalysisResult(analysisResult).ReportedBy(reportedBy).ParticipantDocument(participantDocument).ParticipantName(participantName).Execute()
+	resp, r, err := apiClient.InfractionsAPI.GetInfractions(context.Background()).ContentType(contentType).Page(page).Limit(limit).Status(status).Type_(type_).EndToEndId(endToEndId).TransactionId(transactionId).AmountMin(amountMin).AmountMax(amountMax).AnalysisResult(analysisResult).ReportedBy(reportedBy).ParticipantDocument(participantDocument).ParticipantName(participantName).SortBy(sortBy).SortDirection(sortDirection).ReportedAtFrom(reportedAtFrom).ReportedAtTo(reportedAtTo).CreatedAtFrom(createdAtFrom).CreatedAtTo(createdAtTo).ExpiresAtFrom(expiresAtFrom).ExpiresAtTo(expiresAtTo).UpdatedAtFrom(updatedAtFrom).UpdatedAtTo(updatedAtTo).NeedsManualReview(needsManualReview).Id(id).Protocol(protocol).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `InfractionsAPI.GetInfractions``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -83,6 +97,19 @@ Name | Type | Description  | Notes
  **reportedBy** | **string** | Comma-separated ReportedType (DEBITED_PARTICIPANT,CREDITED_PARTICIPANT) | 
  **participantDocument** | **string** |  | 
  **participantName** | **string** |  | 
+ **sortBy** | **string** | Campo de ordenação. | 
+ **sortDirection** | **string** | Direção da ordenação. | 
+ **reportedAtFrom** | **time.Time** | Filtro: reportedAt a partir de. | 
+ **reportedAtTo** | **time.Time** | Filtro: reportedAt até. | 
+ **createdAtFrom** | **time.Time** | Filtro: createdAt a partir de. | 
+ **createdAtTo** | **time.Time** | Filtro: createdAt até. | 
+ **expiresAtFrom** | **time.Time** | Filtro: expiresAt a partir de. | 
+ **expiresAtTo** | **time.Time** | Filtro: expiresAt até. | 
+ **updatedAtFrom** | **time.Time** | Filtro: updatedAt a partir de. | 
+ **updatedAtTo** | **time.Time** | Filtro: updatedAt até. | 
+ **needsManualReview** | **bool** | Filtro: precisa de revisão manual. | 
+ **id** | **string** | Filtro por ID da infração. | 
+ **protocol** | **string** | Filtro por protocolo. | 
 
 ### Return type
 

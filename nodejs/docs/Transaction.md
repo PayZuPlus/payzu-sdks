@@ -11,7 +11,6 @@ Name | Type
 `status` | string
 `amount` | number
 `type` | string
-`callbackUrl` | string
 `qrCodeText` | string
 `qrCodeBase64` | string
 `qrCodeUrl` | string
@@ -37,14 +36,14 @@ Name | Type
 `paidAt` | string
 `clientReference` | string
 `refundEndToEndId` | string
-`refundAmount` | string
+`refundAmount` | number
 `refundStatus` | string
 `refundReason` | string
 `refundDescription` | string
 `refundedAt` | string
 `cancellationReason` | string
-`infraction` | [TransactionInfraction](TransactionInfraction.md)
 `virtualAccount` | string
+`method` | string
 
 ## Example
 
@@ -57,7 +56,6 @@ const example = {
   "status": null,
   "amount": null,
   "type": null,
-  "callbackUrl": null,
   "qrCodeText": null,
   "qrCodeBase64": null,
   "qrCodeUrl": null,
@@ -89,8 +87,8 @@ const example = {
   "refundDescription": null,
   "refundedAt": null,
   "cancellationReason": null,
-  "infraction": null,
   "virtualAccount": null,
+  "method": null,
 } satisfies Transaction
 
 console.log(example)

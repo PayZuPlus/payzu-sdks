@@ -5,7 +5,7 @@ All URIs are relative to *https://api.payzu.processamento.com/v1*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**DownloadUserReport**](ReportsAPI.md#DownloadUserReport) | **Post** /user/report/{id}/download | Download report
-[**GetUserReport**](ReportsAPI.md#GetUserReport) | **Get** /user/report/{id} | List report job status
+[**GetUserReport**](ReportsAPI.md#GetUserReport) | **Get** /user/report/{id} | Consultar status do relatório
 [**GetUserTransactionById**](ReportsAPI.md#GetUserTransactionById) | **Get** /user/transactions/{id} | List transaction details
 [**GetUserTransactions**](ReportsAPI.md#GetUserTransactions) | **Get** /user/transactions | List Transactions
 [**ListUserReports**](ReportsAPI.md#ListUserReports) | **Get** /user/report | List report jobs
@@ -89,7 +89,7 @@ Name | Type | Description  | Notes
 
 > ReportJob GetUserReport(ctx, id).ContentType(contentType).Execute()
 
-List report job status
+Consultar status do relatório
 
 
 
@@ -258,7 +258,7 @@ func main() {
 	id := "PAYZU2025081418333632CYKN8M" // string | Transaction ID. (optional)
 	status := "COMPLETED" // string | Status da transação. Aceita CSV: PENDING,COMPLETED,etc. (optional)
 	type_ := "DEPOSIT" // string | Tipo da transação. Aceita CSV: DEPOSIT,WITHDRAW,COMMISSION. (optional)
-	amount := float32(15000) // float32 | Amount filter. (optional)
+	amount := float32(15000) // float32 | Amount filter. Mínimo 0.01. (optional)
 	document := "12345678901" // string | CPF (11 dígitos) ou CNPJ (14 dígitos), apenas números sem formatação. (optional)
 	name := "Alice" // string | Name filter. (optional)
 	endToEndId := "E00360305202508141833bcf1f37b487" // string | Pix end-to-end ID. (optional)
@@ -298,7 +298,7 @@ Name | Type | Description  | Notes
  **id** | **string** | Transaction ID. | 
  **status** | **string** | Status da transação. Aceita CSV: PENDING,COMPLETED,etc. | 
  **type_** | **string** | Tipo da transação. Aceita CSV: DEPOSIT,WITHDRAW,COMMISSION. | 
- **amount** | **float32** | Amount filter. | 
+ **amount** | **float32** | Amount filter. Mínimo 0.01. | 
  **document** | **string** | CPF (11 dígitos) ou CNPJ (14 dígitos), apenas números sem formatação. | 
  **name** | **string** | Name filter. | 
  **endToEndId** | **string** | Pix end-to-end ID. | 
@@ -327,7 +327,7 @@ Name | Type | Description  | Notes
 
 ## ListUserReports
 
-> ListUserReports200Response ListUserReports(ctx).ContentType(contentType).Page(page).Limit(limit).Status(status).Execute()
+> ListUserReports200Response ListUserReports(ctx).ContentType(contentType).Page(page).Limit(limit).Status(status).CreatedAtFrom(createdAtFrom).CreatedAtTo(createdAtTo).UpdatedAtFrom(updatedAtFrom).UpdatedAtTo(updatedAtTo).SortBy(sortBy).SortDirection(sortDirection).Execute()
 
 List report jobs
 
@@ -342,6 +342,7 @@ import (
 	"context"
 	"fmt"
 	"os"
+    "time"
 	openapiclient "github.com/PayZuPlus/payzu-sdks/payzupix"
 )
 
@@ -350,10 +351,16 @@ func main() {
 	page := int32(56) // int32 |  (optional) (default to 1)
 	limit := int32(56) // int32 |  (optional) (default to 10)
 	status := "status_example" // string |  (optional)
+	createdAtFrom := time.Now() // time.Time | Filtro: criado a partir de. (optional)
+	createdAtTo := time.Now() // time.Time | Filtro: criado até. (optional)
+	updatedAtFrom := time.Now() // time.Time | Filtro: atualizado a partir de. (optional)
+	updatedAtTo := time.Now() // time.Time | Filtro: atualizado até. (optional)
+	sortBy := "sortBy_example" // string | Campo de ordenação. (optional) (default to "createdAt")
+	sortDirection := "sortDirection_example" // string | Direção da ordenação. (optional) (default to "desc")
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.ReportsAPI.ListUserReports(context.Background()).ContentType(contentType).Page(page).Limit(limit).Status(status).Execute()
+	resp, r, err := apiClient.ReportsAPI.ListUserReports(context.Background()).ContentType(contentType).Page(page).Limit(limit).Status(status).CreatedAtFrom(createdAtFrom).CreatedAtTo(createdAtTo).UpdatedAtFrom(updatedAtFrom).UpdatedAtTo(updatedAtTo).SortBy(sortBy).SortDirection(sortDirection).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `ReportsAPI.ListUserReports``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -378,6 +385,12 @@ Name | Type | Description  | Notes
  **page** | **int32** |  | [default to 1]
  **limit** | **int32** |  | [default to 10]
  **status** | **string** |  | 
+ **createdAtFrom** | **time.Time** | Filtro: criado a partir de. | 
+ **createdAtTo** | **time.Time** | Filtro: criado até. | 
+ **updatedAtFrom** | **time.Time** | Filtro: atualizado a partir de. | 
+ **updatedAtTo** | **time.Time** | Filtro: atualizado até. | 
+ **sortBy** | **string** | Campo de ordenação. | [default to &quot;createdAt&quot;]
+ **sortDirection** | **string** | Direção da ordenação. | [default to &quot;desc&quot;]
 
 ### Return type
 

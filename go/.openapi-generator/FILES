@@ -29,8 +29,8 @@ docs/GetUser200ResponseDailyWithdrawLimit.md
 docs/GetUser200ResponseServiceFee.md
 docs/GetUserBalance200Response.md
 docs/GetUserTransactionById200Response.md
-docs/GetUserTransactionById200ResponseAllOfCallbackLogsInner.md
-docs/GetUserTransactionById200ResponseAllOfInfractionsInner.md
+docs/GetUserTransactionById200ResponseAllOfCallbackLogInner.md
+docs/GetUserTransactionById200ResponseAllOfInfractionInner.md
 docs/GetUserTransactions200Response.md
 docs/InfractionDetail.md
 docs/InfractionDetailTransaction.md
@@ -56,7 +56,6 @@ docs/ResendUserCallbackSingle200Response.md
 docs/ResendUserCallbacks200Response.md
 docs/ResendUserCallbacksRequest.md
 docs/Transaction.md
-docs/TransactionInfraction.md
 docs/WithdrawalsAPI.md
 git_push.sh
 go.mod
@@ -76,8 +75,8 @@ model_get_user_200_response_daily_withdraw_limit.go
 model_get_user_200_response_service_fee.go
 model_get_user_balance_200_response.go
 model_get_user_transaction_by_id_200_response.go
-model_get_user_transaction_by_id_200_response_all_of_callback_logs_inner.go
-model_get_user_transaction_by_id_200_response_all_of_infractions_inner.go
+model_get_user_transaction_by_id_200_response_all_of_callback_log_inner.go
+model_get_user_transaction_by_id_200_response_all_of_infraction_inner.go
 model_get_user_transactions_200_response.go
 model_infraction_detail.go
 model_infraction_detail_transaction.go
@@ -99,7 +98,6 @@ model_resend_user_callback_single_200_response.go
 model_resend_user_callbacks_200_response.go
 model_resend_user_callbacks_request.go
 model_transaction.go
-model_transaction_infraction.go
 response.go
 test/api_account_test.go
 test/api_callbacks_test.go

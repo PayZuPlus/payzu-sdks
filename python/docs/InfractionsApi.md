@@ -12,7 +12,7 @@ Method | HTTP request | Description
 
 
 # **get_infractions**
-> InfractionListResponse get_infractions(content_type, page=page, limit=limit, status=status, type=type, end_to_end_id=end_to_end_id, transaction_id=transaction_id, amount_min=amount_min, amount_max=amount_max, analysis_result=analysis_result, reported_by=reported_by, participant_document=participant_document, participant_name=participant_name)
+> InfractionListResponse get_infractions(content_type, page=page, limit=limit, status=status, type=type, end_to_end_id=end_to_end_id, transaction_id=transaction_id, amount_min=amount_min, amount_max=amount_max, analysis_result=analysis_result, reported_by=reported_by, participant_document=participant_document, participant_name=participant_name, sort_by=sort_by, sort_direction=sort_direction, reported_at_from=reported_at_from, reported_at_to=reported_at_to, created_at_from=created_at_from, created_at_to=created_at_to, expires_at_from=expires_at_from, expires_at_to=expires_at_to, updated_at_from=updated_at_from, updated_at_to=updated_at_to, needs_manual_review=needs_manual_review, id=id, protocol=protocol)
 
 List Infractions
 
@@ -61,10 +61,23 @@ with payzu_pix.ApiClient(configuration) as api_client:
     reported_by = 'reported_by_example' # str | Comma-separated ReportedType (DEBITED_PARTICIPANT,CREDITED_PARTICIPANT) (optional)
     participant_document = 'participant_document_example' # str |  (optional)
     participant_name = 'participant_name_example' # str |  (optional)
+    sort_by = 'sort_by_example' # str | Campo de ordenação. (optional)
+    sort_direction = 'sort_direction_example' # str | Direção da ordenação. (optional)
+    reported_at_from = '2013-10-20T19:20:30+01:00' # datetime | Filtro: reportedAt a partir de. (optional)
+    reported_at_to = '2013-10-20T19:20:30+01:00' # datetime | Filtro: reportedAt até. (optional)
+    created_at_from = '2013-10-20T19:20:30+01:00' # datetime | Filtro: createdAt a partir de. (optional)
+    created_at_to = '2013-10-20T19:20:30+01:00' # datetime | Filtro: createdAt até. (optional)
+    expires_at_from = '2013-10-20T19:20:30+01:00' # datetime | Filtro: expiresAt a partir de. (optional)
+    expires_at_to = '2013-10-20T19:20:30+01:00' # datetime | Filtro: expiresAt até. (optional)
+    updated_at_from = '2013-10-20T19:20:30+01:00' # datetime | Filtro: updatedAt a partir de. (optional)
+    updated_at_to = '2013-10-20T19:20:30+01:00' # datetime | Filtro: updatedAt até. (optional)
+    needs_manual_review = True # bool | Filtro: precisa de revisão manual. (optional)
+    id = 'id_example' # str | Filtro por ID da infração. (optional)
+    protocol = 'protocol_example' # str | Filtro por protocolo. (optional)
 
     try:
         # List Infractions
-        api_response = api_instance.get_infractions(content_type, page=page, limit=limit, status=status, type=type, end_to_end_id=end_to_end_id, transaction_id=transaction_id, amount_min=amount_min, amount_max=amount_max, analysis_result=analysis_result, reported_by=reported_by, participant_document=participant_document, participant_name=participant_name)
+        api_response = api_instance.get_infractions(content_type, page=page, limit=limit, status=status, type=type, end_to_end_id=end_to_end_id, transaction_id=transaction_id, amount_min=amount_min, amount_max=amount_max, analysis_result=analysis_result, reported_by=reported_by, participant_document=participant_document, participant_name=participant_name, sort_by=sort_by, sort_direction=sort_direction, reported_at_from=reported_at_from, reported_at_to=reported_at_to, created_at_from=created_at_from, created_at_to=created_at_to, expires_at_from=expires_at_from, expires_at_to=expires_at_to, updated_at_from=updated_at_from, updated_at_to=updated_at_to, needs_manual_review=needs_manual_review, id=id, protocol=protocol)
         print("The response of InfractionsApi->get_infractions:\n")
         pprint(api_response)
     except Exception as e:
@@ -91,6 +104,19 @@ Name | Type | Description  | Notes
  **reported_by** | **str**| Comma-separated ReportedType (DEBITED_PARTICIPANT,CREDITED_PARTICIPANT) | [optional] 
  **participant_document** | **str**|  | [optional] 
  **participant_name** | **str**|  | [optional] 
+ **sort_by** | **str**| Campo de ordenação. | [optional] 
+ **sort_direction** | **str**| Direção da ordenação. | [optional] 
+ **reported_at_from** | **datetime**| Filtro: reportedAt a partir de. | [optional] 
+ **reported_at_to** | **datetime**| Filtro: reportedAt até. | [optional] 
+ **created_at_from** | **datetime**| Filtro: createdAt a partir de. | [optional] 
+ **created_at_to** | **datetime**| Filtro: createdAt até. | [optional] 
+ **expires_at_from** | **datetime**| Filtro: expiresAt a partir de. | [optional] 
+ **expires_at_to** | **datetime**| Filtro: expiresAt até. | [optional] 
+ **updated_at_from** | **datetime**| Filtro: updatedAt a partir de. | [optional] 
+ **updated_at_to** | **datetime**| Filtro: updatedAt até. | [optional] 
+ **needs_manual_review** | **bool**| Filtro: precisa de revisão manual. | [optional] 
+ **id** | **str**| Filtro por ID da infração. | [optional] 
+ **protocol** | **str**| Filtro por protocolo. | [optional] 
 
 ### Return type
 

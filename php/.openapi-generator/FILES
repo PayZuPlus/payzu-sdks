@@ -26,8 +26,8 @@ docs/Model/GetUser200ResponseDailyWithdrawLimit.md
 docs/Model/GetUser200ResponseServiceFee.md
 docs/Model/GetUserBalance200Response.md
 docs/Model/GetUserTransactionById200Response.md
-docs/Model/GetUserTransactionById200ResponseAllOfCallbackLogsInner.md
-docs/Model/GetUserTransactionById200ResponseAllOfInfractionsInner.md
+docs/Model/GetUserTransactionById200ResponseAllOfCallbackLogInner.md
+docs/Model/GetUserTransactionById200ResponseAllOfInfractionInner.md
 docs/Model/GetUserTransactions200Response.md
 docs/Model/InfractionDetail.md
 docs/Model/InfractionDetailTransaction.md
@@ -49,7 +49,6 @@ docs/Model/ResendUserCallbackSingle200Response.md
 docs/Model/ResendUserCallbacks200Response.md
 docs/Model/ResendUserCallbacksRequest.md
 docs/Model/Transaction.md
-docs/Model/TransactionInfraction.md
 git_push.sh
 lib/Api/AccountApi.php
 lib/Api/CallbacksApi.php
@@ -77,8 +76,8 @@ lib/Model/GetUser200ResponseDailyWithdrawLimit.php
 lib/Model/GetUser200ResponseServiceFee.php
 lib/Model/GetUserBalance200Response.php
 lib/Model/GetUserTransactionById200Response.php
-lib/Model/GetUserTransactionById200ResponseAllOfCallbackLogsInner.php
-lib/Model/GetUserTransactionById200ResponseAllOfInfractionsInner.php
+lib/Model/GetUserTransactionById200ResponseAllOfCallbackLogInner.php
+lib/Model/GetUserTransactionById200ResponseAllOfInfractionInner.php
 lib/Model/GetUserTransactions200Response.php
 lib/Model/InfractionDetail.php
 lib/Model/InfractionDetailTransaction.php
@@ -101,7 +100,6 @@ lib/Model/ResendUserCallbackSingle200Response.php
 lib/Model/ResendUserCallbacks200Response.php
 lib/Model/ResendUserCallbacksRequest.php
 lib/Model/Transaction.php
-lib/Model/TransactionInfraction.php
 lib/ObjectSerializer.php
 phpunit.xml.dist
 test/Api/AccountApiTest.php
@@ -125,8 +123,8 @@ test/Model/GetUser200ResponseDailyWithdrawLimitTest.php
 test/Model/GetUser200ResponseServiceFeeTest.php
 test/Model/GetUser200ResponseTest.php
 test/Model/GetUserBalance200ResponseTest.php
-test/Model/GetUserTransactionById200ResponseAllOfCallbackLogsInnerTest.php
-test/Model/GetUserTransactionById200ResponseAllOfInfractionsInnerTest.php
+test/Model/GetUserTransactionById200ResponseAllOfCallbackLogInnerTest.php
+test/Model/GetUserTransactionById200ResponseAllOfInfractionInnerTest.php
 test/Model/GetUserTransactionById200ResponseTest.php
 test/Model/GetUserTransactions200ResponseTest.php
 test/Model/InfractionDetailTest.php
@@ -148,5 +146,4 @@ test/Model/ReportJobTest.php
 test/Model/ResendUserCallbackSingle200ResponseTest.php
 test/Model/ResendUserCallbacks200ResponseTest.php
 test/Model/ResendUserCallbacksRequestTest.php
-test/Model/TransactionInfractionTest.php
 test/Model/TransactionTest.php

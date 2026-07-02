@@ -21,8 +21,8 @@ docs/GetUser200ResponseDailyWithdrawLimit.md
 docs/GetUser200ResponseServiceFee.md
 docs/GetUserBalance200Response.md
 docs/GetUserTransactionById200Response.md
-docs/GetUserTransactionById200ResponseAllOfCallbackLogsInner.md
-docs/GetUserTransactionById200ResponseAllOfInfractionsInner.md
+docs/GetUserTransactionById200ResponseAllOfCallbackLogInner.md
+docs/GetUserTransactionById200ResponseAllOfInfractionInner.md
 docs/GetUserTransactions200Response.md
 docs/InfractionDetail.md
 docs/InfractionDetailTransaction.md
@@ -48,7 +48,6 @@ docs/ResendUserCallbackSingle200Response.md
 docs/ResendUserCallbacks200Response.md
 docs/ResendUserCallbacksRequest.md
 docs/Transaction.md
-docs/TransactionInfraction.md
 docs/WithdrawalsApi.md
 git_push.sh
 payzu_pix/__init__.py
@@ -80,8 +79,8 @@ payzu_pix/models/get_user200_response_daily_withdraw_limit.py
 payzu_pix/models/get_user200_response_service_fee.py
 payzu_pix/models/get_user_balance200_response.py
 payzu_pix/models/get_user_transaction_by_id200_response.py
-payzu_pix/models/get_user_transaction_by_id200_response_all_of_callback_logs_inner.py
-payzu_pix/models/get_user_transaction_by_id200_response_all_of_infractions_inner.py
+payzu_pix/models/get_user_transaction_by_id200_response_all_of_callback_log_inner.py
+payzu_pix/models/get_user_transaction_by_id200_response_all_of_infraction_inner.py
 payzu_pix/models/get_user_transactions200_response.py
 payzu_pix/models/infraction_detail.py
 payzu_pix/models/infraction_detail_transaction.py
@@ -103,7 +102,6 @@ payzu_pix/models/resend_user_callback_single200_response.py
 payzu_pix/models/resend_user_callbacks200_response.py
 payzu_pix/models/resend_user_callbacks_request.py
 payzu_pix/models/transaction.py
-payzu_pix/models/transaction_infraction.py
 payzu_pix/py.typed
 payzu_pix/rest.py
 pyproject.toml
@@ -129,8 +127,8 @@ test/test_get_user200_response_daily_withdraw_limit.py
 test/test_get_user200_response_service_fee.py
 test/test_get_user_balance200_response.py
 test/test_get_user_transaction_by_id200_response.py
-test/test_get_user_transaction_by_id200_response_all_of_callback_logs_inner.py
-test/test_get_user_transaction_by_id200_response_all_of_infractions_inner.py
+test/test_get_user_transaction_by_id200_response_all_of_callback_log_inner.py
+test/test_get_user_transaction_by_id200_response_all_of_infraction_inner.py
 test/test_get_user_transactions200_response.py
 test/test_infraction_detail.py
 test/test_infraction_detail_transaction.py
@@ -156,6 +154,5 @@ test/test_resend_user_callback_single200_response.py
 test/test_resend_user_callbacks200_response.py
 test/test_resend_user_callbacks_request.py
 test/test_transaction.py
-test/test_transaction_infraction.py
 test/test_withdrawals_api.py
 tox.ini
