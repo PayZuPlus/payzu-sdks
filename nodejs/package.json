@@ -1,21 +1,59 @@
 {
   "name": "payzu-pix",
-  "version": "0.1.0",
-  "description": "OpenAPI client for payzu-pix",
-  "author": "OpenAPI-Generator",
+  "version": "1.0.0",
+  "description": "SDK oficial Node.js da API PayZu Pix: depósitos, saques, transferências internas, infrações, relatórios e callbacks.",
+  "author": "PayZu <suporte@payzu.com.br>",
+  "license": "MIT",
+  "homepage": "https://docs.payzu.com.br",
   "repository": {
     "type": "git",
-    "url": "https://github.com/PayZuPlus/payzu-sdks.git"
+    "url": "https://github.com/PayZuPlus/payzu-sdks.git",
+    "directory": "nodejs"
   },
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
-  "module": "./dist/esm/index.js",
+  "bugs": {
+    "url": "https://github.com/PayZuPlus/payzu-sdks/issues"
+  },
+  "keywords": [
+    "payzu",
+    "pix",
+    "pagamentos",
+    "payments",
+    "brasil",
+    "sdk",
+    "api",
+    "qrcode",
+    "webhook"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
   "sideEffects": false,
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "types": "dist/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/types/index.d.ts",
+      "import": "./dist/esm/index.js",
+      "require": "./dist/cjs/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist"
+  ],
   "scripts": {
-    "build": "tsc && tsc -p tsconfig.esm.json",
-    "prepare": "npm run build"
+    "build": "npm run build:cjs && npm run build:esm && npm run build:types",
+    "build:cjs": "tsc -p tsconfig.build-cjs.json",
+    "build:esm": "tsc -p tsconfig.build-esm.json && node scripts/mark-esm.mjs",
+    "build:types": "tsc -p tsconfig.build-types.json",
+    "typecheck": "tsc -p tsconfig.json",
+    "test": "tsx --test test/*.test.ts",
+    "prepack": "npm run build"
   },
   "devDependencies": {
-    "typescript": "^4.0 || ^5.0"
+    "@types/node": "^20",
+    "tsx": "^4",
+    "typescript": "^5.5"
   }
 }

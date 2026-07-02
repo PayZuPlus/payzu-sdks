@@ -25,10 +25,13 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
       - name: Build
         working-directory: nodejs
+        env:
+          RELEASE_VERSION: ${{ inputs.version || github.event.release.tag_name }}
         run: |
-          npm version "${{ inputs.version || github.event.release.tag_name }}" --no-git-tag-version --allow-same-version || true
-          npm install
-          npm run build || npx tsc
+          npm version "$RELEASE_VERSION" --no-git-tag-version --allow-same-version
+          npm ci
+          npm run build
+          npm test
       - name: Publish
         working-directory: nodejs
         env:
