@@ -9,7 +9,7 @@ Method | HTTP request | Description
 
 
 # **get_user**
-> GetUser200Response get_user(content_type)
+> GetUser200Response get_user()
 
 Account Info
 
@@ -45,11 +45,10 @@ configuration = payzu_pix.Configuration(
 with payzu_pix.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = payzu_pix.AccountApi(api_client)
-    content_type = application/json # str | Obrigatório em toda chamada PayZu. (default to application/json)
 
     try:
         # Account Info
-        api_response = api_instance.get_user(content_type)
+        api_response = api_instance.get_user()
         print("The response of AccountApi->get_user:\n")
         pprint(api_response)
     except Exception as e:
@@ -60,10 +59,7 @@ with payzu_pix.ApiClient(configuration) as api_client:
 
 ### Parameters
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **content_type** | **str**| Obrigatório em toda chamada PayZu. | [default to application/json]
+This endpoint does not need any parameter.
 
 ### Return type
 
@@ -89,7 +85,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_user_balance**
-> GetUserBalance200Response get_user_balance(content_type)
+> GetUserBalance200Response get_user_balance()
 
 Account Balance
 
@@ -125,11 +121,10 @@ configuration = payzu_pix.Configuration(
 with payzu_pix.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = payzu_pix.AccountApi(api_client)
-    content_type = application/json # str | Obrigatório em toda chamada PayZu. (default to application/json)
 
     try:
         # Account Balance
-        api_response = api_instance.get_user_balance(content_type)
+        api_response = api_instance.get_user_balance()
         print("The response of AccountApi->get_user_balance:\n")
         pprint(api_response)
     except Exception as e:
@@ -140,10 +135,7 @@ with payzu_pix.ApiClient(configuration) as api_client:
 
 ### Parameters
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **content_type** | **str**| Obrigatório em toda chamada PayZu. | [default to application/json]
+This endpoint does not need any parameter.
 
 ### Return type
 

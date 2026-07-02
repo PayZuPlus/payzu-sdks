@@ -14,7 +14,7 @@ Method | HTTP request | Description
 
 ## GetInfractions
 
-> InfractionListResponse GetInfractions(ctx).ContentType(contentType).Page(page).Limit(limit).Status(status).Type_(type_).EndToEndId(endToEndId).TransactionId(transactionId).AmountMin(amountMin).AmountMax(amountMax).AnalysisResult(analysisResult).ReportedBy(reportedBy).ParticipantDocument(participantDocument).ParticipantName(participantName).SortBy(sortBy).SortDirection(sortDirection).ReportedAtFrom(reportedAtFrom).ReportedAtTo(reportedAtTo).CreatedAtFrom(createdAtFrom).CreatedAtTo(createdAtTo).ExpiresAtFrom(expiresAtFrom).ExpiresAtTo(expiresAtTo).UpdatedAtFrom(updatedAtFrom).UpdatedAtTo(updatedAtTo).NeedsManualReview(needsManualReview).Id(id).Protocol(protocol).Execute()
+> InfractionListResponse GetInfractions(ctx).Page(page).Limit(limit).Status(status).Type_(type_).EndToEndId(endToEndId).TransactionId(transactionId).AmountMin(amountMin).AmountMax(amountMax).AnalysisResult(analysisResult).ReportedBy(reportedBy).ParticipantDocument(participantDocument).ParticipantName(participantName).SortBy(sortBy).SortDirection(sortDirection).ReportedAtFrom(reportedAtFrom).ReportedAtTo(reportedAtTo).CreatedAtFrom(createdAtFrom).CreatedAtTo(createdAtTo).ExpiresAtFrom(expiresAtFrom).ExpiresAtTo(expiresAtTo).UpdatedAtFrom(updatedAtFrom).UpdatedAtTo(updatedAtTo).NeedsManualReview(needsManualReview).Id(id).Protocol(protocol).Execute()
 
 List Infractions
 
@@ -30,11 +30,10 @@ import (
 	"fmt"
 	"os"
     "time"
-	openapiclient "github.com/PayZuPlus/payzu-sdks/payzupix"
+	openapiclient "github.com/PayZuPlus/payzu-sdks/go"
 )
 
 func main() {
-	contentType := "contentType_example" // string | Obrigatório em toda chamada PayZu. (default to "application/json")
 	page := int32(56) // int32 |  (optional) (default to 1)
 	limit := int32(56) // int32 |  (optional) (default to 10)
 	status := "status_example" // string | Comma-separated InfractionStatus (WAITING_PSP,CLOSED,OPEN,CANCELLED,ACKNOWLEDGED,DEFENDED,ANSWERED,WAITING_ADJUSTMENTS) (optional)
@@ -47,23 +46,23 @@ func main() {
 	reportedBy := "reportedBy_example" // string | Comma-separated ReportedType (DEBITED_PARTICIPANT,CREDITED_PARTICIPANT) (optional)
 	participantDocument := "participantDocument_example" // string |  (optional)
 	participantName := "participantName_example" // string |  (optional)
-	sortBy := "sortBy_example" // string | Campo de ordenação. (optional)
-	sortDirection := "sortDirection_example" // string | Direção da ordenação. (optional)
-	reportedAtFrom := time.Now() // time.Time | Filtro: reportedAt a partir de. (optional)
-	reportedAtTo := time.Now() // time.Time | Filtro: reportedAt até. (optional)
-	createdAtFrom := time.Now() // time.Time | Filtro: createdAt a partir de. (optional)
-	createdAtTo := time.Now() // time.Time | Filtro: createdAt até. (optional)
-	expiresAtFrom := time.Now() // time.Time | Filtro: expiresAt a partir de. (optional)
-	expiresAtTo := time.Now() // time.Time | Filtro: expiresAt até. (optional)
-	updatedAtFrom := time.Now() // time.Time | Filtro: updatedAt a partir de. (optional)
-	updatedAtTo := time.Now() // time.Time | Filtro: updatedAt até. (optional)
-	needsManualReview := true // bool | Filtro: precisa de revisão manual. (optional)
-	id := "id_example" // string | Filtro por ID da infração. (optional)
-	protocol := "protocol_example" // string | Filtro por protocolo. (optional)
+	sortBy := "sortBy_example" // string | Sort field. (optional)
+	sortDirection := "sortDirection_example" // string | Sort direction. (optional)
+	reportedAtFrom := time.Now() // time.Time | Filter: reportedAt from. (optional)
+	reportedAtTo := time.Now() // time.Time | Filter: reportedAt up to. (optional)
+	createdAtFrom := time.Now() // time.Time | Filter: createdAt from. (optional)
+	createdAtTo := time.Now() // time.Time | Filter: createdAt up to. (optional)
+	expiresAtFrom := time.Now() // time.Time | Filter: expiresAt from. (optional)
+	expiresAtTo := time.Now() // time.Time | Filter: expiresAt up to. (optional)
+	updatedAtFrom := time.Now() // time.Time | Filter: updatedAt from. (optional)
+	updatedAtTo := time.Now() // time.Time | Filter: updatedAt up to. (optional)
+	needsManualReview := true // bool | Filter: needs manual review. (optional)
+	id := "id_example" // string | Filter by infraction ID. (optional)
+	protocol := "protocol_example" // string | Filter by protocol. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.InfractionsAPI.GetInfractions(context.Background()).ContentType(contentType).Page(page).Limit(limit).Status(status).Type_(type_).EndToEndId(endToEndId).TransactionId(transactionId).AmountMin(amountMin).AmountMax(amountMax).AnalysisResult(analysisResult).ReportedBy(reportedBy).ParticipantDocument(participantDocument).ParticipantName(participantName).SortBy(sortBy).SortDirection(sortDirection).ReportedAtFrom(reportedAtFrom).ReportedAtTo(reportedAtTo).CreatedAtFrom(createdAtFrom).CreatedAtTo(createdAtTo).ExpiresAtFrom(expiresAtFrom).ExpiresAtTo(expiresAtTo).UpdatedAtFrom(updatedAtFrom).UpdatedAtTo(updatedAtTo).NeedsManualReview(needsManualReview).Id(id).Protocol(protocol).Execute()
+	resp, r, err := apiClient.InfractionsAPI.GetInfractions(context.Background()).Page(page).Limit(limit).Status(status).Type_(type_).EndToEndId(endToEndId).TransactionId(transactionId).AmountMin(amountMin).AmountMax(amountMax).AnalysisResult(analysisResult).ReportedBy(reportedBy).ParticipantDocument(participantDocument).ParticipantName(participantName).SortBy(sortBy).SortDirection(sortDirection).ReportedAtFrom(reportedAtFrom).ReportedAtTo(reportedAtTo).CreatedAtFrom(createdAtFrom).CreatedAtTo(createdAtTo).ExpiresAtFrom(expiresAtFrom).ExpiresAtTo(expiresAtTo).UpdatedAtFrom(updatedAtFrom).UpdatedAtTo(updatedAtTo).NeedsManualReview(needsManualReview).Id(id).Protocol(protocol).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `InfractionsAPI.GetInfractions``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -84,7 +83,6 @@ Other parameters are passed through a pointer to a apiGetInfractionsRequest stru
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **contentType** | **string** | Obrigatório em toda chamada PayZu. | [default to &quot;application/json&quot;]
  **page** | **int32** |  | [default to 1]
  **limit** | **int32** |  | [default to 10]
  **status** | **string** | Comma-separated InfractionStatus (WAITING_PSP,CLOSED,OPEN,CANCELLED,ACKNOWLEDGED,DEFENDED,ANSWERED,WAITING_ADJUSTMENTS) | 
@@ -97,19 +95,19 @@ Name | Type | Description  | Notes
  **reportedBy** | **string** | Comma-separated ReportedType (DEBITED_PARTICIPANT,CREDITED_PARTICIPANT) | 
  **participantDocument** | **string** |  | 
  **participantName** | **string** |  | 
- **sortBy** | **string** | Campo de ordenação. | 
- **sortDirection** | **string** | Direção da ordenação. | 
- **reportedAtFrom** | **time.Time** | Filtro: reportedAt a partir de. | 
- **reportedAtTo** | **time.Time** | Filtro: reportedAt até. | 
- **createdAtFrom** | **time.Time** | Filtro: createdAt a partir de. | 
- **createdAtTo** | **time.Time** | Filtro: createdAt até. | 
- **expiresAtFrom** | **time.Time** | Filtro: expiresAt a partir de. | 
- **expiresAtTo** | **time.Time** | Filtro: expiresAt até. | 
- **updatedAtFrom** | **time.Time** | Filtro: updatedAt a partir de. | 
- **updatedAtTo** | **time.Time** | Filtro: updatedAt até. | 
- **needsManualReview** | **bool** | Filtro: precisa de revisão manual. | 
- **id** | **string** | Filtro por ID da infração. | 
- **protocol** | **string** | Filtro por protocolo. | 
+ **sortBy** | **string** | Sort field. | 
+ **sortDirection** | **string** | Sort direction. | 
+ **reportedAtFrom** | **time.Time** | Filter: reportedAt from. | 
+ **reportedAtTo** | **time.Time** | Filter: reportedAt up to. | 
+ **createdAtFrom** | **time.Time** | Filter: createdAt from. | 
+ **createdAtTo** | **time.Time** | Filter: createdAt up to. | 
+ **expiresAtFrom** | **time.Time** | Filter: expiresAt from. | 
+ **expiresAtTo** | **time.Time** | Filter: expiresAt up to. | 
+ **updatedAtFrom** | **time.Time** | Filter: updatedAt from. | 
+ **updatedAtTo** | **time.Time** | Filter: updatedAt up to. | 
+ **needsManualReview** | **bool** | Filter: needs manual review. | 
+ **id** | **string** | Filter by infraction ID. | 
+ **protocol** | **string** | Filter by protocol. | 
 
 ### Return type
 
@@ -131,7 +129,7 @@ Name | Type | Description  | Notes
 
 ## GetInfractionsById
 
-> InfractionDetail GetInfractionsById(ctx, id).ContentType(contentType).Execute()
+> InfractionDetail GetInfractionsById(ctx, id).Execute()
 
 Get Infraction
 
@@ -146,16 +144,15 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/PayZuPlus/payzu-sdks/payzupix"
+	openapiclient "github.com/PayZuPlus/payzu-sdks/go"
 )
 
 func main() {
-	contentType := "contentType_example" // string | Obrigatório em toda chamada PayZu. (default to "application/json")
 	id := "id_example" // string | Infraction ID
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.InfractionsAPI.GetInfractionsById(context.Background(), id).ContentType(contentType).Execute()
+	resp, r, err := apiClient.InfractionsAPI.GetInfractionsById(context.Background(), id).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `InfractionsAPI.GetInfractionsById``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -180,7 +177,6 @@ Other parameters are passed through a pointer to a apiGetInfractionsByIdRequest 
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **contentType** | **string** | Obrigatório em toda chamada PayZu. | [default to &quot;application/json&quot;]
 
 
 ### Return type
@@ -203,7 +199,7 @@ Name | Type | Description  | Notes
 
 ## GetInfractionsDefenseById
 
-> Defense GetInfractionsDefenseById(ctx, infractionId, defenseId).ContentType(contentType).Execute()
+> Defense GetInfractionsDefenseById(ctx, infractionId, defenseId).Execute()
 
 Get Defense
 
@@ -218,17 +214,16 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/PayZuPlus/payzu-sdks/payzupix"
+	openapiclient "github.com/PayZuPlus/payzu-sdks/go"
 )
 
 func main() {
-	contentType := "contentType_example" // string | Obrigatório em toda chamada PayZu. (default to "application/json")
 	infractionId := "infractionId_example" // string | Infraction ID
 	defenseId := "defenseId_example" // string | Defense ID
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.InfractionsAPI.GetInfractionsDefenseById(context.Background(), infractionId, defenseId).ContentType(contentType).Execute()
+	resp, r, err := apiClient.InfractionsAPI.GetInfractionsDefenseById(context.Background(), infractionId, defenseId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `InfractionsAPI.GetInfractionsDefenseById``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -254,7 +249,6 @@ Other parameters are passed through a pointer to a apiGetInfractionsDefenseByIdR
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **contentType** | **string** | Obrigatório em toda chamada PayZu. | [default to &quot;application/json&quot;]
 
 
 
@@ -278,7 +272,7 @@ Name | Type | Description  | Notes
 
 ## GetInfractionsDefenses
 
-> []Defense GetInfractionsDefenses(ctx, id).ContentType(contentType).Execute()
+> []Defense GetInfractionsDefenses(ctx, id).Execute()
 
 List Defenses
 
@@ -293,16 +287,15 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/PayZuPlus/payzu-sdks/payzupix"
+	openapiclient "github.com/PayZuPlus/payzu-sdks/go"
 )
 
 func main() {
-	contentType := "contentType_example" // string | Obrigatório em toda chamada PayZu. (default to "application/json")
 	id := "id_example" // string | Infraction ID
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.InfractionsAPI.GetInfractionsDefenses(context.Background(), id).ContentType(contentType).Execute()
+	resp, r, err := apiClient.InfractionsAPI.GetInfractionsDefenses(context.Background(), id).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `InfractionsAPI.GetInfractionsDefenses``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -327,7 +320,6 @@ Other parameters are passed through a pointer to a apiGetInfractionsDefensesRequ
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **contentType** | **string** | Obrigatório em toda chamada PayZu. | [default to &quot;application/json&quot;]
 
 
 ### Return type
@@ -365,7 +357,7 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/PayZuPlus/payzu-sdks/payzupix"
+	openapiclient "github.com/PayZuPlus/payzu-sdks/go"
 )
 
 func main() {

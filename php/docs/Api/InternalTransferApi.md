@@ -13,12 +13,12 @@ All URIs are relative to https://api.payzu.processamento.com/v1, except if the o
 ## `getInternalTransfer()`
 
 ```php
-getInternalTransfer($content_type, $id, $client_reference, $virtual_account): \OpenAPI\Client\Model\Transaction
+getInternalTransfer($id, $client_reference, $virtual_account): \OpenAPI\Client\Model\Transaction
 ```
 
 Get internal transfer
 
-Retorna os dados de uma transferência interna. Informe pelo menos um destes parâmetros: `id` ou `clientReference` (também aceita `virtualAccount`). Se informar mais de um, todos são aplicados como filtro (AND).
+Returns the details of an internal transfer. Provide at least one of `id` or `clientReference` (`virtualAccount` is also accepted). If more than one is provided, all are applied as filters (AND).
 
 ### Example
 
@@ -37,13 +37,12 @@ $apiInstance = new OpenAPI\Client\Api\InternalTransferApi(
     new GuzzleHttp\Client(),
     $config
 );
-$content_type = 'application/json'; // string | Obrigatório em toda chamada PayZu.
 $id = 'id_example'; // string | Transaction ID
 $client_reference = 'client_reference_example'; // string | External reference
-$virtual_account = 'virtual_account_example'; // string | Subconta virtual (até 50 caracteres) usada na criação. Aceito como chave de busca alternativa.
+$virtual_account = 'virtual_account_example'; // string | Virtual sub-account (up to 50 characters) used at creation. Accepted as an alternative lookup key.
 
 try {
-    $result = $apiInstance->getInternalTransfer($content_type, $id, $client_reference, $virtual_account);
+    $result = $apiInstance->getInternalTransfer($id, $client_reference, $virtual_account);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling InternalTransferApi->getInternalTransfer: ', $e->getMessage(), PHP_EOL;
@@ -54,10 +53,9 @@ try {
 
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
-| **content_type** | **string**| Obrigatório em toda chamada PayZu. | [default to &#39;application/json&#39;] |
 | **id** | **string**| Transaction ID | [optional] |
 | **client_reference** | **string**| External reference | [optional] |
-| **virtual_account** | **string**| Subconta virtual (até 50 caracteres) usada na criação. Aceito como chave de busca alternativa. | [optional] |
+| **virtual_account** | **string**| Virtual sub-account (up to 50 characters) used at creation. Accepted as an alternative lookup key. | [optional] |
 
 ### Return type
 

@@ -39,7 +39,7 @@ Name | Type | Description | Notes
 **refund_description** | **string** | Description of the refund | [optional]
 **refunded_at** | **string** | Date and time when the refund was processed | [optional]
 **cancellation_reason** | **string** | Reason for cancellation (if cancelled) | [optional]
-**virtual_account** | **string** | Subconta virtual informada na criação. | [optional]
-**method** | **string** | Método/rail da transação. | [optional]
+**virtual_account** | **string** | Virtual sub-account provided at creation. | [optional]
+**method** | **string** | Transaction method/rail. | [optional]
 
 [[Back to Model list]](../../README.md#models) [[Back to API list]](../../README.md#endpoints) [[Back to README]](../../README.md)

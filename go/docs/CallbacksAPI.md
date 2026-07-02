@@ -13,7 +13,7 @@ Method | HTTP request | Description
 
 ## GetUserCallbackById
 
-> CallbackDetail GetUserCallbackById(ctx, id).ContentType(contentType).Execute()
+> CallbackDetail GetUserCallbackById(ctx, id).Execute()
 
 Get Callback
 
@@ -28,16 +28,15 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/PayZuPlus/payzu-sdks/payzupix"
+	openapiclient "github.com/PayZuPlus/payzu-sdks/go"
 )
 
 func main() {
-	contentType := "contentType_example" // string | Obrigatório em toda chamada PayZu. (default to "application/json")
 	id := "id_example" // string | Unique callback ID
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.CallbacksAPI.GetUserCallbackById(context.Background(), id).ContentType(contentType).Execute()
+	resp, r, err := apiClient.CallbacksAPI.GetUserCallbackById(context.Background(), id).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `CallbacksAPI.GetUserCallbackById``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -62,7 +61,6 @@ Other parameters are passed through a pointer to a apiGetUserCallbackByIdRequest
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **contentType** | **string** | Obrigatório em toda chamada PayZu. | [default to &quot;application/json&quot;]
 
 
 ### Return type
@@ -85,7 +83,7 @@ Name | Type | Description  | Notes
 
 ## GetUserCallbacks
 
-> CallbackListResponse GetUserCallbacks(ctx).ContentType(contentType).Page(page).Limit(limit).SortBy(sortBy).SortDirection(sortDirection).Id(id).Url(url).Status(status).TransactionId(transactionId).HasError(hasError).CreatedAtFrom(createdAtFrom).CreatedAtTo(createdAtTo).Execute()
+> CallbackListResponse GetUserCallbacks(ctx).Page(page).Limit(limit).SortBy(sortBy).SortDirection(sortDirection).Id(id).Url(url).Status(status).TransactionId(transactionId).HasError(hasError).CreatedAtFrom(createdAtFrom).CreatedAtTo(createdAtTo).Execute()
 
 List Callbacks
 
@@ -101,11 +99,10 @@ import (
 	"fmt"
 	"os"
     "time"
-	openapiclient "github.com/PayZuPlus/payzu-sdks/payzupix"
+	openapiclient "github.com/PayZuPlus/payzu-sdks/go"
 )
 
 func main() {
-	contentType := "contentType_example" // string | Obrigatório em toda chamada PayZu. (default to "application/json")
 	page := int32(56) // int32 |  (optional) (default to 1)
 	limit := int32(56) // int32 |  (optional) (default to 10)
 	sortBy := "sortBy_example" // string |  (optional) (default to "createdAt")
@@ -120,7 +117,7 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.CallbacksAPI.GetUserCallbacks(context.Background()).ContentType(contentType).Page(page).Limit(limit).SortBy(sortBy).SortDirection(sortDirection).Id(id).Url(url).Status(status).TransactionId(transactionId).HasError(hasError).CreatedAtFrom(createdAtFrom).CreatedAtTo(createdAtTo).Execute()
+	resp, r, err := apiClient.CallbacksAPI.GetUserCallbacks(context.Background()).Page(page).Limit(limit).SortBy(sortBy).SortDirection(sortDirection).Id(id).Url(url).Status(status).TransactionId(transactionId).HasError(hasError).CreatedAtFrom(createdAtFrom).CreatedAtTo(createdAtTo).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `CallbacksAPI.GetUserCallbacks``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -141,7 +138,6 @@ Other parameters are passed through a pointer to a apiGetUserCallbacksRequest st
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **contentType** | **string** | Obrigatório em toda chamada PayZu. | [default to &quot;application/json&quot;]
  **page** | **int32** |  | [default to 1]
  **limit** | **int32** |  | [default to 10]
  **sortBy** | **string** |  | [default to &quot;createdAt&quot;]
@@ -174,7 +170,7 @@ Name | Type | Description  | Notes
 
 ## ResendUserCallbackSingle
 
-> ResendUserCallbackSingle200Response ResendUserCallbackSingle(ctx, transactionId).ContentType(contentType).Execute()
+> ResendUserCallbackSingle200Response ResendUserCallbackSingle(ctx, transactionId).Execute()
 
 Re-send callback (single)
 
@@ -189,16 +185,15 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/PayZuPlus/payzu-sdks/payzupix"
+	openapiclient "github.com/PayZuPlus/payzu-sdks/go"
 )
 
 func main() {
-	contentType := "contentType_example" // string | Obrigatório em toda chamada PayZu. (default to "application/json")
 	transactionId := "transactionId_example" // string | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.CallbacksAPI.ResendUserCallbackSingle(context.Background(), transactionId).ContentType(contentType).Execute()
+	resp, r, err := apiClient.CallbacksAPI.ResendUserCallbackSingle(context.Background(), transactionId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `CallbacksAPI.ResendUserCallbackSingle``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -223,7 +218,6 @@ Other parameters are passed through a pointer to a apiResendUserCallbackSingleRe
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **contentType** | **string** | Obrigatório em toda chamada PayZu. | [default to &quot;application/json&quot;]
 
 
 ### Return type
@@ -262,7 +256,7 @@ import (
 	"fmt"
 	"os"
     "time"
-	openapiclient "github.com/PayZuPlus/payzu-sdks/payzupix"
+	openapiclient "github.com/PayZuPlus/payzu-sdks/go"
 )
 
 func main() {

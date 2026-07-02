@@ -15,12 +15,12 @@ info:
 
     Repo: https://github.com/PayZuPlus/payzu-sdks
   title: PayZu Pix API
-  version: 1.6.0
+  version: 1.7.0
 externalDocs:
-  description: Documentação completa
+  description: Complete documentation
   url: https://docs.payzu.com.br/docs/pix-processamento
 servers:
-- description: Produção
+- description: Production
   url: https://api.payzu.processamento.com/v1
 tags:
 - description: Create and manage Pix charges (deposits)
@@ -41,22 +41,10 @@ paths:
   /pix:
     get:
       description: "Get the latest status and details for a Pix **deposit (charge)**.\
-        \ Provide **one** of `id`, `clientReference`, or `endToEndId`. Use apenas\
-        \ um destes parâmetros: id, clientReference, endToEndId. Combinar mais de\
-        \ um retorna erro."
+        \ Provide **one** of `id`, `clientReference`, or `endToEndId`. Combining more\
+        \ than one returns an error."
       operationId: get_pix
       parameters:
-      - description: Obrigatório em toda chamada PayZu.
-        explode: false
-        in: header
-        name: Content-Type
-        required: true
-        schema:
-          default: application/json
-          enum:
-          - application/json
-          type: string
-        style: simple
       - description: Transaction ID.
         example: PAYZU20250817215911F49RDOBJ
         explode: true
@@ -82,8 +70,8 @@ paths:
         schema:
           type: string
         style: form
-      - description: Subconta virtual (até 50 caracteres) usada na criação. Aceito
-          como chave de busca alternativa.
+      - description: Virtual sub-account (up to 50 characters) used at creation. Accepted
+          as an alternative lookup key.
         explode: true
         in: query
         name: virtualAccount
@@ -189,7 +177,7 @@ paths:
                       \ received undefined"
                     requestId: cmou00000abcdef01s6ghij1k2lm
               schema:
-                $ref: "#/components/schemas/get_pix_400_response"
+                $ref: "#/components/schemas/ApiError"
           description: "Bad Request, payload or query string failed validation"
         "401":
           content:
@@ -202,7 +190,7 @@ paths:
                     message: Missing or invalid Bearer token
                     requestId: cmou00000abcdef01s6ghij1k2lm
               schema:
-                $ref: "#/components/schemas/get_pix_400_response"
+                $ref: "#/components/schemas/ApiError"
           description: "Unauthorized, missing or invalid Bearer token, or token lacks\
             \ the required permission for this endpoint"
         "404":
@@ -216,7 +204,7 @@ paths:
                     message: Resource not found
                     requestId: cmou00000abcdef01s6ghij1k2lm
               schema:
-                $ref: "#/components/schemas/get_pix_400_response"
+                $ref: "#/components/schemas/ApiError"
           description: Resource not found
       security:
       - BearerAuth: []
@@ -232,7 +220,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/post_pix_request"
+              $ref: "#/components/schemas/PostPixRequest"
         required: true
       responses:
         "200":
@@ -293,7 +281,7 @@ paths:
                       \ received undefined"
                     requestId: cmou00000abcdef01s6ghij1k2lm
               schema:
-                $ref: "#/components/schemas/get_pix_400_response"
+                $ref: "#/components/schemas/ApiError"
           description: "Bad Request, payload or query string failed validation"
         "401":
           content:
@@ -306,7 +294,7 @@ paths:
                     message: Missing or invalid Bearer token
                     requestId: cmou00000abcdef01s6ghij1k2lm
               schema:
-                $ref: "#/components/schemas/get_pix_400_response"
+                $ref: "#/components/schemas/ApiError"
           description: "Unauthorized, missing or invalid Bearer token, or token lacks\
             \ the required permission for this endpoint"
       security:
@@ -321,17 +309,6 @@ paths:
         the key owner's details and associated financial institution.
       operationId: get_pix_key
       parameters:
-      - description: Obrigatório em toda chamada PayZu.
-        explode: false
-        in: header
-        name: Content-Type
-        required: true
-        schema:
-          default: application/json
-          enum:
-          - application/json
-          type: string
-        style: simple
       - description: "The Pix key to lookup (CPF, CNPJ, email, phone, or EVP)."
         example: example@payzu.com.br
         explode: true
@@ -413,15 +390,15 @@ paths:
     post:
       description: "Decode and extract information from a Pix QR Code (EMV format)\
         \ before making a payment. Returns the parsed data including receiver details,\
-        \ amount (if present), and other QR Code metadata. No momento a PayZu só suporta\
-        \ QR Code dinâmico. QR estático ainda não é processado."
+        \ amount (if present), and other QR Code metadata. Currently PayZu only supports\
+        \ dynamic QR Codes. Static QR Codes are not processed yet."
       operationId: post_pix_qrcode_read
       parameters: []
       requestBody:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/post_pix_qrcode_read_request"
+              $ref: "#/components/schemas/PostPixQrcodeReadRequest"
         required: true
       responses:
         "200":
@@ -476,21 +453,10 @@ paths:
       - Withdrawals
   /proof/{id}:
     get:
-      description: Retorna o comprovante da transação como JSON com o campo `base64`
-        (PDF codificado). Decodifique pra exibir ou salvar como `.pdf`.
+      description: Returns the transaction receipt as JSON with a `base64` field (encoded
+        PDF). Decode it to display or save as `.pdf`.
       operationId: get_proof
       parameters:
-      - description: Obrigatório em toda chamada PayZu.
-        explode: false
-        in: header
-        name: Content-Type
-        required: true
-        schema:
-          default: application/json
-          enum:
-          - application/json
-          type: string
-        style: simple
       - description: Transaction ID.
         example: PAYZU2025081418333632CYKN8M
         explode: false
@@ -523,10 +489,10 @@ paths:
                   value:
                     base64: JVBERi0xLjQKJ...
               schema:
-                $ref: "#/components/schemas/get_proof_200_response"
+                $ref: "#/components/schemas/ProofResponse"
             application/pdf:
               schema:
-                description: "PDF binário (formato padrão, quando `type=pdf`)."
+                description: "Binary PDF (default format, when `type=pdf`)."
                 format: binary
                 type: string
           description: "Base64 if `type=base64`, otherwise binary PDF."
@@ -541,7 +507,7 @@ paths:
                     message: querystring/type Invalid input
                     requestId: cmou00000abcdef01s6ghij1k2lm
               schema:
-                $ref: "#/components/schemas/get_pix_400_response"
+                $ref: "#/components/schemas/ApiError"
           description: "Bad Request, payload or query string failed validation"
         "401":
           content:
@@ -554,7 +520,7 @@ paths:
                     message: Missing or invalid Bearer token
                     requestId: cmou00000abcdef01s6ghij1k2lm
               schema:
-                $ref: "#/components/schemas/get_pix_400_response"
+                $ref: "#/components/schemas/ApiError"
           description: "Unauthorized, missing or invalid Bearer token, or token lacks\
             \ the required permission for this endpoint"
         "404":
@@ -568,7 +534,7 @@ paths:
                     message: Resource not found
                     requestId: cmou00000abcdef01s6ghij1k2lm
               schema:
-                $ref: "#/components/schemas/get_pix_400_response"
+                $ref: "#/components/schemas/ApiError"
           description: Resource not found
       security:
       - BearerAuth: []
@@ -577,23 +543,12 @@ paths:
       - Pix Operations
   /withdraw:
     get:
-      description: "Retorna o status e os detalhes atuais de um saque. Informe pelo\
-        \ menos um destes parâmetros: `id`, `clientReference` ou `endToEndId`. Se\
-        \ informar mais de um, todos são aplicados como filtro (AND), o que pode nã\
-        o retornar registro caso não apontem para a mesma transação."
+      description: "Get the latest status and details for a withdrawal. Provide at\
+        \ least one of `id`, `clientReference`, or `endToEndId`. If more than one\
+        \ is provided, all are applied as filters (AND), which may return no record\
+        \ if they do not point to the same transaction."
       operationId: get_withdraw
       parameters:
-      - description: Obrigatório em toda chamada PayZu.
-        explode: false
-        in: header
-        name: Content-Type
-        required: true
-        schema:
-          default: application/json
-          enum:
-          - application/json
-          type: string
-        style: simple
       - description: Transaction ID.
         example: PAYZU2025081721512946OOLK75
         explode: true
@@ -619,8 +574,8 @@ paths:
         schema:
           type: string
         style: form
-      - description: Subconta virtual (até 50 caracteres) usada na criação. Aceito
-          como chave de busca alternativa.
+      - description: Virtual sub-account (up to 50 characters) used at creation. Accepted
+          as an alternative lookup key.
         explode: true
         in: query
         name: virtualAccount
@@ -725,7 +680,7 @@ paths:
                       \ received undefined"
                     requestId: cmou00000abcdef01s6ghij1k2lm
               schema:
-                $ref: "#/components/schemas/get_pix_400_response"
+                $ref: "#/components/schemas/ApiError"
           description: "Bad Request, payload or query string failed validation"
         "401":
           content:
@@ -738,7 +693,7 @@ paths:
                     message: Missing or invalid Bearer token
                     requestId: cmou00000abcdef01s6ghij1k2lm
               schema:
-                $ref: "#/components/schemas/get_pix_400_response"
+                $ref: "#/components/schemas/ApiError"
           description: "Unauthorized, missing or invalid Bearer token, or token lacks\
             \ the required permission for this endpoint"
         "404":
@@ -752,7 +707,7 @@ paths:
                     message: Resource not found
                     requestId: cmou00000abcdef01s6ghij1k2lm
               schema:
-                $ref: "#/components/schemas/get_pix_400_response"
+                $ref: "#/components/schemas/ApiError"
           description: Resource not found
       security:
       - BearerAuth: []
@@ -767,7 +722,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/post_withdraw_request"
+              $ref: "#/components/schemas/PostWithdrawRequest"
         required: true
       responses:
         "200":
@@ -865,7 +820,7 @@ paths:
                       \ received undefined"
                     requestId: cmou00000abcdef01s6ghij1k2lm
               schema:
-                $ref: "#/components/schemas/get_pix_400_response"
+                $ref: "#/components/schemas/ApiError"
           description: "Bad Request, payload or query string failed validation"
         "401":
           content:
@@ -878,7 +833,7 @@ paths:
                     message: Missing or invalid Bearer token
                     requestId: cmou00000abcdef01s6ghij1k2lm
               schema:
-                $ref: "#/components/schemas/get_pix_400_response"
+                $ref: "#/components/schemas/ApiError"
           description: "Unauthorized, missing or invalid Bearer token, or token lacks\
             \ the required permission for this endpoint"
       security:
@@ -889,15 +844,15 @@ paths:
   /withdraw/qrcode:
     post:
       description: "Cash out using a **Pix QR Code** (static/dynamic). If `amount`\
-        \ is not provided, the QR Code's embedded value will be used. No momento a\
-        \ PayZu só suporta QR Code dinâmico. QR estático ainda não é processado."
+        \ is not provided, the QR Code's embedded value will be used. Currently PayZu\
+        \ only supports dynamic QR Codes. Static QR Codes are not processed yet."
       operationId: post_withdraw_qrcode
       parameters: []
       requestBody:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/post_withdraw_qrcode_request"
+              $ref: "#/components/schemas/PostWithdrawQrcodeRequest"
         required: true
       responses:
         "200":
@@ -1005,21 +960,10 @@ paths:
       - Withdrawals
   /withdraw/proof/{id}:
     get:
-      description: Retorna o comprovante da transação como JSON com o campo `base64`
-        (PDF codificado). Decodifique pra exibir ou salvar como `.pdf`.
+      description: Returns the transaction receipt as JSON with a `base64` field (encoded
+        PDF). Decode it to display or save as `.pdf`.
       operationId: get_withdraw_proof
       parameters:
-      - description: Obrigatório em toda chamada PayZu.
-        explode: false
-        in: header
-        name: Content-Type
-        required: true
-        schema:
-          default: application/json
-          enum:
-          - application/json
-          type: string
-        style: simple
       - description: Transaction ID.
         example: PAYZU2025081721512946OOLK75
         explode: false
@@ -1052,10 +996,10 @@ paths:
                   value:
                     base64: JVBERi0xLjQKJ...
               schema:
-                $ref: "#/components/schemas/get_proof_200_response"
+                $ref: "#/components/schemas/ProofResponse"
             application/pdf:
               schema:
-                description: "PDF binário (formato padrão, quando `type=pdf`)."
+                description: "Binary PDF (default format, when `type=pdf`)."
                 format: binary
                 type: string
           description: "Base64 if `type=base64`, otherwise binary PDF."
@@ -1070,7 +1014,7 @@ paths:
                     message: querystring/type Invalid input
                     requestId: cmou00000abcdef01s6ghij1k2lm
               schema:
-                $ref: "#/components/schemas/get_pix_400_response"
+                $ref: "#/components/schemas/ApiError"
           description: "Bad Request, payload or query string failed validation"
         "401":
           content:
@@ -1083,7 +1027,7 @@ paths:
                     message: Missing or invalid Bearer token
                     requestId: cmou00000abcdef01s6ghij1k2lm
               schema:
-                $ref: "#/components/schemas/get_pix_400_response"
+                $ref: "#/components/schemas/ApiError"
           description: "Unauthorized, missing or invalid Bearer token, or token lacks\
             \ the required permission for this endpoint"
         "404":
@@ -1097,7 +1041,7 @@ paths:
                     message: Resource not found
                     requestId: cmou00000abcdef01s6ghij1k2lm
               schema:
-                $ref: "#/components/schemas/get_pix_400_response"
+                $ref: "#/components/schemas/ApiError"
           description: Resource not found
       security:
       - BearerAuth: []
@@ -1108,18 +1052,6 @@ paths:
     get:
       description: "Account profile, permissions, limits and fee rules."
       operationId: get_user
-      parameters:
-      - description: Obrigatório em toda chamada PayZu.
-        explode: false
-        in: header
-        name: Content-Type
-        required: true
-        schema:
-          default: application/json
-          enum:
-          - application/json
-          type: string
-        style: simple
       responses:
         "200":
           content:
@@ -1168,7 +1100,7 @@ paths:
                     message: Missing or invalid Bearer token
                     requestId: cmou00000abcdef01s6ghij1k2lm
               schema:
-                $ref: "#/components/schemas/get_pix_400_response"
+                $ref: "#/components/schemas/ApiError"
           description: "Unauthorized, missing or invalid Bearer token, or token lacks\
             \ the required permission for this endpoint"
         "404":
@@ -1182,7 +1114,7 @@ paths:
                     message: Resource not found
                     requestId: cmou00000abcdef01s6ghij1k2lm
               schema:
-                $ref: "#/components/schemas/get_pix_400_response"
+                $ref: "#/components/schemas/ApiError"
           description: Resource not found
       security:
       - BearerAuth: []
@@ -1193,18 +1125,6 @@ paths:
     get:
       description: Available and blocked balances.
       operationId: get_user_balance
-      parameters:
-      - description: Obrigatório em toda chamada PayZu.
-        explode: false
-        in: header
-        name: Content-Type
-        required: true
-        schema:
-          default: application/json
-          enum:
-          - application/json
-          type: string
-        style: simple
       responses:
         "200":
           content:
@@ -1229,7 +1149,7 @@ paths:
                     message: Missing or invalid Bearer token
                     requestId: cmou00000abcdef01s6ghij1k2lm
               schema:
-                $ref: "#/components/schemas/get_pix_400_response"
+                $ref: "#/components/schemas/ApiError"
           description: "Unauthorized, missing or invalid Bearer token, or token lacks\
             \ the required permission for this endpoint"
       security:
@@ -1242,17 +1162,6 @@ paths:
       description: Paginated list of account transactions with filters.
       operationId: get_user_transactions
       parameters:
-      - description: Obrigatório em toda chamada PayZu.
-        explode: false
-        in: header
-        name: Content-Type
-        required: true
-        schema:
-          default: application/json
-          enum:
-          - application/json
-          type: string
-        style: simple
       - description: Start date (YYYY-MM-DD).
         example: 2025-08-01
         explode: true
@@ -1300,7 +1209,7 @@ paths:
         schema:
           type: string
         style: form
-      - description: "Status da transação. Aceita CSV: PENDING,COMPLETED,etc."
+      - description: "Transaction status. Accepts CSV: PENDING,COMPLETED,etc."
         example: COMPLETED
         explode: true
         in: query
@@ -1310,7 +1219,7 @@ paths:
           example: "COMPLETED,PENDING"
           type: string
         style: form
-      - description: "Tipo da transação. Aceita CSV: DEPOSIT,WITHDRAW,COMMISSION."
+      - description: "Transaction type. Accepts CSV: DEPOSIT,WITHDRAW,COMMISSION."
         example: DEPOSIT
         explode: true
         in: query
@@ -1320,7 +1229,7 @@ paths:
           example: "DEPOSIT,WITHDRAW"
           type: string
         style: form
-      - description: Amount filter. Mínimo 0.01.
+      - description: Amount filter. Minimum 0.01.
         example: 15000
         explode: true
         in: query
@@ -1330,8 +1239,7 @@ paths:
           minimum: 0.01
           type: number
         style: form
-      - description: "CPF (11 dígitos) ou CNPJ (14 dígitos), apenas números sem formataç\
-          ão."
+      - description: "CPF (11 digits) or CNPJ (14 digits), digits only, no punctuation."
         example: "12345678901"
         explode: true
         in: query
@@ -1391,8 +1299,8 @@ paths:
         schema:
           type: string
         style: form
-      - description: Subconta virtual (até 50 caracteres) usada na criação. Aceito
-          como chave de busca alternativa.
+      - description: Virtual sub-account (up to 50 characters) used at creation. Accepted
+          as an alternative lookup key.
         explode: true
         in: query
         name: virtualAccount
@@ -1494,7 +1402,7 @@ paths:
                       \ received undefined"
                     requestId: cmou00000abcdef01s6ghij1k2lm
               schema:
-                $ref: "#/components/schemas/get_pix_400_response"
+                $ref: "#/components/schemas/ApiError"
           description: "Bad Request, payload or query string failed validation"
         "401":
           content:
@@ -1507,7 +1415,7 @@ paths:
                     message: Missing or invalid Bearer token
                     requestId: cmou00000abcdef01s6ghij1k2lm
               schema:
-                $ref: "#/components/schemas/get_pix_400_response"
+                $ref: "#/components/schemas/ApiError"
           description: "Unauthorized, missing or invalid Bearer token, or token lacks\
             \ the required permission for this endpoint"
         "404":
@@ -1521,7 +1429,7 @@ paths:
                     message: Resource not found
                     requestId: cmou00000abcdef01s6ghij1k2lm
               schema:
-                $ref: "#/components/schemas/get_pix_400_response"
+                $ref: "#/components/schemas/ApiError"
           description: Resource not found
       security:
       - BearerAuth: []
@@ -1534,17 +1442,6 @@ paths:
         transactions.
       operationId: get_user_callbacks
       parameters:
-      - description: Obrigatório em toda chamada PayZu.
-        explode: false
-        in: header
-        name: Content-Type
-        required: true
-        schema:
-          default: application/json
-          enum:
-          - application/json
-          type: string
-        style: simple
       - explode: true
         in: query
         name: page
@@ -1682,7 +1579,7 @@ paths:
                       \ received undefined"
                     requestId: cmou00000abcdef01s6ghij1k2lm
               schema:
-                $ref: "#/components/schemas/get_pix_400_response"
+                $ref: "#/components/schemas/ApiError"
           description: "Bad Request, payload or query string failed validation"
         "401":
           content:
@@ -1695,7 +1592,7 @@ paths:
                     message: Missing or invalid Bearer token
                     requestId: cmou00000abcdef01s6ghij1k2lm
               schema:
-                $ref: "#/components/schemas/get_pix_400_response"
+                $ref: "#/components/schemas/ApiError"
           description: "Unauthorized, missing or invalid Bearer token, or token lacks\
             \ the required permission for this endpoint"
         "404":
@@ -1709,7 +1606,7 @@ paths:
                     message: Resource not found
                     requestId: cmou00000abcdef01s6ghij1k2lm
               schema:
-                $ref: "#/components/schemas/get_pix_400_response"
+                $ref: "#/components/schemas/ApiError"
           description: Resource not found
       security:
       - BearerAuth: []
@@ -1721,17 +1618,6 @@ paths:
       description: Returns the details of a specific callback log.
       operationId: get_user_callback_by_id
       parameters:
-      - description: Obrigatório em toda chamada PayZu.
-        explode: false
-        in: header
-        name: Content-Type
-        required: true
-        schema:
-          default: application/json
-          enum:
-          - application/json
-          type: string
-        style: simple
       - description: Unique callback ID
         explode: false
         in: path
@@ -1775,7 +1661,7 @@ paths:
                     message: Resource not found
                     requestId: cmou00000abcdef01s6ghij1k2lm
               schema:
-                $ref: "#/components/schemas/get_pix_400_response"
+                $ref: "#/components/schemas/ApiError"
           description: Callback not found or does not belong to the user
       security:
       - BearerAuth: []
@@ -1788,17 +1674,6 @@ paths:
         and filters.
       operationId: get_infractions
       parameters:
-      - description: Obrigatório em toda chamada PayZu.
-        explode: false
-        in: header
-        name: Content-Type
-        required: true
-        schema:
-          default: application/json
-          enum:
-          - application/json
-          type: string
-        style: simple
       - explode: true
         in: query
         name: page
@@ -1892,7 +1767,7 @@ paths:
         schema:
           type: string
         style: form
-      - description: Campo de ordenação.
+      - description: Sort field.
         explode: true
         in: query
         name: sortBy
@@ -1900,7 +1775,7 @@ paths:
         schema:
           type: string
         style: form
-      - description: Direção da ordenação.
+      - description: Sort direction.
         explode: true
         in: query
         name: sortDirection
@@ -1911,7 +1786,7 @@ paths:
           - desc
           type: string
         style: form
-      - description: "Filtro: reportedAt a partir de."
+      - description: "Filter: reportedAt from."
         explode: true
         in: query
         name: reportedAtFrom
@@ -1920,7 +1795,7 @@ paths:
           format: date-time
           type: string
         style: form
-      - description: "Filtro: reportedAt até."
+      - description: "Filter: reportedAt up to."
         explode: true
         in: query
         name: reportedAtTo
@@ -1929,7 +1804,7 @@ paths:
           format: date-time
           type: string
         style: form
-      - description: "Filtro: createdAt a partir de."
+      - description: "Filter: createdAt from."
         explode: true
         in: query
         name: createdAtFrom
@@ -1938,7 +1813,7 @@ paths:
           format: date-time
           type: string
         style: form
-      - description: "Filtro: createdAt até."
+      - description: "Filter: createdAt up to."
         explode: true
         in: query
         name: createdAtTo
@@ -1947,7 +1822,7 @@ paths:
           format: date-time
           type: string
         style: form
-      - description: "Filtro: expiresAt a partir de."
+      - description: "Filter: expiresAt from."
         explode: true
         in: query
         name: expiresAtFrom
@@ -1956,7 +1831,7 @@ paths:
           format: date-time
           type: string
         style: form
-      - description: "Filtro: expiresAt até."
+      - description: "Filter: expiresAt up to."
         explode: true
         in: query
         name: expiresAtTo
@@ -1965,7 +1840,7 @@ paths:
           format: date-time
           type: string
         style: form
-      - description: "Filtro: updatedAt a partir de."
+      - description: "Filter: updatedAt from."
         explode: true
         in: query
         name: updatedAtFrom
@@ -1974,7 +1849,7 @@ paths:
           format: date-time
           type: string
         style: form
-      - description: "Filtro: updatedAt até."
+      - description: "Filter: updatedAt up to."
         explode: true
         in: query
         name: updatedAtTo
@@ -1983,7 +1858,7 @@ paths:
           format: date-time
           type: string
         style: form
-      - description: "Filtro: precisa de revisão manual."
+      - description: "Filter: needs manual review."
         explode: true
         in: query
         name: needsManualReview
@@ -1991,7 +1866,7 @@ paths:
         schema:
           type: boolean
         style: form
-      - description: Filtro por ID da infração.
+      - description: Filter by infraction ID.
         explode: true
         in: query
         name: id
@@ -1999,7 +1874,7 @@ paths:
         schema:
           type: string
         style: form
-      - description: Filtro por protocolo.
+      - description: Filter by protocol.
         explode: true
         in: query
         name: protocol
@@ -2057,7 +1932,7 @@ paths:
                       \ received undefined"
                     requestId: cmou00000abcdef01s6ghij1k2lm
               schema:
-                $ref: "#/components/schemas/get_pix_400_response"
+                $ref: "#/components/schemas/ApiError"
           description: "Bad Request, payload or query string failed validation"
         "401":
           content:
@@ -2070,7 +1945,7 @@ paths:
                     message: Missing or invalid Bearer token
                     requestId: cmou00000abcdef01s6ghij1k2lm
               schema:
-                $ref: "#/components/schemas/get_pix_400_response"
+                $ref: "#/components/schemas/ApiError"
           description: "Unauthorized, missing or invalid Bearer token, or token lacks\
             \ the required permission for this endpoint"
         "404":
@@ -2084,7 +1959,7 @@ paths:
                     message: Resource not found
                     requestId: cmou00000abcdef01s6ghij1k2lm
               schema:
-                $ref: "#/components/schemas/get_pix_400_response"
+                $ref: "#/components/schemas/ApiError"
           description: Resource not found
       security:
       - BearerAuth: []
@@ -2096,17 +1971,6 @@ paths:
       description: Get a specific infraction by ID.
       operationId: get_infractions_by_id
       parameters:
-      - description: Obrigatório em toda chamada PayZu.
-        explode: false
-        in: header
-        name: Content-Type
-        required: true
-        schema:
-          default: application/json
-          enum:
-          - application/json
-          type: string
-        style: simple
       - description: Infraction ID
         explode: false
         in: path
@@ -2158,7 +2022,7 @@ paths:
                     message: Resource not found
                     requestId: cmou00000abcdef01s6ghij1k2lm
               schema:
-                $ref: "#/components/schemas/get_pix_400_response"
+                $ref: "#/components/schemas/ApiError"
           description: Infraction not found
       security:
       - BearerAuth: []
@@ -2171,17 +2035,6 @@ paths:
         privileges**.
       operationId: get_infractions_defenses
       parameters:
-      - description: Obrigatório em toda chamada PayZu.
-        explode: false
-        in: header
-        name: Content-Type
-        required: true
-        schema:
-          default: application/json
-          enum:
-          - application/json
-          type: string
-        style: simple
       - description: Infraction ID
         explode: false
         in: path
@@ -2222,7 +2075,7 @@ paths:
                       \ received undefined"
                     requestId: cmou00000abcdef01s6ghij1k2lm
               schema:
-                $ref: "#/components/schemas/get_pix_400_response"
+                $ref: "#/components/schemas/ApiError"
           description: "Bad Request, payload or query string failed validation"
         "401":
           content:
@@ -2235,7 +2088,7 @@ paths:
                     message: Missing or invalid Bearer token
                     requestId: cmou00000abcdef01s6ghij1k2lm
               schema:
-                $ref: "#/components/schemas/get_pix_400_response"
+                $ref: "#/components/schemas/ApiError"
           description: "Unauthorized, missing or invalid Bearer token, or token lacks\
             \ the required permission for this endpoint"
         "404":
@@ -2249,7 +2102,7 @@ paths:
                     message: Resource not found
                     requestId: cmou00000abcdef01s6ghij1k2lm
               schema:
-                $ref: "#/components/schemas/get_pix_400_response"
+                $ref: "#/components/schemas/ApiError"
           description: Resource not found
       security:
       - BearerAuth: []
@@ -2272,7 +2125,7 @@ paths:
         content:
           multipart/form-data:
             schema:
-              $ref: "#/components/schemas/post_infractions_defense_request"
+              $ref: "#/components/schemas/PostInfractionsDefenseRequest"
         required: true
       responses:
         "201":
@@ -2309,7 +2162,7 @@ paths:
                       \ received undefined"
                     requestId: cmou00000abcdef01s6ghij1k2lm
               schema:
-                $ref: "#/components/schemas/get_pix_400_response"
+                $ref: "#/components/schemas/ApiError"
           description: Invalid file or provider does not support defense
         "404":
           content:
@@ -2322,7 +2175,7 @@ paths:
                     message: Resource not found
                     requestId: cmou00000abcdef01s6ghij1k2lm
               schema:
-                $ref: "#/components/schemas/get_pix_400_response"
+                $ref: "#/components/schemas/ApiError"
           description: Infraction not found
         "422":
           content:
@@ -2335,7 +2188,7 @@ paths:
                     message: Insufficient balance for this operation
                     requestId: cmou00000abcdef01s6ghij1k2lm
               schema:
-                $ref: "#/components/schemas/get_pix_400_response"
+                $ref: "#/components/schemas/ApiError"
           description: Infraction not open for defense
       security:
       - BearerAuth: []
@@ -2347,17 +2200,6 @@ paths:
       description: Get a specific defense for an infraction. **Requires support privileges**.
       operationId: get_infractions_defense_by_id
       parameters:
-      - description: Obrigatório em toda chamada PayZu.
-        explode: false
-        in: header
-        name: Content-Type
-        required: true
-        schema:
-          default: application/json
-          enum:
-          - application/json
-          type: string
-        style: simple
       - description: Infraction ID
         explode: false
         in: path
@@ -2407,7 +2249,7 @@ paths:
                     message: Resource not found
                     requestId: cmou00000abcdef01s6ghij1k2lm
               schema:
-                $ref: "#/components/schemas/get_pix_400_response"
+                $ref: "#/components/schemas/ApiError"
           description: Defense not found
       security:
       - BearerAuth: []
@@ -2416,22 +2258,11 @@ paths:
       - Infractions
   /internal-transfer:
     get:
-      description: "Retorna os dados de uma transferência interna. Informe pelo menos\
-        \ um destes parâmetros: `id` ou `clientReference` (também aceita `virtualAccount`).\
-        \ Se informar mais de um, todos são aplicados como filtro (AND)."
+      description: "Returns the details of an internal transfer. Provide at least\
+        \ one of `id` or `clientReference` (`virtualAccount` is also accepted). If\
+        \ more than one is provided, all are applied as filters (AND)."
       operationId: get_internal_transfer
       parameters:
-      - description: Obrigatório em toda chamada PayZu.
-        explode: false
-        in: header
-        name: Content-Type
-        required: true
-        schema:
-          default: application/json
-          enum:
-          - application/json
-          type: string
-        style: simple
       - description: Transaction ID
         explode: true
         in: query
@@ -2449,8 +2280,8 @@ paths:
           maxLength: 64
           type: string
         style: form
-      - description: Subconta virtual (até 50 caracteres) usada na criação. Aceito
-          como chave de busca alternativa.
+      - description: Virtual sub-account (up to 50 characters) used at creation. Accepted
+          as an alternative lookup key.
         explode: true
         in: query
         name: virtualAccount
@@ -2517,7 +2348,7 @@ paths:
                       \ received undefined"
                     requestId: cmou00000abcdef01s6ghij1k2lm
               schema:
-                $ref: "#/components/schemas/get_pix_400_response"
+                $ref: "#/components/schemas/ApiError"
           description: Provide either `id` or `clientReference`
         "404":
           content:
@@ -2530,7 +2361,7 @@ paths:
                     message: Resource not found
                     requestId: cmou00000abcdef01s6ghij1k2lm
               schema:
-                $ref: "#/components/schemas/get_pix_400_response"
+                $ref: "#/components/schemas/ApiError"
           description: Transfer not found
       security:
       - BearerAuth: []
@@ -2546,7 +2377,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/post_internal_transfer_request"
+              $ref: "#/components/schemas/PostInternalTransferRequest"
         required: true
       responses:
         "200":
@@ -2606,7 +2437,7 @@ paths:
                       \ received undefined"
                     requestId: cmou00000abcdef01s6ghij1k2lm
               schema:
-                $ref: "#/components/schemas/get_pix_400_response"
+                $ref: "#/components/schemas/ApiError"
           description: Invalid payload (e.g. payerAccountNumber does not belong to
             the requester)
         "403":
@@ -2620,7 +2451,7 @@ paths:
                     message: Token does not have permission for this operation
                     requestId: cmou00000abcdef01s6ghij1k2lm
               schema:
-                $ref: "#/components/schemas/get_pix_400_response"
+                $ref: "#/components/schemas/ApiError"
           description: allowInternalTransfer disabled or token missing WITHDRAW permission
         "404":
           content:
@@ -2633,7 +2464,7 @@ paths:
                     message: Resource not found
                     requestId: cmou00000abcdef01s6ghij1k2lm
               schema:
-                $ref: "#/components/schemas/get_pix_400_response"
+                $ref: "#/components/schemas/ApiError"
           description: Receiver account not found
         "422":
           content:
@@ -2646,7 +2477,7 @@ paths:
                     message: Insufficient balance for this operation
                     requestId: cmou00000abcdef01s6ghij1k2lm
               schema:
-                $ref: "#/components/schemas/get_pix_400_response"
+                $ref: "#/components/schemas/ApiError"
           description: Insufficient balance / amount below ticket minimum
       security:
       - BearerAuth: []
@@ -2659,17 +2490,6 @@ paths:
         infractions.
       operationId: get_user_transaction_by_id
       parameters:
-      - description: Obrigatório em toda chamada PayZu.
-        explode: false
-        in: header
-        name: Content-Type
-        required: true
-        schema:
-          default: application/json
-          enum:
-          - application/json
-          type: string
-        style: simple
       - explode: false
         in: path
         name: id
@@ -2695,7 +2515,7 @@ paths:
                     message: Resource not found
                     requestId: cmou00000abcdef01s6ghij1k2lm
               schema:
-                $ref: "#/components/schemas/get_pix_400_response"
+                $ref: "#/components/schemas/ApiError"
           description: Transaction not found
       security:
       - BearerAuth: []
@@ -2707,17 +2527,6 @@ paths:
       description: List report jobs created by the authenticated user.
       operationId: list_user_reports
       parameters:
-      - description: Obrigatório em toda chamada PayZu.
-        explode: false
-        in: header
-        name: Content-Type
-        required: true
-        schema:
-          default: application/json
-          enum:
-          - application/json
-          type: string
-        style: simple
       - explode: true
         in: query
         name: page
@@ -2749,7 +2558,7 @@ paths:
           - FAILED
           type: string
         style: form
-      - description: "Filtro: criado a partir de."
+      - description: "Filter: created from."
         explode: true
         in: query
         name: createdAtFrom
@@ -2758,7 +2567,7 @@ paths:
           format: date-time
           type: string
         style: form
-      - description: "Filtro: criado até."
+      - description: "Filter: created up to."
         explode: true
         in: query
         name: createdAtTo
@@ -2767,7 +2576,7 @@ paths:
           format: date-time
           type: string
         style: form
-      - description: "Filtro: atualizado a partir de."
+      - description: "Filter: updated from."
         explode: true
         in: query
         name: updatedAtFrom
@@ -2776,7 +2585,7 @@ paths:
           format: date-time
           type: string
         style: form
-      - description: "Filtro: atualizado até."
+      - description: "Filter: updated up to."
         explode: true
         in: query
         name: updatedAtTo
@@ -2785,7 +2594,7 @@ paths:
           format: date-time
           type: string
         style: form
-      - description: Campo de ordenação.
+      - description: Sort field.
         explode: true
         in: query
         name: sortBy
@@ -2797,7 +2606,7 @@ paths:
           - updatedAt
           type: string
         style: form
-      - description: Direção da ordenação.
+      - description: Sort direction.
         explode: true
         in: query
         name: sortDirection
@@ -2839,7 +2648,7 @@ paths:
                       \ received undefined"
                     requestId: cmou00000abcdef01s6ghij1k2lm
               schema:
-                $ref: "#/components/schemas/get_pix_400_response"
+                $ref: "#/components/schemas/ApiError"
           description: "Bad Request, payload or query string failed validation"
         "401":
           content:
@@ -2852,7 +2661,7 @@ paths:
                     message: Missing or invalid Bearer token
                     requestId: cmou00000abcdef01s6ghij1k2lm
               schema:
-                $ref: "#/components/schemas/get_pix_400_response"
+                $ref: "#/components/schemas/ApiError"
           description: "Unauthorized, missing or invalid Bearer token, or token lacks\
             \ the required permission for this endpoint"
         "404":
@@ -2866,7 +2675,7 @@ paths:
                     message: Resource not found
                     requestId: cmou00000abcdef01s6ghij1k2lm
               schema:
-                $ref: "#/components/schemas/get_pix_400_response"
+                $ref: "#/components/schemas/ApiError"
           description: Resource not found
       security:
       - BearerAuth: []
@@ -2882,7 +2691,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/post_user_report_request"
+              $ref: "#/components/schemas/PostUserReportRequest"
         required: true
       responses:
         "202":
@@ -2902,7 +2711,7 @@ paths:
                     message: Insufficient balance for this operation
                     requestId: cmou00000abcdef01s6ghij1k2lm
               schema:
-                $ref: "#/components/schemas/get_pix_400_response"
+                $ref: "#/components/schemas/ApiError"
           description: No transactions match the filter / concurrency limit reached
       security:
       - BearerAuth: []
@@ -2911,21 +2720,9 @@ paths:
       - Reports
   /user/report/{id}:
     get:
-      description: Retorna o status e os metadados de um job de relatório específico
-        pelo `id`.
+      description: Returns the status and metadata of a specific report job by `id`.
       operationId: get_user_report
       parameters:
-      - description: Obrigatório em toda chamada PayZu.
-        explode: false
-        in: header
-        name: Content-Type
-        required: true
-        schema:
-          default: application/json
-          enum:
-          - application/json
-          type: string
-        style: simple
       - explode: false
         in: path
         name: id
@@ -2960,11 +2757,11 @@ paths:
                     message: Resource not found
                     requestId: cmou00000abcdef01s6ghij1k2lm
               schema:
-                $ref: "#/components/schemas/get_pix_400_response"
+                $ref: "#/components/schemas/ApiError"
           description: Report not found
       security:
       - BearerAuth: []
-      summary: Consultar status do relatório
+      summary: Get report job status
       tags:
       - Reports
   /user/report/{id}/download:
@@ -2972,17 +2769,6 @@ paths:
       description: Returns a short-lived signed URL to download the CSV file.
       operationId: download_user_report
       parameters:
-      - description: Obrigatório em toda chamada PayZu.
-        explode: false
-        in: header
-        name: Content-Type
-        required: true
-        schema:
-          default: application/json
-          enum:
-          - application/json
-          type: string
-        style: simple
       - explode: false
         in: path
         name: id
@@ -3014,7 +2800,7 @@ paths:
                     message: Resource not found
                     requestId: cmou00000abcdef01s6ghij1k2lm
               schema:
-                $ref: "#/components/schemas/get_pix_400_response"
+                $ref: "#/components/schemas/ApiError"
           description: Report not found
         "410":
           content:
@@ -3027,7 +2813,7 @@ paths:
                     message: Report file expired and is no longer available
                     requestId: cmou00000abcdef01s6ghij1k2lm
               schema:
-                $ref: "#/components/schemas/get_pix_400_response"
+                $ref: "#/components/schemas/ApiError"
           description: Report file expired
         "422":
           content:
@@ -3040,7 +2826,7 @@ paths:
                     message: Insufficient balance for this operation
                     requestId: cmou00000abcdef01s6ghij1k2lm
               schema:
-                $ref: "#/components/schemas/get_pix_400_response"
+                $ref: "#/components/schemas/ApiError"
           description: Report not ready (still processing)
       security:
       - BearerAuth: []
@@ -3071,7 +2857,7 @@ paths:
                   transactionStatus:
                   - COMPLETED
             schema:
-              $ref: "#/components/schemas/resend_user_callbacks_request"
+              $ref: "#/components/schemas/ResendUserCallbacksRequest"
         required: true
       responses:
         "200":
@@ -3096,7 +2882,7 @@ paths:
                     message: Resource not found
                     requestId: cmou00000abcdef01s6ghij1k2lm
               schema:
-                $ref: "#/components/schemas/get_pix_400_response"
+                $ref: "#/components/schemas/ApiError"
           description: No matching transactions
         "429":
           content:
@@ -3109,7 +2895,7 @@ paths:
                     message: Limite de reenvios atingido. Tente novamente em 1 minuto.
                     requestId: cmou00000abcdef01s6ghij1k2lm
               schema:
-                $ref: "#/components/schemas/get_pix_400_response"
+                $ref: "#/components/schemas/ApiError"
           description: Rate limit exceeded (5/min)
       security:
       - BearerAuth: []
@@ -3121,17 +2907,6 @@ paths:
       description: Resend the callback of a single transaction.
       operationId: resend_user_callback_single
       parameters:
-      - description: Obrigatório em toda chamada PayZu.
-        explode: false
-        in: header
-        name: Content-Type
-        required: true
-        schema:
-          default: application/json
-          enum:
-          - application/json
-          type: string
-        style: simple
       - explode: false
         in: path
         name: transactionId
@@ -3161,7 +2936,7 @@ paths:
                     message: Resource not found
                     requestId: cmou00000abcdef01s6ghij1k2lm
               schema:
-                $ref: "#/components/schemas/get_pix_400_response"
+                $ref: "#/components/schemas/ApiError"
           description: Transaction not found or has no callbackUrl configured
         "429":
           content:
@@ -3174,7 +2949,7 @@ paths:
                     message: Limite de reenvios atingido. Tente novamente em 1 minuto.
                     requestId: cmou00000abcdef01s6ghij1k2lm
               schema:
-                $ref: "#/components/schemas/get_pix_400_response"
+                $ref: "#/components/schemas/ApiError"
           description: Rate limit exceeded (5/min)
       security:
       - BearerAuth: []
@@ -3186,17 +2961,6 @@ paths:
       description: Render the Pix QR Code of a deposit as a binary PNG image
       operationId: get_pix_qrcode
       parameters:
-      - description: Obrigatório em toda chamada PayZu.
-        explode: false
-        in: header
-        name: Content-Type
-        required: true
-        schema:
-          default: application/json
-          enum:
-          - application/json
-          type: string
-        style: simple
       - explode: false
         in: path
         name: transactionId
@@ -3224,7 +2988,7 @@ paths:
                       \ received undefined"
                     requestId: cmou00000abcdef01s6ghij1k2lm
               schema:
-                $ref: "#/components/schemas/get_pix_400_response"
+                $ref: "#/components/schemas/ApiError"
           description: Transaction is not a DEPOSIT or has no QR code
         "404":
           content:
@@ -3237,7 +3001,7 @@ paths:
                     message: Resource not found
                     requestId: cmou00000abcdef01s6ghij1k2lm
               schema:
-                $ref: "#/components/schemas/get_pix_400_response"
+                $ref: "#/components/schemas/get_pix_qrcode_404_response"
           description: Transaction not found
       security:
       - BearerAuth: []
@@ -3408,12 +3172,12 @@ components:
           type: string
           nullable: true
         virtualAccount:
-          description: Subconta virtual informada na criação.
+          description: Virtual sub-account provided at creation.
           maxLength: 50
           type: string
           nullable: true
         method:
-          description: Método/rail da transação.
+          description: Transaction method/rail.
           enum:
           - PIX
           - BANK_SLIP
@@ -3895,22 +3659,16 @@ components:
           format: date-time
           type: string
           nullable: true
-    get_pix_400_response:
+    PostPixRequest:
       example:
-        requestId: requestId
-        error: error
-        message: message
-        statusCode: 5
-      properties:
-        statusCode:
-          type: integer
-        error:
-          type: string
-        message:
-          type: string
-        requestId:
-          type: string
-    post_pix_request:
+        generatedName: John Doe
+        expiresIn: 600
+        amount: 10.9
+        generatedDocument: "12345678901"
+        clientReference: order_12345
+        callbackUrl: https://webhook.cool/
+        generatedEmail: john.doe@example.com
+        virtualAccount: virtualAccount
       properties:
         amount:
           description: Amount in BRL. Must be >= 1.
@@ -3944,35 +3702,16 @@ components:
           maxLength: 64
           type: string
         virtualAccount:
-          description: "Subconta virtual (até 50 caracteres) para correlacionar lojas,\
-            \ filiais, marketplaces. Volta no callback."
+          description: "Virtual sub-account (up to 50 characters) to correlate stores,\
+            \ branches, marketplaces. Returned in the callback."
           maxLength: 50
           type: string
       required:
       - amount
-    get_pix_key_400_response:
+    PostPixQrcodeReadRequest:
       example:
-        error: INVALID_PIX_KEY
-        message: The provided Pix key has an invalid format.
-      properties:
-        error:
-          example: INVALID_PIX_KEY
-          type: string
-        message:
-          example: The provided Pix key has an invalid format.
-          type: string
-    get_pix_key_404_response:
-      example:
-        error: PIX_KEY_NOT_FOUND
-        message: The specified Pix key was not found in DICT.
-      properties:
-        error:
-          example: PIX_KEY_NOT_FOUND
-          type: string
-        message:
-          example: The specified Pix key was not found in DICT.
-          type: string
-    post_pix_qrcode_read_request:
+        emv: 00020101021226770014br.gov.bcb.pix2555api.payzu/pix/qr/v2/013318d6-2d7d-479e-8bb3-b5c7b9da688c5204000053039865802BR5916PAYZU
+          6007SAOPAULO6217051320260118278956304EC55
       properties:
         emv:
           description: The EMV payload string from the Pix QR Code.
@@ -3981,24 +3720,15 @@ components:
           type: string
       required:
       - emv
-    post_pix_qrcode_read_400_response:
+    PostWithdrawRequest:
       example:
-        error: INVALID_QR_CODE
-        message: The provided EMV payload is invalid or malformed.
-      properties:
-        error:
-          example: INVALID_QR_CODE
-          type: string
-        message:
-          example: The provided EMV payload is invalid or malformed.
-          type: string
-    get_proof_200_response:
-      example:
-        base64: base64
-      properties:
-        base64:
-          type: string
-    post_withdraw_request:
+        pixType: email
+        amount: 2
+        clientReference: withdraw_98765
+        description: Weekly payout
+        callbackUrl: https://webhook.cool/
+        virtualAccount: virtualAccount
+        pixKey: teste@teste.com
       properties:
         amount:
           description: Amount in BRL. Must be >= 1.
@@ -4033,15 +3763,23 @@ components:
           example: Weekly payout
           type: string
         virtualAccount:
-          description: "Subconta virtual (até 50 caracteres) para correlacionar lojas,\
-            \ filiais, marketplaces. Volta no callback."
+          description: "Virtual sub-account (up to 50 characters) to correlate stores,\
+            \ branches, marketplaces. Returned in the callback."
           maxLength: 50
           type: string
       required:
       - amount
       - pixKey
       - pixType
-    post_withdraw_qrcode_request:
+    PostWithdrawQrcodeRequest:
+      example:
+        amount: 20
+        qrCode: 00020101021226770014br.gov.bcb.pix2555api.payzu/pix/qr/v2/013318d6-2d7d-479e-8bb3-b5c7b9da688c5204000053039865802BR5916PAYZU
+          6007SAOPAULO6217051320260118278956304EC55
+        clientReference: order-123
+        description: Pagamento via QR Code
+        callbackUrl: https://webhook.cool/
+        virtualAccount: virtualAccount
       properties:
         qrCode:
           description: Pix QR Code payload (EMV format).
@@ -4067,12 +3805,267 @@ components:
           example: order-123
           type: string
         virtualAccount:
-          description: "Subconta virtual (até 50 caracteres) para correlacionar lojas,\
-            \ filiais, marketplaces. Volta no callback."
+          description: "Virtual sub-account (up to 50 characters) to correlate stores,\
+            \ branches, marketplaces. Returned in the callback."
           maxLength: 50
           type: string
       required:
       - qrCode
+    PostInfractionsDefenseRequest:
+      properties:
+        defense:
+          description: "Defense text (max: 1000 characters)"
+          maxLength: 1000
+          type: string
+        files:
+          description: "Evidence files (max: 10MB total)"
+          items:
+            format: binary
+            type: string
+          type: array
+      required:
+      - defense
+    PostInternalTransferRequest:
+      example:
+        payerAccountNumber: "513579"
+        amount: 100.5
+        receiverAccountNumber: "987654"
+        clientReference: transfer_abc_123
+        description: "Pagamento referente a fatura #1234"
+        callbackUrl: https://webhook.cool/
+        virtualAccount: virtualAccount
+      properties:
+        payerAccountNumber:
+          description: Payer account number (6 digits). Must match the authenticated
+            user's accountNumber.
+          example: "513579"
+          pattern: "^\\d{6}$"
+          type: string
+        receiverAccountNumber:
+          description: Destination account number (6 digits).
+          example: "987654"
+          pattern: "^\\d{6}$"
+          type: string
+        amount:
+          description: Transfer amount in BRL.
+          example: 100.5
+          minimum: 0.01
+          type: number
+        description:
+          description: Optional transfer description.
+          example: "Pagamento referente a fatura #1234"
+          maxLength: 500
+          type: string
+        callbackUrl:
+          description: URL to receive transaction-update webhooks.
+          example: https://webhook.cool/
+          format: uri
+          type: string
+        clientReference:
+          description: External reference for idempotency / reconciliation.
+          example: transfer_abc_123
+          maxLength: 64
+          type: string
+        virtualAccount:
+          description: "Virtual sub-account (up to 50 characters) to correlate stores,\
+            \ branches, marketplaces. Returned in the callback."
+          maxLength: 50
+          minLength: 1
+          type: string
+      required:
+      - amount
+      - payerAccountNumber
+      - receiverAccountNumber
+    PostUserReportRequest:
+      example:
+        dateTo: 2000-01-23T04:56:07.000+00:00
+        dateFrom: 2000-01-23T04:56:07.000+00:00
+        type:
+        - DEPOSIT
+        - DEPOSIT
+        status:
+        - PENDING
+        - PENDING
+      properties:
+        dateFrom:
+          format: date-time
+          type: string
+        dateTo:
+          format: date-time
+          type: string
+        status:
+          items:
+            enum:
+            - PENDING
+            - COMPLETED
+            - CANCELED
+            - WAITING_FOR_REFUND
+            - REFUNDED
+            - EXPIRED
+            - ERROR
+            type: string
+          type: array
+        type:
+          items:
+            enum:
+            - DEPOSIT
+            - WITHDRAW
+            - COMMISSION
+            type: string
+          type: array
+      required:
+      - dateFrom
+      - dateTo
+    ResendUserCallbacksRequest:
+      example:
+        transactionIds:
+        - transactionIds
+        - transactionIds
+        transactionEndToEndIds:
+        - transactionEndToEndIds
+        - transactionEndToEndIds
+        createdAtTo: 2000-01-23T04:56:07.000+00:00
+        transactionTypes:
+        - DEPOSIT
+        - DEPOSIT
+        transactionStatus:
+        - PENDING
+        - PENDING
+        createdAtFrom: 2000-01-23T04:56:07.000+00:00
+      properties:
+        createdAtFrom:
+          description: Period start (REQUIRED). Cannot be more than 30 days in the
+            past.
+          format: date-time
+          type: string
+        createdAtTo:
+          description: Period end (REQUIRED). Period span cannot exceed 7 days.
+          format: date-time
+          type: string
+        transactionIds:
+          description: Restrict to specific transaction IDs
+          items:
+            type: string
+          type: array
+        transactionTypes:
+          description: Filter by transaction type
+          items:
+            enum:
+            - DEPOSIT
+            - WITHDRAW
+            - COMMISSION
+            type: string
+          type: array
+        transactionStatus:
+          description: Filter by transaction status
+          items:
+            enum:
+            - PENDING
+            - COMPLETED
+            - CANCELED
+            - WAITING_FOR_REFUND
+            - REFUNDED
+            - EXPIRED
+            - ERROR
+            type: string
+          type: array
+        transactionEndToEndIds:
+          description: Restrict to specific Pix end-to-end IDs
+          items:
+            type: string
+          type: array
+      required:
+      - createdAtFrom
+      - createdAtTo
+    ApiError:
+      example:
+        requestId: cmbz0f8qk0001js04hp3e2n0f
+        retryAfterSeconds: 30
+        errorCode: PZA100
+        details:
+        - field: field
+          message: message
+        - field: field
+          message: message
+        error: Bad Request
+        message: Validation failed
+        statusCode: 400
+      properties:
+        statusCode:
+          description: HTTP status code.
+          example: 400
+          type: integer
+        error:
+          description: HTTP status text.
+          example: Bad Request
+          type: string
+        message:
+          description: Human-readable error message.
+          example: Validation failed
+          type: string
+        requestId:
+          description: Unique request correlation ID (cuid). Include it when contacting
+            support.
+          example: cmbz0f8qk0001js04hp3e2n0f
+          type: string
+        errorCode:
+          description: "Stable machine-readable error code, when available."
+          example: PZA100
+          type: string
+        retryAfterSeconds:
+          description: Seconds to wait before retrying. Present only on 429 responses.
+          example: 30
+          type: integer
+        details:
+          description: "Field-level validation errors, when applicable."
+          items:
+            $ref: "#/components/schemas/ApiError_details_inner"
+          type: array
+      required:
+      - error
+      - message
+      - requestId
+      - statusCode
+    ProofResponse:
+      example:
+        base64: base64
+      properties:
+        base64:
+          description: Base64-encoded PDF receipt.
+          type: string
+    get_pix_key_400_response:
+      example:
+        error: INVALID_PIX_KEY
+        message: The provided Pix key has an invalid format.
+      properties:
+        error:
+          example: INVALID_PIX_KEY
+          type: string
+        message:
+          example: The provided Pix key has an invalid format.
+          type: string
+    get_pix_key_404_response:
+      example:
+        error: PIX_KEY_NOT_FOUND
+        message: The specified Pix key was not found in DICT.
+      properties:
+        error:
+          example: PIX_KEY_NOT_FOUND
+          type: string
+        message:
+          example: The specified Pix key was not found in DICT.
+          type: string
+    post_pix_qrcode_read_400_response:
+      example:
+        error: INVALID_QR_CODE
+        message: The provided EMV payload is invalid or malformed.
+      properties:
+        error:
+          example: INVALID_QR_CODE
+          type: string
+        message:
+          example: The provided EMV payload is invalid or malformed.
+          type: string
     post_withdraw_qrcode_400_response:
       example:
         error: AMOUNT_REQUIRED
@@ -4289,63 +4282,6 @@ components:
           items:
             $ref: "#/components/schemas/Transaction"
           type: array
-    post_infractions_defense_request:
-      properties:
-        defense:
-          description: "Defense text (max: 1000 characters)"
-          maxLength: 1000
-          type: string
-        files:
-          description: "Evidence files (max: 10MB total)"
-          items:
-            format: binary
-            type: string
-          type: array
-      required:
-      - defense
-    post_internal_transfer_request:
-      properties:
-        payerAccountNumber:
-          description: Payer account number (6 digits). Must match the authenticated
-            user's accountNumber.
-          example: "513579"
-          pattern: "^\\d{6}$"
-          type: string
-        receiverAccountNumber:
-          description: Destination account number (6 digits).
-          example: "987654"
-          pattern: "^\\d{6}$"
-          type: string
-        amount:
-          description: Transfer amount in BRL.
-          example: 100.5
-          minimum: 0.01
-          type: number
-        description:
-          description: Optional transfer description.
-          example: "Pagamento referente a fatura #1234"
-          maxLength: 500
-          type: string
-        callbackUrl:
-          description: URL to receive transaction-update webhooks.
-          example: https://webhook.cool/
-          format: uri
-          type: string
-        clientReference:
-          description: External reference for idempotency / reconciliation.
-          example: transfer_abc_123
-          maxLength: 64
-          type: string
-        virtualAccount:
-          description: "Subconta virtual (até 50 caracteres) para correlacionar lojas,\
-            \ filiais, marketplaces. Volta no callback."
-          maxLength: 50
-          minLength: 1
-          type: string
-      required:
-      - amount
-      - payerAccountNumber
-      - receiverAccountNumber
     get_user_transaction_by_id_200_response_allOf_Infraction_inner:
       example:
         createdAt: 2000-01-23T04:56:07.000+00:00
@@ -4389,7 +4325,7 @@ components:
       - $ref: "#/components/schemas/Transaction"
       - properties:
           Infraction:
-            description: Histórico completo de infrações desta transação.
+            description: Complete infraction history for this transaction.
             items:
               $ref: "#/components/schemas/get_user_transaction_by_id_200_response_allOf_Infraction_inner"
             type: array
@@ -4481,37 +4417,6 @@ components:
           items:
             $ref: "#/components/schemas/ReportJob"
           type: array
-    post_user_report_request:
-      properties:
-        dateFrom:
-          format: date-time
-          type: string
-        dateTo:
-          format: date-time
-          type: string
-        status:
-          items:
-            enum:
-            - PENDING
-            - COMPLETED
-            - CANCELED
-            - WAITING_FOR_REFUND
-            - REFUNDED
-            - EXPIRED
-            - ERROR
-            type: string
-          type: array
-        type:
-          items:
-            enum:
-            - DEPOSIT
-            - WITHDRAW
-            - COMMISSION
-            type: string
-          type: array
-      required:
-      - dateFrom
-      - dateTo
     download_user_report_200_response:
       example:
         url: https://openapi-generator.tech
@@ -4525,52 +4430,6 @@ components:
           description: When the signed URL expires
           format: date-time
           type: string
-    resend_user_callbacks_request:
-      properties:
-        createdAtFrom:
-          description: Period start (REQUIRED). Cannot be more than 30 days in the
-            past.
-          format: date-time
-          type: string
-        createdAtTo:
-          description: Period end (REQUIRED). Period span cannot exceed 7 days.
-          format: date-time
-          type: string
-        transactionIds:
-          description: Restrict to specific transaction IDs
-          items:
-            type: string
-          type: array
-        transactionTypes:
-          description: Filter by transaction type
-          items:
-            enum:
-            - DEPOSIT
-            - WITHDRAW
-            - COMMISSION
-            type: string
-          type: array
-        transactionStatus:
-          description: Filter by transaction status
-          items:
-            enum:
-            - PENDING
-            - COMPLETED
-            - CANCELED
-            - WAITING_FOR_REFUND
-            - REFUNDED
-            - EXPIRED
-            - ERROR
-            type: string
-          type: array
-        transactionEndToEndIds:
-          description: Restrict to specific Pix end-to-end IDs
-          items:
-            type: string
-          type: array
-      required:
-      - createdAtFrom
-      - createdAtTo
     resend_user_callbacks_200_response:
       example:
         total: 0
@@ -4586,6 +4445,21 @@ components:
         message: message
       properties:
         message:
+          type: string
+    get_pix_qrcode_404_response:
+      example:
+        requestId: requestId
+        error: error
+        message: message
+        statusCode: 0
+      properties:
+        statusCode:
+          type: integer
+        error:
+          type: string
+        message:
+          type: string
+        requestId:
           type: string
     InfractionDetail_transaction:
       example:
@@ -4631,8 +4505,8 @@ components:
           format: int32
           type: integer
         url:
-          description: URL assinada para download (expira em 9 minutos). Presente
-            apenas ao buscar a defesa individual; ausente na listagem.
+          description: Signed download URL (expires in 9 minutes). Present only when
+            fetching an individual defense; absent in the listing.
           type: string
           nullable: true
     InfractionListResponse_pagination:
@@ -4671,6 +4545,18 @@ components:
         hasNextPage:
           description: Indicates if there is a next page
           type: boolean
+    ApiError_details_inner:
+      example:
+        field: field
+        message: message
+      properties:
+        field:
+          type: string
+        message:
+          type: string
+      required:
+      - field
+      - message
   securitySchemes:
     BearerAuth:
       scheme: bearer

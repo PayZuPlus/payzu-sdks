@@ -1,15 +1,16 @@
 /* tslint:disable */
 /* eslint-disable */
+export * from './ApiError.js';
+export * from './ApiErrorDetailsInner.js';
 export * from './CallbackDetail.js';
 export * from './CallbackListResponse.js';
 export * from './CallbackListResponsePagination.js';
 export * from './Defense.js';
 export * from './DefenseFilesInner.js';
 export * from './DownloadUserReport200Response.js';
-export * from './GetPix400Response.js';
 export * from './GetPixKey400Response.js';
 export * from './GetPixKey404Response.js';
-export * from './GetProof200Response.js';
+export * from './GetPixQrcode404Response.js';
 export * from './GetUser200Response.js';
 export * from './GetUser200ResponseDailyWithdrawLimit.js';
 export * from './GetUser200ResponseServiceFee.js';
@@ -32,6 +33,7 @@ export * from './PostUserReportRequest.js';
 export * from './PostWithdrawQrcode400Response.js';
 export * from './PostWithdrawQrcodeRequest.js';
 export * from './PostWithdrawRequest.js';
+export * from './ProofResponse.js';
 export * from './QRCodeReadResponse.js';
 export * from './ReportJob.js';
 export * from './ResendUserCallbackSingle200Response.js';

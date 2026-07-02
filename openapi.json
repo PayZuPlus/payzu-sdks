@@ -1,7 +1,7 @@
 {
   "openapi": "3.1.0",
   "info": {
-    "version": "1.6.0",
+    "version": "1.7.0",
     "title": "PayZu Pix API",
     "description": "REST API for Pix operations on the PayZu platform, deposits, withdrawals, internal transfers, infractions, reports, and callback inspection. All amounts are in BRL (reais) unless explicitly noted. Authentication uses a Bearer token issued during onboarding.\n\n## SDKs oficiais\n\n- Node.js: `npm install payzu-pix`\n- Python: `pip install payzu-pix`\n- Go: `go get github.com/PayZuPlus/payzu-sdks/go`\n- PHP: `composer require payzu/pix`\n\nRepo: https://github.com/PayZuPlus/payzu-sdks\n",
     "contact": {
@@ -12,7 +12,7 @@
   "servers": [
     {
       "url": "https://api.payzu.processamento.com/v1",
-      "description": "Produção"
+      "description": "Production"
     }
   ],
   "tags": [
@@ -64,55 +64,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "type": "object",
-                "required": [
-                  "amount"
-                ],
-                "properties": {
-                  "amount": {
-                    "type": "number",
-                    "description": "Amount in BRL. Must be >= 1.",
-                    "example": 10.9,
-                    "minimum": 1
-                  },
-                  "callbackUrl": {
-                    "type": "string",
-                    "description": "URL to receive `transaction updated` webhooks.",
-                    "example": "https://webhook.cool/"
-                  },
-                  "generatedName": {
-                    "type": "string",
-                    "description": "Payer full name. Letters and spaces only.",
-                    "example": "John Doe"
-                  },
-                  "generatedEmail": {
-                    "type": "string",
-                    "description": "Payer email (optional).",
-                    "example": "john.doe@example.com"
-                  },
-                  "generatedDocument": {
-                    "type": "string",
-                    "description": "Payer CPF (11 digits) or CNPJ (14 digits), no punctuation.",
-                    "example": "12345678901"
-                  },
-                  "expiresIn": {
-                    "type": "number",
-                    "description": "Seconds until the QR Code expires. Default: 600.",
-                    "example": 600,
-                    "maximum": 172000
-                  },
-                  "clientReference": {
-                    "type": "string",
-                    "description": "External reference (order, invoice, etc.).",
-                    "example": "order_12345",
-                    "maxLength": 64
-                  },
-                  "virtualAccount": {
-                    "type": "string",
-                    "maxLength": 50,
-                    "description": "Subconta virtual (até 50 caracteres) para correlacionar lojas, filiais, marketplaces. Volta no callback."
-                  }
-                }
+                "$ref": "#/components/schemas/PostPixRequest"
               }
             }
           }
@@ -175,21 +127,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "statusCode": {
-                      "type": "integer"
-                    },
-                    "error": {
-                      "type": "string"
-                    },
-                    "message": {
-                      "type": "string"
-                    },
-                    "requestId": {
-                      "type": "string"
-                    }
-                  }
+                  "$ref": "#/components/schemas/ApiError"
                 },
                 "examples": {
                   "error": {
@@ -209,21 +147,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "statusCode": {
-                      "type": "integer"
-                    },
-                    "error": {
-                      "type": "string"
-                    },
-                    "message": {
-                      "type": "string"
-                    },
-                    "requestId": {
-                      "type": "string"
-                    }
-                  }
+                  "$ref": "#/components/schemas/ApiError"
                 },
                 "examples": {
                   "error": {
@@ -243,7 +167,7 @@
       },
       "get": {
         "summary": "Retrieve Charge",
-        "description": "Get the latest status and details for a Pix **deposit (charge)**. Provide **one** of `id`, `clientReference`, or `endToEndId`. Use apenas um destes parâmetros: id, clientReference, endToEndId. Combinar mais de um retorna erro.",
+        "description": "Get the latest status and details for a Pix **deposit (charge)**. Provide **one** of `id`, `clientReference`, or `endToEndId`. Combining more than one returns an error.",
         "operationId": "get_pix",
         "tags": [
           "Pix Operations"
@@ -254,19 +178,6 @@
           }
         ],
         "parameters": [
-          {
-            "in": "header",
-            "name": "Content-Type",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "enum": [
-                "application/json"
-              ],
-              "default": "application/json"
-            },
-            "description": "Obrigatório em toda chamada PayZu."
-          },
           {
             "in": "query",
             "name": "id",
@@ -303,7 +214,7 @@
               "type": "string",
               "maxLength": 50
             },
-            "description": "Subconta virtual (até 50 caracteres) usada na criação. Aceito como chave de busca alternativa."
+            "description": "Virtual sub-account (up to 50 characters) used at creation. Accepted as an alternative lookup key."
           }
         ],
         "responses": {
@@ -404,21 +315,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "statusCode": {
-                      "type": "integer"
-                    },
-                    "error": {
-                      "type": "string"
-                    },
-                    "message": {
-                      "type": "string"
-                    },
-                    "requestId": {
-                      "type": "string"
-                    }
-                  }
+                  "$ref": "#/components/schemas/ApiError"
                 },
                 "examples": {
                   "error": {
@@ -438,21 +335,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "statusCode": {
-                      "type": "integer"
-                    },
-                    "error": {
-                      "type": "string"
-                    },
-                    "message": {
-                      "type": "string"
-                    },
-                    "requestId": {
-                      "type": "string"
-                    }
-                  }
+                  "$ref": "#/components/schemas/ApiError"
                 },
                 "examples": {
                   "error": {
@@ -472,21 +355,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "statusCode": {
-                      "type": "integer"
-                    },
-                    "error": {
-                      "type": "string"
-                    },
-                    "message": {
-                      "type": "string"
-                    },
-                    "requestId": {
-                      "type": "string"
-                    }
-                  }
+                  "$ref": "#/components/schemas/ApiError"
                 },
                 "examples": {
                   "error": {
@@ -518,19 +387,6 @@
           }
         ],
         "parameters": [
-          {
-            "in": "header",
-            "name": "Content-Type",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "enum": [
-                "application/json"
-              ],
-              "default": "application/json"
-            },
-            "description": "Obrigatório em toda chamada PayZu."
-          },
           {
             "in": "query",
             "name": "pixKey",
@@ -653,7 +509,7 @@
     "/pix/qrcode/read": {
       "post": {
         "summary": "Read QR Code",
-        "description": "Decode and extract information from a Pix QR Code (EMV format) before making a payment. Returns the parsed data including receiver details, amount (if present), and other QR Code metadata. No momento a PayZu só suporta QR Code dinâmico. QR estático ainda não é processado.",
+        "description": "Decode and extract information from a Pix QR Code (EMV format) before making a payment. Returns the parsed data including receiver details, amount (if present), and other QR Code metadata. Currently PayZu only supports dynamic QR Codes. Static QR Codes are not processed yet.",
         "operationId": "post_pix_qrcode_read",
         "tags": [
           "Withdrawals"
@@ -668,17 +524,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "type": "object",
-                "required": [
-                  "emv"
-                ],
-                "properties": {
-                  "emv": {
-                    "type": "string",
-                    "description": "The EMV payload string from the Pix QR Code.",
-                    "example": "00020101021226770014br.gov.bcb.pix2555api.payzu/pix/qr/v2/013318d6-2d7d-479e-8bb3-b5c7b9da688c5204000053039865802BR5916PAYZU 6007SAOPAULO6217051320260118278956304EC55"
-                  }
-                }
+                "$ref": "#/components/schemas/PostPixQrcodeReadRequest"
               }
             }
           }
@@ -761,7 +607,7 @@
     "/proof/{id}": {
       "get": {
         "summary": "Get Transaction Receipt",
-        "description": "Retorna o comprovante da transação como JSON com o campo `base64` (PDF codificado). Decodifique pra exibir ou salvar como `.pdf`.",
+        "description": "Returns the transaction receipt as JSON with a `base64` field (encoded PDF). Decode it to display or save as `.pdf`.",
         "operationId": "get_proof",
         "tags": [
           "Pix Operations"
@@ -772,19 +618,6 @@
           }
         ],
         "parameters": [
-          {
-            "in": "header",
-            "name": "Content-Type",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "enum": [
-                "application/json"
-              ],
-              "default": "application/json"
-            },
-            "description": "Obrigatório em toda chamada PayZu."
-          },
           {
             "in": "path",
             "name": "id",
@@ -817,12 +650,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "base64": {
-                      "type": "string"
-                    }
-                  }
+                  "$ref": "#/components/schemas/ProofResponse"
                 },
                 "examples": {
                   "base64": {
@@ -837,7 +665,7 @@
                 "schema": {
                   "type": "string",
                   "format": "binary",
-                  "description": "PDF binário (formato padrão, quando `type=pdf`)."
+                  "description": "Binary PDF (default format, when `type=pdf`)."
                 }
               }
             }
@@ -847,21 +675,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "statusCode": {
-                      "type": "integer"
-                    },
-                    "error": {
-                      "type": "string"
-                    },
-                    "message": {
-                      "type": "string"
-                    },
-                    "requestId": {
-                      "type": "string"
-                    }
-                  }
+                  "$ref": "#/components/schemas/ApiError"
                 },
                 "examples": {
                   "error": {
@@ -881,21 +695,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "statusCode": {
-                      "type": "integer"
-                    },
-                    "error": {
-                      "type": "string"
-                    },
-                    "message": {
-                      "type": "string"
-                    },
-                    "requestId": {
-                      "type": "string"
-                    }
-                  }
+                  "$ref": "#/components/schemas/ApiError"
                 },
                 "examples": {
                   "error": {
@@ -915,21 +715,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "statusCode": {
-                      "type": "integer"
-                    },
-                    "error": {
-                      "type": "string"
-                    },
-                    "message": {
-                      "type": "string"
-                    },
-                    "requestId": {
-                      "type": "string"
-                    }
-                  }
+                  "$ref": "#/components/schemas/ApiError"
                 },
                 "examples": {
                   "error": {
@@ -965,58 +751,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "type": "object",
-                "required": [
-                  "amount",
-                  "pixKey",
-                  "pixType"
-                ],
-                "properties": {
-                  "amount": {
-                    "type": "number",
-                    "description": "Amount in BRL. Must be >= 1.",
-                    "example": 2,
-                    "minimum": 0.01
-                  },
-                  "pixKey": {
-                    "type": "string",
-                    "description": "Destination Pix key.",
-                    "example": "teste@teste.com"
-                  },
-                  "pixType": {
-                    "type": "string",
-                    "description": "Pix key type.",
-                    "enum": [
-                      "cpf",
-                      "cnpj",
-                      "phone",
-                      "email",
-                      "evp"
-                    ],
-                    "example": "email"
-                  },
-                  "callbackUrl": {
-                    "type": "string",
-                    "description": "Webhook URL for status updates.",
-                    "example": "https://webhook.cool/"
-                  },
-                  "clientReference": {
-                    "type": "string",
-                    "description": "External reference for this withdrawal.",
-                    "example": "withdraw_98765",
-                    "maxLength": 64
-                  },
-                  "description": {
-                    "type": "string",
-                    "description": "Optional description.",
-                    "example": "Weekly payout"
-                  },
-                  "virtualAccount": {
-                    "type": "string",
-                    "maxLength": 50,
-                    "description": "Subconta virtual (até 50 caracteres) para correlacionar lojas, filiais, marketplaces. Volta no callback."
-                  }
-                }
+                "$ref": "#/components/schemas/PostWithdrawRequest"
               }
             }
           }
@@ -1119,21 +854,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "statusCode": {
-                      "type": "integer"
-                    },
-                    "error": {
-                      "type": "string"
-                    },
-                    "message": {
-                      "type": "string"
-                    },
-                    "requestId": {
-                      "type": "string"
-                    }
-                  }
+                  "$ref": "#/components/schemas/ApiError"
                 },
                 "examples": {
                   "error": {
@@ -1153,21 +874,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "statusCode": {
-                      "type": "integer"
-                    },
-                    "error": {
-                      "type": "string"
-                    },
-                    "message": {
-                      "type": "string"
-                    },
-                    "requestId": {
-                      "type": "string"
-                    }
-                  }
+                  "$ref": "#/components/schemas/ApiError"
                 },
                 "examples": {
                   "error": {
@@ -1187,7 +894,7 @@
       },
       "get": {
         "summary": "Retrieve Withdrawal",
-        "description": "Retorna o status e os detalhes atuais de um saque. Informe pelo menos um destes parâmetros: `id`, `clientReference` ou `endToEndId`. Se informar mais de um, todos são aplicados como filtro (AND), o que pode não retornar registro caso não apontem para a mesma transação.",
+        "description": "Get the latest status and details for a withdrawal. Provide at least one of `id`, `clientReference`, or `endToEndId`. If more than one is provided, all are applied as filters (AND), which may return no record if they do not point to the same transaction.",
         "operationId": "get_withdraw",
         "tags": [
           "Withdrawals"
@@ -1198,19 +905,6 @@
           }
         ],
         "parameters": [
-          {
-            "in": "header",
-            "name": "Content-Type",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "enum": [
-                "application/json"
-              ],
-              "default": "application/json"
-            },
-            "description": "Obrigatório em toda chamada PayZu."
-          },
           {
             "in": "query",
             "name": "id",
@@ -1247,7 +941,7 @@
               "type": "string",
               "maxLength": 50
             },
-            "description": "Subconta virtual (até 50 caracteres) usada na criação. Aceito como chave de busca alternativa."
+            "description": "Virtual sub-account (up to 50 characters) used at creation. Accepted as an alternative lookup key."
           }
         ],
         "responses": {
@@ -1348,21 +1042,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "statusCode": {
-                      "type": "integer"
-                    },
-                    "error": {
-                      "type": "string"
-                    },
-                    "message": {
-                      "type": "string"
-                    },
-                    "requestId": {
-                      "type": "string"
-                    }
-                  }
+                  "$ref": "#/components/schemas/ApiError"
                 },
                 "examples": {
                   "error": {
@@ -1382,21 +1062,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "statusCode": {
-                      "type": "integer"
-                    },
-                    "error": {
-                      "type": "string"
-                    },
-                    "message": {
-                      "type": "string"
-                    },
-                    "requestId": {
-                      "type": "string"
-                    }
-                  }
+                  "$ref": "#/components/schemas/ApiError"
                 },
                 "examples": {
                   "error": {
@@ -1416,21 +1082,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "statusCode": {
-                      "type": "integer"
-                    },
-                    "error": {
-                      "type": "string"
-                    },
-                    "message": {
-                      "type": "string"
-                    },
-                    "requestId": {
-                      "type": "string"
-                    }
-                  }
+                  "$ref": "#/components/schemas/ApiError"
                 },
                 "examples": {
                   "error": {
@@ -1451,7 +1103,7 @@
     "/withdraw/qrcode": {
       "post": {
         "summary": "Create Withdrawal using QR Code",
-        "description": "Cash out using a **Pix QR Code** (static/dynamic). If `amount` is not provided, the QR Code's embedded value will be used. No momento a PayZu só suporta QR Code dinâmico. QR estático ainda não é processado.",
+        "description": "Cash out using a **Pix QR Code** (static/dynamic). If `amount` is not provided, the QR Code's embedded value will be used. Currently PayZu only supports dynamic QR Codes. Static QR Codes are not processed yet.",
         "operationId": "post_withdraw_qrcode",
         "tags": [
           "Withdrawals"
@@ -1466,43 +1118,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "type": "object",
-                "required": [
-                  "qrCode"
-                ],
-                "properties": {
-                  "qrCode": {
-                    "type": "string",
-                    "description": "Pix QR Code payload (EMV format).",
-                    "example": "00020101021226770014br.gov.bcb.pix2555api.payzu/pix/qr/v2/013318d6-2d7d-479e-8bb3-b5c7b9da688c5204000053039865802BR5916PAYZU 6007SAOPAULO6217051320260118278956304EC55"
-                  },
-                  "amount": {
-                    "type": "number",
-                    "description": "Amount in BRL. Optional - if not provided, uses the QR Code's embedded value.",
-                    "example": 20,
-                    "minimum": 0.1
-                  },
-                  "callbackUrl": {
-                    "type": "string",
-                    "description": "Webhook URL for status updates.",
-                    "example": "https://webhook.cool/"
-                  },
-                  "description": {
-                    "type": "string",
-                    "description": "Optional description for the payment.",
-                    "example": "Pagamento via QR Code"
-                  },
-                  "clientReference": {
-                    "type": "string",
-                    "description": "External reference for this withdrawal.",
-                    "example": "order-123"
-                  },
-                  "virtualAccount": {
-                    "type": "string",
-                    "maxLength": 50,
-                    "description": "Subconta virtual (até 50 caracteres) para correlacionar lojas, filiais, marketplaces. Volta no callback."
-                  }
-                }
+                "$ref": "#/components/schemas/PostWithdrawQrcodeRequest"
               }
             }
           }
@@ -1637,7 +1253,7 @@
     "/withdraw/proof/{id}": {
       "get": {
         "summary": "Get Withdrawal Receipt",
-        "description": "Retorna o comprovante da transação como JSON com o campo `base64` (PDF codificado). Decodifique pra exibir ou salvar como `.pdf`.",
+        "description": "Returns the transaction receipt as JSON with a `base64` field (encoded PDF). Decode it to display or save as `.pdf`.",
         "operationId": "get_withdraw_proof",
         "tags": [
           "Withdrawals"
@@ -1648,19 +1264,6 @@
           }
         ],
         "parameters": [
-          {
-            "in": "header",
-            "name": "Content-Type",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "enum": [
-                "application/json"
-              ],
-              "default": "application/json"
-            },
-            "description": "Obrigatório em toda chamada PayZu."
-          },
           {
             "in": "path",
             "name": "id",
@@ -1693,12 +1296,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "base64": {
-                      "type": "string"
-                    }
-                  }
+                  "$ref": "#/components/schemas/ProofResponse"
                 },
                 "examples": {
                   "base64": {
@@ -1713,7 +1311,7 @@
                 "schema": {
                   "type": "string",
                   "format": "binary",
-                  "description": "PDF binário (formato padrão, quando `type=pdf`)."
+                  "description": "Binary PDF (default format, when `type=pdf`)."
                 }
               }
             }
@@ -1723,21 +1321,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "statusCode": {
-                      "type": "integer"
-                    },
-                    "error": {
-                      "type": "string"
-                    },
-                    "message": {
-                      "type": "string"
-                    },
-                    "requestId": {
-                      "type": "string"
-                    }
-                  }
+                  "$ref": "#/components/schemas/ApiError"
                 },
                 "examples": {
                   "error": {
@@ -1757,21 +1341,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "statusCode": {
-                      "type": "integer"
-                    },
-                    "error": {
-                      "type": "string"
-                    },
-                    "message": {
-                      "type": "string"
-                    },
-                    "requestId": {
-                      "type": "string"
-                    }
-                  }
+                  "$ref": "#/components/schemas/ApiError"
                 },
                 "examples": {
                   "error": {
@@ -1791,21 +1361,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "statusCode": {
-                      "type": "integer"
-                    },
-                    "error": {
-                      "type": "string"
-                    },
-                    "message": {
-                      "type": "string"
-                    },
-                    "requestId": {
-                      "type": "string"
-                    }
-                  }
+                  "$ref": "#/components/schemas/ApiError"
                 },
                 "examples": {
                   "error": {
@@ -1979,21 +1535,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "statusCode": {
-                      "type": "integer"
-                    },
-                    "error": {
-                      "type": "string"
-                    },
-                    "message": {
-                      "type": "string"
-                    },
-                    "requestId": {
-                      "type": "string"
-                    }
-                  }
+                  "$ref": "#/components/schemas/ApiError"
                 },
                 "examples": {
                   "error": {
@@ -2013,21 +1555,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "statusCode": {
-                      "type": "integer"
-                    },
-                    "error": {
-                      "type": "string"
-                    },
-                    "message": {
-                      "type": "string"
-                    },
-                    "requestId": {
-                      "type": "string"
-                    }
-                  }
+                  "$ref": "#/components/schemas/ApiError"
                 },
                 "examples": {
                   "error": {
@@ -2042,22 +1570,7 @@
               }
             }
           }
-        },
-        "parameters": [
-          {
-            "in": "header",
-            "name": "Content-Type",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "enum": [
-                "application/json"
-              ],
-              "default": "application/json"
-            },
-            "description": "Obrigatório em toda chamada PayZu."
-          }
-        ]
+        }
       }
     },
     "/user/balance": {
@@ -2106,21 +1619,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "statusCode": {
-                      "type": "integer"
-                    },
-                    "error": {
-                      "type": "string"
-                    },
-                    "message": {
-                      "type": "string"
-                    },
-                    "requestId": {
-                      "type": "string"
-                    }
-                  }
+                  "$ref": "#/components/schemas/ApiError"
                 },
                 "examples": {
                   "error": {
@@ -2135,22 +1634,7 @@
               }
             }
           }
-        },
-        "parameters": [
-          {
-            "in": "header",
-            "name": "Content-Type",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "enum": [
-                "application/json"
-              ],
-              "default": "application/json"
-            },
-            "description": "Obrigatório em toda chamada PayZu."
-          }
-        ]
+        }
       }
     },
     "/user/transactions": {
@@ -2167,19 +1651,6 @@
           }
         ],
         "parameters": [
-          {
-            "in": "header",
-            "name": "Content-Type",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "enum": [
-                "application/json"
-              ],
-              "default": "application/json"
-            },
-            "description": "Obrigatório em toda chamada PayZu."
-          },
           {
             "in": "query",
             "name": "dateFrom",
@@ -2236,7 +1707,7 @@
             "in": "query",
             "name": "status",
             "required": false,
-            "description": "Status da transação. Aceita CSV: PENDING,COMPLETED,etc.",
+            "description": "Transaction status. Accepts CSV: PENDING,COMPLETED,etc.",
             "schema": {
               "type": "string",
               "example": "COMPLETED,PENDING"
@@ -2247,7 +1718,7 @@
             "in": "query",
             "name": "type",
             "required": false,
-            "description": "Tipo da transação. Aceita CSV: DEPOSIT,WITHDRAW,COMMISSION.",
+            "description": "Transaction type. Accepts CSV: DEPOSIT,WITHDRAW,COMMISSION.",
             "schema": {
               "type": "string",
               "example": "DEPOSIT,WITHDRAW"
@@ -2258,7 +1729,7 @@
             "in": "query",
             "name": "amount",
             "required": false,
-            "description": "Amount filter. Mínimo 0.01.",
+            "description": "Amount filter. Minimum 0.01.",
             "schema": {
               "type": "number",
               "minimum": 0.01
@@ -2269,7 +1740,7 @@
             "in": "query",
             "name": "document",
             "required": false,
-            "description": "CPF (11 dígitos) ou CNPJ (14 dígitos), apenas números sem formatação.",
+            "description": "CPF (11 digits) or CNPJ (14 digits), digits only, no punctuation.",
             "schema": {
               "type": "string",
               "pattern": "^[0-9]{11,14}$"
@@ -2338,7 +1809,7 @@
               "type": "string",
               "maxLength": 50
             },
-            "description": "Subconta virtual (até 50 caracteres) usada na criação. Aceito como chave de busca alternativa."
+            "description": "Virtual sub-account (up to 50 characters) used at creation. Accepted as an alternative lookup key."
           }
         ],
         "responses": {
@@ -2454,21 +1925,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "statusCode": {
-                      "type": "integer"
-                    },
-                    "error": {
-                      "type": "string"
-                    },
-                    "message": {
-                      "type": "string"
-                    },
-                    "requestId": {
-                      "type": "string"
-                    }
-                  }
+                  "$ref": "#/components/schemas/ApiError"
                 },
                 "examples": {
                   "error": {
@@ -2488,21 +1945,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "statusCode": {
-                      "type": "integer"
-                    },
-                    "error": {
-                      "type": "string"
-                    },
-                    "message": {
-                      "type": "string"
-                    },
-                    "requestId": {
-                      "type": "string"
-                    }
-                  }
+                  "$ref": "#/components/schemas/ApiError"
                 },
                 "examples": {
                   "error": {
@@ -2522,21 +1965,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "statusCode": {
-                      "type": "integer"
-                    },
-                    "error": {
-                      "type": "string"
-                    },
-                    "message": {
-                      "type": "string"
-                    },
-                    "requestId": {
-                      "type": "string"
-                    }
-                  }
+                  "$ref": "#/components/schemas/ApiError"
                 },
                 "examples": {
                   "error": {
@@ -2568,19 +1997,6 @@
           }
         ],
         "parameters": [
-          {
-            "in": "header",
-            "name": "Content-Type",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "enum": [
-                "application/json"
-              ],
-              "default": "application/json"
-            },
-            "description": "Obrigatório em toda chamada PayZu."
-          },
           {
             "name": "page",
             "in": "query",
@@ -2727,21 +2143,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "statusCode": {
-                      "type": "integer"
-                    },
-                    "error": {
-                      "type": "string"
-                    },
-                    "message": {
-                      "type": "string"
-                    },
-                    "requestId": {
-                      "type": "string"
-                    }
-                  }
+                  "$ref": "#/components/schemas/ApiError"
                 },
                 "examples": {
                   "error": {
@@ -2761,21 +2163,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "statusCode": {
-                      "type": "integer"
-                    },
-                    "error": {
-                      "type": "string"
-                    },
-                    "message": {
-                      "type": "string"
-                    },
-                    "requestId": {
-                      "type": "string"
-                    }
-                  }
+                  "$ref": "#/components/schemas/ApiError"
                 },
                 "examples": {
                   "error": {
@@ -2795,21 +2183,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "statusCode": {
-                      "type": "integer"
-                    },
-                    "error": {
-                      "type": "string"
-                    },
-                    "message": {
-                      "type": "string"
-                    },
-                    "requestId": {
-                      "type": "string"
-                    }
-                  }
+                  "$ref": "#/components/schemas/ApiError"
                 },
                 "examples": {
                   "error": {
@@ -2841,19 +2215,6 @@
           }
         ],
         "parameters": [
-          {
-            "in": "header",
-            "name": "Content-Type",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "enum": [
-                "application/json"
-              ],
-              "default": "application/json"
-            },
-            "description": "Obrigatório em toda chamada PayZu."
-          },
           {
             "in": "path",
             "name": "id",
@@ -2902,21 +2263,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "statusCode": {
-                      "type": "integer"
-                    },
-                    "error": {
-                      "type": "string"
-                    },
-                    "message": {
-                      "type": "string"
-                    },
-                    "requestId": {
-                      "type": "string"
-                    }
-                  }
+                  "$ref": "#/components/schemas/ApiError"
                 },
                 "examples": {
                   "error": {
@@ -2948,19 +2295,6 @@
           }
         ],
         "parameters": [
-          {
-            "in": "header",
-            "name": "Content-Type",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "enum": [
-                "application/json"
-              ],
-              "default": "application/json"
-            },
-            "description": "Obrigatório em toda chamada PayZu."
-          },
           {
             "name": "page",
             "in": "query",
@@ -3058,7 +2392,7 @@
             "name": "sortBy",
             "in": "query",
             "required": false,
-            "description": "Campo de ordenação.",
+            "description": "Sort field.",
             "schema": {
               "type": "string"
             }
@@ -3067,7 +2401,7 @@
             "name": "sortDirection",
             "in": "query",
             "required": false,
-            "description": "Direção da ordenação.",
+            "description": "Sort direction.",
             "schema": {
               "type": "string",
               "enum": [
@@ -3080,7 +2414,7 @@
             "name": "reportedAtFrom",
             "in": "query",
             "required": false,
-            "description": "Filtro: reportedAt a partir de.",
+            "description": "Filter: reportedAt from.",
             "schema": {
               "type": "string",
               "format": "date-time"
@@ -3090,7 +2424,7 @@
             "name": "reportedAtTo",
             "in": "query",
             "required": false,
-            "description": "Filtro: reportedAt até.",
+            "description": "Filter: reportedAt up to.",
             "schema": {
               "type": "string",
               "format": "date-time"
@@ -3100,7 +2434,7 @@
             "name": "createdAtFrom",
             "in": "query",
             "required": false,
-            "description": "Filtro: createdAt a partir de.",
+            "description": "Filter: createdAt from.",
             "schema": {
               "type": "string",
               "format": "date-time"
@@ -3110,7 +2444,7 @@
             "name": "createdAtTo",
             "in": "query",
             "required": false,
-            "description": "Filtro: createdAt até.",
+            "description": "Filter: createdAt up to.",
             "schema": {
               "type": "string",
               "format": "date-time"
@@ -3120,7 +2454,7 @@
             "name": "expiresAtFrom",
             "in": "query",
             "required": false,
-            "description": "Filtro: expiresAt a partir de.",
+            "description": "Filter: expiresAt from.",
             "schema": {
               "type": "string",
               "format": "date-time"
@@ -3130,7 +2464,7 @@
             "name": "expiresAtTo",
             "in": "query",
             "required": false,
-            "description": "Filtro: expiresAt até.",
+            "description": "Filter: expiresAt up to.",
             "schema": {
               "type": "string",
               "format": "date-time"
@@ -3140,7 +2474,7 @@
             "name": "updatedAtFrom",
             "in": "query",
             "required": false,
-            "description": "Filtro: updatedAt a partir de.",
+            "description": "Filter: updatedAt from.",
             "schema": {
               "type": "string",
               "format": "date-time"
@@ -3150,7 +2484,7 @@
             "name": "updatedAtTo",
             "in": "query",
             "required": false,
-            "description": "Filtro: updatedAt até.",
+            "description": "Filter: updatedAt up to.",
             "schema": {
               "type": "string",
               "format": "date-time"
@@ -3160,7 +2494,7 @@
             "name": "needsManualReview",
             "in": "query",
             "required": false,
-            "description": "Filtro: precisa de revisão manual.",
+            "description": "Filter: needs manual review.",
             "schema": {
               "type": "boolean"
             }
@@ -3169,7 +2503,7 @@
             "name": "id",
             "in": "query",
             "required": false,
-            "description": "Filtro por ID da infração.",
+            "description": "Filter by infraction ID.",
             "schema": {
               "type": "string"
             }
@@ -3178,7 +2512,7 @@
             "name": "protocol",
             "in": "query",
             "required": false,
-            "description": "Filtro por protocolo.",
+            "description": "Filter by protocol.",
             "schema": {
               "type": "string"
             }
@@ -3239,21 +2573,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "statusCode": {
-                      "type": "integer"
-                    },
-                    "error": {
-                      "type": "string"
-                    },
-                    "message": {
-                      "type": "string"
-                    },
-                    "requestId": {
-                      "type": "string"
-                    }
-                  }
+                  "$ref": "#/components/schemas/ApiError"
                 },
                 "examples": {
                   "error": {
@@ -3273,21 +2593,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "statusCode": {
-                      "type": "integer"
-                    },
-                    "error": {
-                      "type": "string"
-                    },
-                    "message": {
-                      "type": "string"
-                    },
-                    "requestId": {
-                      "type": "string"
-                    }
-                  }
+                  "$ref": "#/components/schemas/ApiError"
                 },
                 "examples": {
                   "error": {
@@ -3307,21 +2613,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "statusCode": {
-                      "type": "integer"
-                    },
-                    "error": {
-                      "type": "string"
-                    },
-                    "message": {
-                      "type": "string"
-                    },
-                    "requestId": {
-                      "type": "string"
-                    }
-                  }
+                  "$ref": "#/components/schemas/ApiError"
                 },
                 "examples": {
                   "error": {
@@ -3353,19 +2645,6 @@
           }
         ],
         "parameters": [
-          {
-            "in": "header",
-            "name": "Content-Type",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "enum": [
-                "application/json"
-              ],
-              "default": "application/json"
-            },
-            "description": "Obrigatório em toda chamada PayZu."
-          },
           {
             "in": "path",
             "name": "id",
@@ -3421,21 +2700,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "statusCode": {
-                      "type": "integer"
-                    },
-                    "error": {
-                      "type": "string"
-                    },
-                    "message": {
-                      "type": "string"
-                    },
-                    "requestId": {
-                      "type": "string"
-                    }
-                  }
+                  "$ref": "#/components/schemas/ApiError"
                 },
                 "examples": {
                   "error": {
@@ -3482,25 +2747,7 @@
           "content": {
             "multipart/form-data": {
               "schema": {
-                "type": "object",
-                "required": [
-                  "defense"
-                ],
-                "properties": {
-                  "defense": {
-                    "type": "string",
-                    "maxLength": 1000,
-                    "description": "Defense text (max: 1000 characters)"
-                  },
-                  "files": {
-                    "type": "array",
-                    "items": {
-                      "type": "string",
-                      "format": "binary"
-                    },
-                    "description": "Evidence files (max: 10MB total)"
-                  }
-                }
+                "$ref": "#/components/schemas/PostInfractionsDefenseRequest"
               }
             }
           }
@@ -3542,21 +2789,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "statusCode": {
-                      "type": "integer"
-                    },
-                    "error": {
-                      "type": "string"
-                    },
-                    "message": {
-                      "type": "string"
-                    },
-                    "requestId": {
-                      "type": "string"
-                    }
-                  }
+                  "$ref": "#/components/schemas/ApiError"
                 },
                 "examples": {
                   "error": {
@@ -3576,21 +2809,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "statusCode": {
-                      "type": "integer"
-                    },
-                    "error": {
-                      "type": "string"
-                    },
-                    "message": {
-                      "type": "string"
-                    },
-                    "requestId": {
-                      "type": "string"
-                    }
-                  }
+                  "$ref": "#/components/schemas/ApiError"
                 },
                 "examples": {
                   "error": {
@@ -3610,21 +2829,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "statusCode": {
-                      "type": "integer"
-                    },
-                    "error": {
-                      "type": "string"
-                    },
-                    "message": {
-                      "type": "string"
-                    },
-                    "requestId": {
-                      "type": "string"
-                    }
-                  }
+                  "$ref": "#/components/schemas/ApiError"
                 },
                 "examples": {
                   "error": {
@@ -3654,19 +2859,6 @@
           }
         ],
         "parameters": [
-          {
-            "in": "header",
-            "name": "Content-Type",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "enum": [
-                "application/json"
-              ],
-              "default": "application/json"
-            },
-            "description": "Obrigatório em toda chamada PayZu."
-          },
           {
             "in": "path",
             "name": "id",
@@ -3712,21 +2904,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "statusCode": {
-                      "type": "integer"
-                    },
-                    "error": {
-                      "type": "string"
-                    },
-                    "message": {
-                      "type": "string"
-                    },
-                    "requestId": {
-                      "type": "string"
-                    }
-                  }
+                  "$ref": "#/components/schemas/ApiError"
                 },
                 "examples": {
                   "error": {
@@ -3746,21 +2924,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "statusCode": {
-                      "type": "integer"
-                    },
-                    "error": {
-                      "type": "string"
-                    },
-                    "message": {
-                      "type": "string"
-                    },
-                    "requestId": {
-                      "type": "string"
-                    }
-                  }
+                  "$ref": "#/components/schemas/ApiError"
                 },
                 "examples": {
                   "error": {
@@ -3780,21 +2944,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "statusCode": {
-                      "type": "integer"
-                    },
-                    "error": {
-                      "type": "string"
-                    },
-                    "message": {
-                      "type": "string"
-                    },
-                    "requestId": {
-                      "type": "string"
-                    }
-                  }
+                  "$ref": "#/components/schemas/ApiError"
                 },
                 "examples": {
                   "error": {
@@ -3826,19 +2976,6 @@
           }
         ],
         "parameters": [
-          {
-            "in": "header",
-            "name": "Content-Type",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "enum": [
-                "application/json"
-              ],
-              "default": "application/json"
-            },
-            "description": "Obrigatório em toda chamada PayZu."
-          },
           {
             "in": "path",
             "name": "infractionId",
@@ -3895,21 +3032,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "statusCode": {
-                      "type": "integer"
-                    },
-                    "error": {
-                      "type": "string"
-                    },
-                    "message": {
-                      "type": "string"
-                    },
-                    "requestId": {
-                      "type": "string"
-                    }
-                  }
+                  "$ref": "#/components/schemas/ApiError"
                 },
                 "examples": {
                   "error": {
@@ -3945,56 +3068,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "type": "object",
-                "required": [
-                  "payerAccountNumber",
-                  "receiverAccountNumber",
-                  "amount"
-                ],
-                "properties": {
-                  "payerAccountNumber": {
-                    "type": "string",
-                    "pattern": "^\\d{6}$",
-                    "description": "Payer account number (6 digits). Must match the authenticated user's accountNumber.",
-                    "example": "513579"
-                  },
-                  "receiverAccountNumber": {
-                    "type": "string",
-                    "pattern": "^\\d{6}$",
-                    "description": "Destination account number (6 digits).",
-                    "example": "987654"
-                  },
-                  "amount": {
-                    "type": "number",
-                    "minimum": 0.01,
-                    "description": "Transfer amount in BRL.",
-                    "example": 100.5
-                  },
-                  "description": {
-                    "type": "string",
-                    "maxLength": 500,
-                    "description": "Optional transfer description.",
-                    "example": "Pagamento referente a fatura #1234"
-                  },
-                  "callbackUrl": {
-                    "type": "string",
-                    "format": "uri",
-                    "description": "URL to receive transaction-update webhooks.",
-                    "example": "https://webhook.cool/"
-                  },
-                  "clientReference": {
-                    "type": "string",
-                    "maxLength": 64,
-                    "description": "External reference for idempotency / reconciliation.",
-                    "example": "transfer_abc_123"
-                  },
-                  "virtualAccount": {
-                    "type": "string",
-                    "maxLength": 50,
-                    "description": "Subconta virtual (até 50 caracteres) para correlacionar lojas, filiais, marketplaces. Volta no callback.",
-                    "minLength": 1
-                  }
-                }
+                "$ref": "#/components/schemas/PostInternalTransferRequest"
               }
             }
           }
@@ -4057,21 +3131,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "statusCode": {
-                      "type": "integer"
-                    },
-                    "error": {
-                      "type": "string"
-                    },
-                    "message": {
-                      "type": "string"
-                    },
-                    "requestId": {
-                      "type": "string"
-                    }
-                  }
+                  "$ref": "#/components/schemas/ApiError"
                 },
                 "examples": {
                   "error": {
@@ -4091,21 +3151,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "statusCode": {
-                      "type": "integer"
-                    },
-                    "error": {
-                      "type": "string"
-                    },
-                    "message": {
-                      "type": "string"
-                    },
-                    "requestId": {
-                      "type": "string"
-                    }
-                  }
+                  "$ref": "#/components/schemas/ApiError"
                 },
                 "examples": {
                   "error": {
@@ -4125,21 +3171,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "statusCode": {
-                      "type": "integer"
-                    },
-                    "error": {
-                      "type": "string"
-                    },
-                    "message": {
-                      "type": "string"
-                    },
-                    "requestId": {
-                      "type": "string"
-                    }
-                  }
+                  "$ref": "#/components/schemas/ApiError"
                 },
                 "examples": {
                   "error": {
@@ -4159,21 +3191,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "statusCode": {
-                      "type": "integer"
-                    },
-                    "error": {
-                      "type": "string"
-                    },
-                    "message": {
-                      "type": "string"
-                    },
-                    "requestId": {
-                      "type": "string"
-                    }
-                  }
+                  "$ref": "#/components/schemas/ApiError"
                 },
                 "examples": {
                   "error": {
@@ -4193,7 +3211,7 @@
       },
       "get": {
         "summary": "Get internal transfer",
-        "description": "Retorna os dados de uma transferência interna. Informe pelo menos um destes parâmetros: `id` ou `clientReference` (também aceita `virtualAccount`). Se informar mais de um, todos são aplicados como filtro (AND).",
+        "description": "Returns the details of an internal transfer. Provide at least one of `id` or `clientReference` (`virtualAccount` is also accepted). If more than one is provided, all are applied as filters (AND).",
         "operationId": "get_internal_transfer",
         "tags": [
           "Internal Transfer"
@@ -4204,19 +3222,6 @@
           }
         ],
         "parameters": [
-          {
-            "in": "header",
-            "name": "Content-Type",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "enum": [
-                "application/json"
-              ],
-              "default": "application/json"
-            },
-            "description": "Obrigatório em toda chamada PayZu."
-          },
           {
             "name": "id",
             "in": "query",
@@ -4242,7 +3247,7 @@
               "type": "string",
               "maxLength": 50
             },
-            "description": "Subconta virtual (até 50 caracteres) usada na criação. Aceito como chave de busca alternativa."
+            "description": "Virtual sub-account (up to 50 characters) used at creation. Accepted as an alternative lookup key."
           }
         ],
         "responses": {
@@ -4303,21 +3308,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "statusCode": {
-                      "type": "integer"
-                    },
-                    "error": {
-                      "type": "string"
-                    },
-                    "message": {
-                      "type": "string"
-                    },
-                    "requestId": {
-                      "type": "string"
-                    }
-                  }
+                  "$ref": "#/components/schemas/ApiError"
                 },
                 "examples": {
                   "error": {
@@ -4337,21 +3328,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "statusCode": {
-                      "type": "integer"
-                    },
-                    "error": {
-                      "type": "string"
-                    },
-                    "message": {
-                      "type": "string"
-                    },
-                    "requestId": {
-                      "type": "string"
-                    }
-                  }
+                  "$ref": "#/components/schemas/ApiError"
                 },
                 "examples": {
                   "error": {
@@ -4384,19 +3361,6 @@
         ],
         "parameters": [
           {
-            "in": "header",
-            "name": "Content-Type",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "enum": [
-                "application/json"
-              ],
-              "default": "application/json"
-            },
-            "description": "Obrigatório em toda chamada PayZu."
-          },
-          {
             "name": "id",
             "in": "path",
             "required": true,
@@ -4420,7 +3384,7 @@
                       "properties": {
                         "Infraction": {
                           "type": "array",
-                          "description": "Histórico completo de infrações desta transação.",
+                          "description": "Complete infraction history for this transaction.",
                           "items": {
                             "type": "object",
                             "properties": {
@@ -4480,21 +3444,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "statusCode": {
-                      "type": "integer"
-                    },
-                    "error": {
-                      "type": "string"
-                    },
-                    "message": {
-                      "type": "string"
-                    },
-                    "requestId": {
-                      "type": "string"
-                    }
-                  }
+                  "$ref": "#/components/schemas/ApiError"
                 },
                 "examples": {
                   "error": {
@@ -4530,47 +3480,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "type": "object",
-                "required": [
-                  "dateFrom",
-                  "dateTo"
-                ],
-                "properties": {
-                  "dateFrom": {
-                    "type": "string",
-                    "format": "date-time"
-                  },
-                  "dateTo": {
-                    "type": "string",
-                    "format": "date-time"
-                  },
-                  "status": {
-                    "type": "array",
-                    "items": {
-                      "type": "string",
-                      "enum": [
-                        "PENDING",
-                        "COMPLETED",
-                        "CANCELED",
-                        "WAITING_FOR_REFUND",
-                        "REFUNDED",
-                        "EXPIRED",
-                        "ERROR"
-                      ]
-                    }
-                  },
-                  "type": {
-                    "type": "array",
-                    "items": {
-                      "type": "string",
-                      "enum": [
-                        "DEPOSIT",
-                        "WITHDRAW",
-                        "COMMISSION"
-                      ]
-                    }
-                  }
-                }
+                "$ref": "#/components/schemas/PostUserReportRequest"
               }
             }
           }
@@ -4591,21 +3501,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "statusCode": {
-                      "type": "integer"
-                    },
-                    "error": {
-                      "type": "string"
-                    },
-                    "message": {
-                      "type": "string"
-                    },
-                    "requestId": {
-                      "type": "string"
-                    }
-                  }
+                  "$ref": "#/components/schemas/ApiError"
                 },
                 "examples": {
                   "error": {
@@ -4635,19 +3531,6 @@
           }
         ],
         "parameters": [
-          {
-            "in": "header",
-            "name": "Content-Type",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "enum": [
-                "application/json"
-              ],
-              "default": "application/json"
-            },
-            "description": "Obrigatório em toda chamada PayZu."
-          },
           {
             "name": "page",
             "in": "query",
@@ -4684,7 +3567,7 @@
             "name": "createdAtFrom",
             "in": "query",
             "required": false,
-            "description": "Filtro: criado a partir de.",
+            "description": "Filter: created from.",
             "schema": {
               "type": "string",
               "format": "date-time"
@@ -4694,7 +3577,7 @@
             "name": "createdAtTo",
             "in": "query",
             "required": false,
-            "description": "Filtro: criado até.",
+            "description": "Filter: created up to.",
             "schema": {
               "type": "string",
               "format": "date-time"
@@ -4704,7 +3587,7 @@
             "name": "updatedAtFrom",
             "in": "query",
             "required": false,
-            "description": "Filtro: atualizado a partir de.",
+            "description": "Filter: updated from.",
             "schema": {
               "type": "string",
               "format": "date-time"
@@ -4714,7 +3597,7 @@
             "name": "updatedAtTo",
             "in": "query",
             "required": false,
-            "description": "Filtro: atualizado até.",
+            "description": "Filter: updated up to.",
             "schema": {
               "type": "string",
               "format": "date-time"
@@ -4724,7 +3607,7 @@
             "name": "sortBy",
             "in": "query",
             "required": false,
-            "description": "Campo de ordenação.",
+            "description": "Sort field.",
             "schema": {
               "type": "string",
               "enum": [
@@ -4738,7 +3621,7 @@
             "name": "sortDirection",
             "in": "query",
             "required": false,
-            "description": "Direção da ordenação.",
+            "description": "Sort direction.",
             "schema": {
               "type": "string",
               "enum": [
@@ -4796,21 +3679,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "statusCode": {
-                      "type": "integer"
-                    },
-                    "error": {
-                      "type": "string"
-                    },
-                    "message": {
-                      "type": "string"
-                    },
-                    "requestId": {
-                      "type": "string"
-                    }
-                  }
+                  "$ref": "#/components/schemas/ApiError"
                 },
                 "examples": {
                   "error": {
@@ -4830,21 +3699,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "statusCode": {
-                      "type": "integer"
-                    },
-                    "error": {
-                      "type": "string"
-                    },
-                    "message": {
-                      "type": "string"
-                    },
-                    "requestId": {
-                      "type": "string"
-                    }
-                  }
+                  "$ref": "#/components/schemas/ApiError"
                 },
                 "examples": {
                   "error": {
@@ -4864,21 +3719,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "statusCode": {
-                      "type": "integer"
-                    },
-                    "error": {
-                      "type": "string"
-                    },
-                    "message": {
-                      "type": "string"
-                    },
-                    "requestId": {
-                      "type": "string"
-                    }
-                  }
+                  "$ref": "#/components/schemas/ApiError"
                 },
                 "examples": {
                   "error": {
@@ -4899,7 +3740,7 @@
     },
     "/user/report/{id}": {
       "get": {
-        "summary": "Consultar status do relatório",
+        "summary": "Get report job status",
         "operationId": "get_user_report",
         "tags": [
           "Reports"
@@ -4910,19 +3751,6 @@
           }
         ],
         "parameters": [
-          {
-            "in": "header",
-            "name": "Content-Type",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "enum": [
-                "application/json"
-              ],
-              "default": "application/json"
-            },
-            "description": "Obrigatório em toda chamada PayZu."
-          },
           {
             "name": "id",
             "in": "path",
@@ -4960,21 +3788,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "statusCode": {
-                      "type": "integer"
-                    },
-                    "error": {
-                      "type": "string"
-                    },
-                    "message": {
-                      "type": "string"
-                    },
-                    "requestId": {
-                      "type": "string"
-                    }
-                  }
+                  "$ref": "#/components/schemas/ApiError"
                 },
                 "examples": {
                   "error": {
@@ -4990,7 +3804,7 @@
             }
           }
         },
-        "description": "Retorna o status e os metadados de um job de relatório específico pelo `id`."
+        "description": "Returns the status and metadata of a specific report job by `id`."
       }
     },
     "/user/report/{id}/download": {
@@ -5007,19 +3821,6 @@
           }
         ],
         "parameters": [
-          {
-            "in": "header",
-            "name": "Content-Type",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "enum": [
-                "application/json"
-              ],
-              "default": "application/json"
-            },
-            "description": "Obrigatório em toda chamada PayZu."
-          },
           {
             "name": "id",
             "in": "path",
@@ -5066,21 +3867,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "statusCode": {
-                      "type": "integer"
-                    },
-                    "error": {
-                      "type": "string"
-                    },
-                    "message": {
-                      "type": "string"
-                    },
-                    "requestId": {
-                      "type": "string"
-                    }
-                  }
+                  "$ref": "#/components/schemas/ApiError"
                 },
                 "examples": {
                   "error": {
@@ -5100,21 +3887,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "statusCode": {
-                      "type": "integer"
-                    },
-                    "error": {
-                      "type": "string"
-                    },
-                    "message": {
-                      "type": "string"
-                    },
-                    "requestId": {
-                      "type": "string"
-                    }
-                  }
+                  "$ref": "#/components/schemas/ApiError"
                 },
                 "examples": {
                   "error": {
@@ -5134,21 +3907,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "statusCode": {
-                      "type": "integer"
-                    },
-                    "error": {
-                      "type": "string"
-                    },
-                    "message": {
-                      "type": "string"
-                    },
-                    "requestId": {
-                      "type": "string"
-                    }
-                  }
+                  "$ref": "#/components/schemas/ApiError"
                 },
                 "examples": {
                   "error": {
@@ -5184,65 +3943,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "type": "object",
-                "required": [
-                  "createdAtFrom",
-                  "createdAtTo"
-                ],
-                "properties": {
-                  "createdAtFrom": {
-                    "type": "string",
-                    "format": "date-time",
-                    "description": "Period start (REQUIRED). Cannot be more than 30 days in the past."
-                  },
-                  "createdAtTo": {
-                    "type": "string",
-                    "format": "date-time",
-                    "description": "Period end (REQUIRED). Period span cannot exceed 7 days."
-                  },
-                  "transactionIds": {
-                    "type": "array",
-                    "items": {
-                      "type": "string"
-                    },
-                    "description": "Restrict to specific transaction IDs"
-                  },
-                  "transactionTypes": {
-                    "type": "array",
-                    "items": {
-                      "type": "string",
-                      "enum": [
-                        "DEPOSIT",
-                        "WITHDRAW",
-                        "COMMISSION"
-                      ]
-                    },
-                    "description": "Filter by transaction type"
-                  },
-                  "transactionStatus": {
-                    "type": "array",
-                    "items": {
-                      "type": "string",
-                      "enum": [
-                        "PENDING",
-                        "COMPLETED",
-                        "CANCELED",
-                        "WAITING_FOR_REFUND",
-                        "REFUNDED",
-                        "EXPIRED",
-                        "ERROR"
-                      ]
-                    },
-                    "description": "Filter by transaction status"
-                  },
-                  "transactionEndToEndIds": {
-                    "type": "array",
-                    "items": {
-                      "type": "string"
-                    },
-                    "description": "Restrict to specific Pix end-to-end IDs"
-                  }
-                }
+                "$ref": "#/components/schemas/ResendUserCallbacksRequest"
               },
               "examples": {
                 "by_period": {
@@ -5302,21 +4003,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "statusCode": {
-                      "type": "integer"
-                    },
-                    "error": {
-                      "type": "string"
-                    },
-                    "message": {
-                      "type": "string"
-                    },
-                    "requestId": {
-                      "type": "string"
-                    }
-                  }
+                  "$ref": "#/components/schemas/ApiError"
                 },
                 "examples": {
                   "error": {
@@ -5336,21 +4023,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "statusCode": {
-                      "type": "integer"
-                    },
-                    "error": {
-                      "type": "string"
-                    },
-                    "message": {
-                      "type": "string"
-                    },
-                    "requestId": {
-                      "type": "string"
-                    }
-                  }
+                  "$ref": "#/components/schemas/ApiError"
                 },
                 "examples": {
                   "error": {
@@ -5382,19 +4055,6 @@
           }
         ],
         "parameters": [
-          {
-            "in": "header",
-            "name": "Content-Type",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "enum": [
-                "application/json"
-              ],
-              "default": "application/json"
-            },
-            "description": "Obrigatório em toda chamada PayZu."
-          },
           {
             "name": "transactionId",
             "in": "path",
@@ -5432,21 +4092,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "statusCode": {
-                      "type": "integer"
-                    },
-                    "error": {
-                      "type": "string"
-                    },
-                    "message": {
-                      "type": "string"
-                    },
-                    "requestId": {
-                      "type": "string"
-                    }
-                  }
+                  "$ref": "#/components/schemas/ApiError"
                 },
                 "examples": {
                   "error": {
@@ -5466,21 +4112,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "statusCode": {
-                      "type": "integer"
-                    },
-                    "error": {
-                      "type": "string"
-                    },
-                    "message": {
-                      "type": "string"
-                    },
-                    "requestId": {
-                      "type": "string"
-                    }
-                  }
+                  "$ref": "#/components/schemas/ApiError"
                 },
                 "examples": {
                   "error": {
@@ -5514,19 +4146,6 @@
         ],
         "parameters": [
           {
-            "in": "header",
-            "name": "Content-Type",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "enum": [
-                "application/json"
-              ],
-              "default": "application/json"
-            },
-            "description": "Obrigatório em toda chamada PayZu."
-          },
-          {
             "name": "transactionId",
             "in": "path",
             "required": true,
@@ -5552,21 +4171,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "statusCode": {
-                      "type": "integer"
-                    },
-                    "error": {
-                      "type": "string"
-                    },
-                    "message": {
-                      "type": "string"
-                    },
-                    "requestId": {
-                      "type": "string"
-                    }
-                  }
+                  "$ref": "#/components/schemas/ApiError"
                 },
                 "examples": {
                   "error": {
@@ -5785,7 +4390,7 @@
             "type": "string",
             "nullable": true,
             "maxLength": 50,
-            "description": "Subconta virtual informada na criação."
+            "description": "Virtual sub-account provided at creation."
           },
           "method": {
             "type": "string",
@@ -5794,7 +4399,7 @@
               "BANK_SLIP",
               "INTERNAL_TRANSFER"
             ],
-            "description": "Método/rail da transação."
+            "description": "Transaction method/rail."
           }
         },
         "description": "Unified transaction representation used by all endpoints."
@@ -6062,7 +4667,7 @@
                 },
                 "url": {
                   "type": "string",
-                  "description": "URL assinada para download (expira em 9 minutos). Presente apenas ao buscar a defesa individual; ausente na listagem.",
+                  "description": "Signed download URL (expires in 9 minutes). Present only when fetching an individual defense; absent in the listing.",
                   "nullable": true
                 }
               }
@@ -6207,11 +4812,414 @@
             "description": "When the file expires from storage (typically 7 days after creation)"
           }
         }
+      },
+      "PostPixRequest": {
+        "type": "object",
+        "required": [
+          "amount"
+        ],
+        "properties": {
+          "amount": {
+            "type": "number",
+            "description": "Amount in BRL. Must be >= 1.",
+            "example": 10.9,
+            "minimum": 1
+          },
+          "callbackUrl": {
+            "type": "string",
+            "description": "URL to receive `transaction updated` webhooks.",
+            "example": "https://webhook.cool/"
+          },
+          "generatedName": {
+            "type": "string",
+            "description": "Payer full name. Letters and spaces only.",
+            "example": "John Doe"
+          },
+          "generatedEmail": {
+            "type": "string",
+            "description": "Payer email (optional).",
+            "example": "john.doe@example.com"
+          },
+          "generatedDocument": {
+            "type": "string",
+            "description": "Payer CPF (11 digits) or CNPJ (14 digits), no punctuation.",
+            "example": "12345678901"
+          },
+          "expiresIn": {
+            "type": "number",
+            "description": "Seconds until the QR Code expires. Default: 600.",
+            "example": 600,
+            "maximum": 172000
+          },
+          "clientReference": {
+            "type": "string",
+            "description": "External reference (order, invoice, etc.).",
+            "example": "order_12345",
+            "maxLength": 64
+          },
+          "virtualAccount": {
+            "type": "string",
+            "maxLength": 50,
+            "description": "Virtual sub-account (up to 50 characters) to correlate stores, branches, marketplaces. Returned in the callback."
+          }
+        }
+      },
+      "PostPixQrcodeReadRequest": {
+        "type": "object",
+        "required": [
+          "emv"
+        ],
+        "properties": {
+          "emv": {
+            "type": "string",
+            "description": "The EMV payload string from the Pix QR Code.",
+            "example": "00020101021226770014br.gov.bcb.pix2555api.payzu/pix/qr/v2/013318d6-2d7d-479e-8bb3-b5c7b9da688c5204000053039865802BR5916PAYZU 6007SAOPAULO6217051320260118278956304EC55"
+          }
+        }
+      },
+      "PostWithdrawRequest": {
+        "type": "object",
+        "required": [
+          "amount",
+          "pixKey",
+          "pixType"
+        ],
+        "properties": {
+          "amount": {
+            "type": "number",
+            "description": "Amount in BRL. Must be >= 1.",
+            "example": 2,
+            "minimum": 0.01
+          },
+          "pixKey": {
+            "type": "string",
+            "description": "Destination Pix key.",
+            "example": "teste@teste.com"
+          },
+          "pixType": {
+            "type": "string",
+            "description": "Pix key type.",
+            "enum": [
+              "cpf",
+              "cnpj",
+              "phone",
+              "email",
+              "evp"
+            ],
+            "example": "email"
+          },
+          "callbackUrl": {
+            "type": "string",
+            "description": "Webhook URL for status updates.",
+            "example": "https://webhook.cool/"
+          },
+          "clientReference": {
+            "type": "string",
+            "description": "External reference for this withdrawal.",
+            "example": "withdraw_98765",
+            "maxLength": 64
+          },
+          "description": {
+            "type": "string",
+            "description": "Optional description.",
+            "example": "Weekly payout"
+          },
+          "virtualAccount": {
+            "type": "string",
+            "maxLength": 50,
+            "description": "Virtual sub-account (up to 50 characters) to correlate stores, branches, marketplaces. Returned in the callback."
+          }
+        }
+      },
+      "PostWithdrawQrcodeRequest": {
+        "type": "object",
+        "required": [
+          "qrCode"
+        ],
+        "properties": {
+          "qrCode": {
+            "type": "string",
+            "description": "Pix QR Code payload (EMV format).",
+            "example": "00020101021226770014br.gov.bcb.pix2555api.payzu/pix/qr/v2/013318d6-2d7d-479e-8bb3-b5c7b9da688c5204000053039865802BR5916PAYZU 6007SAOPAULO6217051320260118278956304EC55"
+          },
+          "amount": {
+            "type": "number",
+            "description": "Amount in BRL. Optional - if not provided, uses the QR Code's embedded value.",
+            "example": 20,
+            "minimum": 0.1
+          },
+          "callbackUrl": {
+            "type": "string",
+            "description": "Webhook URL for status updates.",
+            "example": "https://webhook.cool/"
+          },
+          "description": {
+            "type": "string",
+            "description": "Optional description for the payment.",
+            "example": "Pagamento via QR Code"
+          },
+          "clientReference": {
+            "type": "string",
+            "description": "External reference for this withdrawal.",
+            "example": "order-123"
+          },
+          "virtualAccount": {
+            "type": "string",
+            "maxLength": 50,
+            "description": "Virtual sub-account (up to 50 characters) to correlate stores, branches, marketplaces. Returned in the callback."
+          }
+        }
+      },
+      "PostInfractionsDefenseRequest": {
+        "type": "object",
+        "required": [
+          "defense"
+        ],
+        "properties": {
+          "defense": {
+            "type": "string",
+            "maxLength": 1000,
+            "description": "Defense text (max: 1000 characters)"
+          },
+          "files": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "binary"
+            },
+            "description": "Evidence files (max: 10MB total)"
+          }
+        }
+      },
+      "PostInternalTransferRequest": {
+        "type": "object",
+        "required": [
+          "payerAccountNumber",
+          "receiverAccountNumber",
+          "amount"
+        ],
+        "properties": {
+          "payerAccountNumber": {
+            "type": "string",
+            "pattern": "^\\d{6}$",
+            "description": "Payer account number (6 digits). Must match the authenticated user's accountNumber.",
+            "example": "513579"
+          },
+          "receiverAccountNumber": {
+            "type": "string",
+            "pattern": "^\\d{6}$",
+            "description": "Destination account number (6 digits).",
+            "example": "987654"
+          },
+          "amount": {
+            "type": "number",
+            "minimum": 0.01,
+            "description": "Transfer amount in BRL.",
+            "example": 100.5
+          },
+          "description": {
+            "type": "string",
+            "maxLength": 500,
+            "description": "Optional transfer description.",
+            "example": "Pagamento referente a fatura #1234"
+          },
+          "callbackUrl": {
+            "type": "string",
+            "format": "uri",
+            "description": "URL to receive transaction-update webhooks.",
+            "example": "https://webhook.cool/"
+          },
+          "clientReference": {
+            "type": "string",
+            "maxLength": 64,
+            "description": "External reference for idempotency / reconciliation.",
+            "example": "transfer_abc_123"
+          },
+          "virtualAccount": {
+            "type": "string",
+            "maxLength": 50,
+            "description": "Virtual sub-account (up to 50 characters) to correlate stores, branches, marketplaces. Returned in the callback.",
+            "minLength": 1
+          }
+        }
+      },
+      "PostUserReportRequest": {
+        "type": "object",
+        "required": [
+          "dateFrom",
+          "dateTo"
+        ],
+        "properties": {
+          "dateFrom": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "dateTo": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "status": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "PENDING",
+                "COMPLETED",
+                "CANCELED",
+                "WAITING_FOR_REFUND",
+                "REFUNDED",
+                "EXPIRED",
+                "ERROR"
+              ]
+            }
+          },
+          "type": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "DEPOSIT",
+                "WITHDRAW",
+                "COMMISSION"
+              ]
+            }
+          }
+        }
+      },
+      "ResendUserCallbacksRequest": {
+        "type": "object",
+        "required": [
+          "createdAtFrom",
+          "createdAtTo"
+        ],
+        "properties": {
+          "createdAtFrom": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Period start (REQUIRED). Cannot be more than 30 days in the past."
+          },
+          "createdAtTo": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Period end (REQUIRED). Period span cannot exceed 7 days."
+          },
+          "transactionIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Restrict to specific transaction IDs"
+          },
+          "transactionTypes": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "DEPOSIT",
+                "WITHDRAW",
+                "COMMISSION"
+              ]
+            },
+            "description": "Filter by transaction type"
+          },
+          "transactionStatus": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "PENDING",
+                "COMPLETED",
+                "CANCELED",
+                "WAITING_FOR_REFUND",
+                "REFUNDED",
+                "EXPIRED",
+                "ERROR"
+              ]
+            },
+            "description": "Filter by transaction status"
+          },
+          "transactionEndToEndIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Restrict to specific Pix end-to-end IDs"
+          }
+        }
+      },
+      "ApiError": {
+        "type": "object",
+        "required": [
+          "statusCode",
+          "error",
+          "message",
+          "requestId"
+        ],
+        "properties": {
+          "statusCode": {
+            "type": "integer",
+            "description": "HTTP status code.",
+            "example": 400
+          },
+          "error": {
+            "type": "string",
+            "description": "HTTP status text.",
+            "example": "Bad Request"
+          },
+          "message": {
+            "type": "string",
+            "description": "Human-readable error message.",
+            "example": "Validation failed"
+          },
+          "requestId": {
+            "type": "string",
+            "description": "Unique request correlation ID (cuid). Include it when contacting support.",
+            "example": "cmbz0f8qk0001js04hp3e2n0f"
+          },
+          "errorCode": {
+            "type": "string",
+            "description": "Stable machine-readable error code, when available.",
+            "example": "PZA100"
+          },
+          "retryAfterSeconds": {
+            "type": "integer",
+            "description": "Seconds to wait before retrying. Present only on 429 responses.",
+            "example": 30
+          },
+          "details": {
+            "type": "array",
+            "description": "Field-level validation errors, when applicable.",
+            "items": {
+              "type": "object",
+              "required": [
+                "field",
+                "message"
+              ],
+              "properties": {
+                "field": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "ProofResponse": {
+        "type": "object",
+        "properties": {
+          "base64": {
+            "type": "string",
+            "description": "Base64-encoded PDF receipt."
+          }
+        }
       }
     }
   },
   "externalDocs": {
-    "description": "Documentação completa",
+    "description": "Complete documentation",
     "url": "https://docs.payzu.com.br/docs/pix-processamento"
   }
 }

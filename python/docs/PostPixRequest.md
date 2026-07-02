@@ -12,7 +12,7 @@ Name | Type | Description | Notes
 **generated_document** | **str** | Payer CPF (11 digits) or CNPJ (14 digits), no punctuation. | [optional] 
 **expires_in** | **float** | Seconds until the QR Code expires. Default: 600. | [optional] 
 **client_reference** | **str** | External reference (order, invoice, etc.). | [optional] 
-**virtual_account** | **str** | Subconta virtual (até 50 caracteres) para correlacionar lojas, filiais, marketplaces. Volta no callback. | [optional] 
+**virtual_account** | **str** | Virtual sub-account (up to 50 characters) to correlate stores, branches, marketplaces. Returned in the callback. | [optional] 
 
 ## Example
 

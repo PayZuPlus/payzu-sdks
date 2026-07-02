@@ -5,7 +5,7 @@ All URIs are relative to *https://api.payzu.processamento.com/v1*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**DownloadUserReport**](ReportsAPI.md#DownloadUserReport) | **Post** /user/report/{id}/download | Download report
-[**GetUserReport**](ReportsAPI.md#GetUserReport) | **Get** /user/report/{id} | Consultar status do relatório
+[**GetUserReport**](ReportsAPI.md#GetUserReport) | **Get** /user/report/{id} | Get report job status
 [**GetUserTransactionById**](ReportsAPI.md#GetUserTransactionById) | **Get** /user/transactions/{id} | List transaction details
 [**GetUserTransactions**](ReportsAPI.md#GetUserTransactions) | **Get** /user/transactions | List Transactions
 [**ListUserReports**](ReportsAPI.md#ListUserReports) | **Get** /user/report | List report jobs
@@ -15,7 +15,7 @@ Method | HTTP request | Description
 
 ## DownloadUserReport
 
-> DownloadUserReport200Response DownloadUserReport(ctx, id).ContentType(contentType).Execute()
+> DownloadUserReport200Response DownloadUserReport(ctx, id).Execute()
 
 Download report
 
@@ -30,16 +30,15 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/PayZuPlus/payzu-sdks/payzupix"
+	openapiclient "github.com/PayZuPlus/payzu-sdks/go"
 )
 
 func main() {
-	contentType := "contentType_example" // string | Obrigatório em toda chamada PayZu. (default to "application/json")
 	id := "38400000-8cf0-11bd-b23e-10b96e4ef00d" // string | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.ReportsAPI.DownloadUserReport(context.Background(), id).ContentType(contentType).Execute()
+	resp, r, err := apiClient.ReportsAPI.DownloadUserReport(context.Background(), id).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `ReportsAPI.DownloadUserReport``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -64,7 +63,6 @@ Other parameters are passed through a pointer to a apiDownloadUserReportRequest 
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **contentType** | **string** | Obrigatório em toda chamada PayZu. | [default to &quot;application/json&quot;]
 
 
 ### Return type
@@ -87,9 +85,9 @@ Name | Type | Description  | Notes
 
 ## GetUserReport
 
-> ReportJob GetUserReport(ctx, id).ContentType(contentType).Execute()
+> ReportJob GetUserReport(ctx, id).Execute()
 
-Consultar status do relatório
+Get report job status
 
 
 
@@ -102,16 +100,15 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/PayZuPlus/payzu-sdks/payzupix"
+	openapiclient "github.com/PayZuPlus/payzu-sdks/go"
 )
 
 func main() {
-	contentType := "contentType_example" // string | Obrigatório em toda chamada PayZu. (default to "application/json")
 	id := "38400000-8cf0-11bd-b23e-10b96e4ef00d" // string | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.ReportsAPI.GetUserReport(context.Background(), id).ContentType(contentType).Execute()
+	resp, r, err := apiClient.ReportsAPI.GetUserReport(context.Background(), id).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `ReportsAPI.GetUserReport``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -136,7 +133,6 @@ Other parameters are passed through a pointer to a apiGetUserReportRequest struc
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **contentType** | **string** | Obrigatório em toda chamada PayZu. | [default to &quot;application/json&quot;]
 
 
 ### Return type
@@ -159,7 +155,7 @@ Name | Type | Description  | Notes
 
 ## GetUserTransactionById
 
-> GetUserTransactionById200Response GetUserTransactionById(ctx, id).ContentType(contentType).Execute()
+> GetUserTransactionById200Response GetUserTransactionById(ctx, id).Execute()
 
 List transaction details
 
@@ -174,16 +170,15 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/PayZuPlus/payzu-sdks/payzupix"
+	openapiclient "github.com/PayZuPlus/payzu-sdks/go"
 )
 
 func main() {
-	contentType := "contentType_example" // string | Obrigatório em toda chamada PayZu. (default to "application/json")
 	id := "id_example" // string | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.ReportsAPI.GetUserTransactionById(context.Background(), id).ContentType(contentType).Execute()
+	resp, r, err := apiClient.ReportsAPI.GetUserTransactionById(context.Background(), id).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `ReportsAPI.GetUserTransactionById``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -208,7 +203,6 @@ Other parameters are passed through a pointer to a apiGetUserTransactionByIdRequ
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **contentType** | **string** | Obrigatório em toda chamada PayZu. | [default to &quot;application/json&quot;]
 
 
 ### Return type
@@ -231,7 +225,7 @@ Name | Type | Description  | Notes
 
 ## GetUserTransactions
 
-> GetUserTransactions200Response GetUserTransactions(ctx).ContentType(contentType).DateFrom(dateFrom).DateTo(dateTo).Limit(limit).Page(page).Id(id).Status(status).Type_(type_).Amount(amount).Document(document).Name(name).EndToEndId(endToEndId).SortBy(sortBy).SortDirection(sortDirection).ClientReference(clientReference).VirtualAccount(virtualAccount).Execute()
+> GetUserTransactions200Response GetUserTransactions(ctx).DateFrom(dateFrom).DateTo(dateTo).Limit(limit).Page(page).Id(id).Status(status).Type_(type_).Amount(amount).Document(document).Name(name).EndToEndId(endToEndId).SortBy(sortBy).SortDirection(sortDirection).ClientReference(clientReference).VirtualAccount(virtualAccount).Execute()
 
 List Transactions
 
@@ -246,30 +240,29 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/PayZuPlus/payzu-sdks/payzupix"
+	openapiclient "github.com/PayZuPlus/payzu-sdks/go"
 )
 
 func main() {
-	contentType := "contentType_example" // string | Obrigatório em toda chamada PayZu. (default to "application/json")
 	dateFrom := "2025-08-01" // string | Start date (YYYY-MM-DD). (optional)
 	dateTo := "2025-08-17" // string | End date (YYYY-MM-DD). (optional)
 	limit := float32(10) // float32 | Items per page (max 1000). (optional) (default to 10)
 	page := float32(1) // float32 | Page number (default 1). (optional) (default to 1)
 	id := "PAYZU2025081418333632CYKN8M" // string | Transaction ID. (optional)
-	status := "COMPLETED" // string | Status da transação. Aceita CSV: PENDING,COMPLETED,etc. (optional)
-	type_ := "DEPOSIT" // string | Tipo da transação. Aceita CSV: DEPOSIT,WITHDRAW,COMMISSION. (optional)
-	amount := float32(15000) // float32 | Amount filter. Mínimo 0.01. (optional)
-	document := "12345678901" // string | CPF (11 dígitos) ou CNPJ (14 dígitos), apenas números sem formatação. (optional)
+	status := "COMPLETED" // string | Transaction status. Accepts CSV: PENDING,COMPLETED,etc. (optional)
+	type_ := "DEPOSIT" // string | Transaction type. Accepts CSV: DEPOSIT,WITHDRAW,COMMISSION. (optional)
+	amount := float32(15000) // float32 | Amount filter. Minimum 0.01. (optional)
+	document := "12345678901" // string | CPF (11 digits) or CNPJ (14 digits), digits only, no punctuation. (optional)
 	name := "Alice" // string | Name filter. (optional)
 	endToEndId := "E00360305202508141833bcf1f37b487" // string | Pix end-to-end ID. (optional)
 	sortBy := "sortBy_example" // string | Field to sort by (optional) (default to "createdAt")
 	sortDirection := "sortDirection_example" // string | Sort direction (optional) (default to "desc")
 	clientReference := "clientReference_example" // string | Filter by external reference (optional)
-	virtualAccount := "virtualAccount_example" // string | Subconta virtual (até 50 caracteres) usada na criação. Aceito como chave de busca alternativa. (optional)
+	virtualAccount := "virtualAccount_example" // string | Virtual sub-account (up to 50 characters) used at creation. Accepted as an alternative lookup key. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.ReportsAPI.GetUserTransactions(context.Background()).ContentType(contentType).DateFrom(dateFrom).DateTo(dateTo).Limit(limit).Page(page).Id(id).Status(status).Type_(type_).Amount(amount).Document(document).Name(name).EndToEndId(endToEndId).SortBy(sortBy).SortDirection(sortDirection).ClientReference(clientReference).VirtualAccount(virtualAccount).Execute()
+	resp, r, err := apiClient.ReportsAPI.GetUserTransactions(context.Background()).DateFrom(dateFrom).DateTo(dateTo).Limit(limit).Page(page).Id(id).Status(status).Type_(type_).Amount(amount).Document(document).Name(name).EndToEndId(endToEndId).SortBy(sortBy).SortDirection(sortDirection).ClientReference(clientReference).VirtualAccount(virtualAccount).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `ReportsAPI.GetUserTransactions``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -290,22 +283,21 @@ Other parameters are passed through a pointer to a apiGetUserTransactionsRequest
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **contentType** | **string** | Obrigatório em toda chamada PayZu. | [default to &quot;application/json&quot;]
  **dateFrom** | **string** | Start date (YYYY-MM-DD). | 
  **dateTo** | **string** | End date (YYYY-MM-DD). | 
  **limit** | **float32** | Items per page (max 1000). | [default to 10]
  **page** | **float32** | Page number (default 1). | [default to 1]
  **id** | **string** | Transaction ID. | 
- **status** | **string** | Status da transação. Aceita CSV: PENDING,COMPLETED,etc. | 
- **type_** | **string** | Tipo da transação. Aceita CSV: DEPOSIT,WITHDRAW,COMMISSION. | 
- **amount** | **float32** | Amount filter. Mínimo 0.01. | 
- **document** | **string** | CPF (11 dígitos) ou CNPJ (14 dígitos), apenas números sem formatação. | 
+ **status** | **string** | Transaction status. Accepts CSV: PENDING,COMPLETED,etc. | 
+ **type_** | **string** | Transaction type. Accepts CSV: DEPOSIT,WITHDRAW,COMMISSION. | 
+ **amount** | **float32** | Amount filter. Minimum 0.01. | 
+ **document** | **string** | CPF (11 digits) or CNPJ (14 digits), digits only, no punctuation. | 
  **name** | **string** | Name filter. | 
  **endToEndId** | **string** | Pix end-to-end ID. | 
  **sortBy** | **string** | Field to sort by | [default to &quot;createdAt&quot;]
  **sortDirection** | **string** | Sort direction | [default to &quot;desc&quot;]
  **clientReference** | **string** | Filter by external reference | 
- **virtualAccount** | **string** | Subconta virtual (até 50 caracteres) usada na criação. Aceito como chave de busca alternativa. | 
+ **virtualAccount** | **string** | Virtual sub-account (up to 50 characters) used at creation. Accepted as an alternative lookup key. | 
 
 ### Return type
 
@@ -327,7 +319,7 @@ Name | Type | Description  | Notes
 
 ## ListUserReports
 
-> ListUserReports200Response ListUserReports(ctx).ContentType(contentType).Page(page).Limit(limit).Status(status).CreatedAtFrom(createdAtFrom).CreatedAtTo(createdAtTo).UpdatedAtFrom(updatedAtFrom).UpdatedAtTo(updatedAtTo).SortBy(sortBy).SortDirection(sortDirection).Execute()
+> ListUserReports200Response ListUserReports(ctx).Page(page).Limit(limit).Status(status).CreatedAtFrom(createdAtFrom).CreatedAtTo(createdAtTo).UpdatedAtFrom(updatedAtFrom).UpdatedAtTo(updatedAtTo).SortBy(sortBy).SortDirection(sortDirection).Execute()
 
 List report jobs
 
@@ -343,24 +335,23 @@ import (
 	"fmt"
 	"os"
     "time"
-	openapiclient "github.com/PayZuPlus/payzu-sdks/payzupix"
+	openapiclient "github.com/PayZuPlus/payzu-sdks/go"
 )
 
 func main() {
-	contentType := "contentType_example" // string | Obrigatório em toda chamada PayZu. (default to "application/json")
 	page := int32(56) // int32 |  (optional) (default to 1)
 	limit := int32(56) // int32 |  (optional) (default to 10)
 	status := "status_example" // string |  (optional)
-	createdAtFrom := time.Now() // time.Time | Filtro: criado a partir de. (optional)
-	createdAtTo := time.Now() // time.Time | Filtro: criado até. (optional)
-	updatedAtFrom := time.Now() // time.Time | Filtro: atualizado a partir de. (optional)
-	updatedAtTo := time.Now() // time.Time | Filtro: atualizado até. (optional)
-	sortBy := "sortBy_example" // string | Campo de ordenação. (optional) (default to "createdAt")
-	sortDirection := "sortDirection_example" // string | Direção da ordenação. (optional) (default to "desc")
+	createdAtFrom := time.Now() // time.Time | Filter: created from. (optional)
+	createdAtTo := time.Now() // time.Time | Filter: created up to. (optional)
+	updatedAtFrom := time.Now() // time.Time | Filter: updated from. (optional)
+	updatedAtTo := time.Now() // time.Time | Filter: updated up to. (optional)
+	sortBy := "sortBy_example" // string | Sort field. (optional) (default to "createdAt")
+	sortDirection := "sortDirection_example" // string | Sort direction. (optional) (default to "desc")
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.ReportsAPI.ListUserReports(context.Background()).ContentType(contentType).Page(page).Limit(limit).Status(status).CreatedAtFrom(createdAtFrom).CreatedAtTo(createdAtTo).UpdatedAtFrom(updatedAtFrom).UpdatedAtTo(updatedAtTo).SortBy(sortBy).SortDirection(sortDirection).Execute()
+	resp, r, err := apiClient.ReportsAPI.ListUserReports(context.Background()).Page(page).Limit(limit).Status(status).CreatedAtFrom(createdAtFrom).CreatedAtTo(createdAtTo).UpdatedAtFrom(updatedAtFrom).UpdatedAtTo(updatedAtTo).SortBy(sortBy).SortDirection(sortDirection).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `ReportsAPI.ListUserReports``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -381,16 +372,15 @@ Other parameters are passed through a pointer to a apiListUserReportsRequest str
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **contentType** | **string** | Obrigatório em toda chamada PayZu. | [default to &quot;application/json&quot;]
  **page** | **int32** |  | [default to 1]
  **limit** | **int32** |  | [default to 10]
  **status** | **string** |  | 
- **createdAtFrom** | **time.Time** | Filtro: criado a partir de. | 
- **createdAtTo** | **time.Time** | Filtro: criado até. | 
- **updatedAtFrom** | **time.Time** | Filtro: atualizado a partir de. | 
- **updatedAtTo** | **time.Time** | Filtro: atualizado até. | 
- **sortBy** | **string** | Campo de ordenação. | [default to &quot;createdAt&quot;]
- **sortDirection** | **string** | Direção da ordenação. | [default to &quot;desc&quot;]
+ **createdAtFrom** | **time.Time** | Filter: created from. | 
+ **createdAtTo** | **time.Time** | Filter: created up to. | 
+ **updatedAtFrom** | **time.Time** | Filter: updated from. | 
+ **updatedAtTo** | **time.Time** | Filter: updated up to. | 
+ **sortBy** | **string** | Sort field. | [default to &quot;createdAt&quot;]
+ **sortDirection** | **string** | Sort direction. | [default to &quot;desc&quot;]
 
 ### Return type
 
@@ -428,7 +418,7 @@ import (
 	"fmt"
 	"os"
     "time"
-	openapiclient "github.com/PayZuPlus/payzu-sdks/payzupix"
+	openapiclient "github.com/PayZuPlus/payzu-sdks/go"
 )
 
 func main() {

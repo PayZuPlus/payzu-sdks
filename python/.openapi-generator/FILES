@@ -5,6 +5,8 @@
 .travis.yml
 README.md
 docs/AccountApi.md
+docs/ApiError.md
+docs/ApiErrorDetailsInner.md
 docs/CallbackDetail.md
 docs/CallbackListResponse.md
 docs/CallbackListResponsePagination.md
@@ -12,10 +14,9 @@ docs/CallbacksApi.md
 docs/Defense.md
 docs/DefenseFilesInner.md
 docs/DownloadUserReport200Response.md
-docs/GetPix400Response.md
 docs/GetPixKey400Response.md
 docs/GetPixKey404Response.md
-docs/GetProof200Response.md
+docs/GetPixQrcode404Response.md
 docs/GetUser200Response.md
 docs/GetUser200ResponseDailyWithdrawLimit.md
 docs/GetUser200ResponseServiceFee.md
@@ -41,6 +42,7 @@ docs/PostUserReportRequest.md
 docs/PostWithdrawQrcode400Response.md
 docs/PostWithdrawQrcodeRequest.md
 docs/PostWithdrawRequest.md
+docs/ProofResponse.md
 docs/QRCodeReadResponse.md
 docs/ReportJob.md
 docs/ReportsApi.md
@@ -64,16 +66,17 @@ payzu_pix/api_response.py
 payzu_pix/configuration.py
 payzu_pix/exceptions.py
 payzu_pix/models/__init__.py
+payzu_pix/models/api_error.py
+payzu_pix/models/api_error_details_inner.py
 payzu_pix/models/callback_detail.py
 payzu_pix/models/callback_list_response.py
 payzu_pix/models/callback_list_response_pagination.py
 payzu_pix/models/defense.py
 payzu_pix/models/defense_files_inner.py
 payzu_pix/models/download_user_report200_response.py
-payzu_pix/models/get_pix400_response.py
 payzu_pix/models/get_pix_key400_response.py
 payzu_pix/models/get_pix_key404_response.py
-payzu_pix/models/get_proof200_response.py
+payzu_pix/models/get_pix_qrcode404_response.py
 payzu_pix/models/get_user200_response.py
 payzu_pix/models/get_user200_response_daily_withdraw_limit.py
 payzu_pix/models/get_user200_response_service_fee.py
@@ -96,6 +99,7 @@ payzu_pix/models/post_user_report_request.py
 payzu_pix/models/post_withdraw_qrcode400_response.py
 payzu_pix/models/post_withdraw_qrcode_request.py
 payzu_pix/models/post_withdraw_request.py
+payzu_pix/models/proof_response.py
 payzu_pix/models/qr_code_read_response.py
 payzu_pix/models/report_job.py
 payzu_pix/models/resend_user_callback_single200_response.py
@@ -111,6 +115,8 @@ setup.py
 test-requirements.txt
 test/__init__.py
 test/test_account_api.py
+test/test_api_error.py
+test/test_api_error_details_inner.py
 test/test_callback_detail.py
 test/test_callback_list_response.py
 test/test_callback_list_response_pagination.py
@@ -118,10 +124,9 @@ test/test_callbacks_api.py
 test/test_defense.py
 test/test_defense_files_inner.py
 test/test_download_user_report200_response.py
-test/test_get_pix400_response.py
 test/test_get_pix_key400_response.py
 test/test_get_pix_key404_response.py
-test/test_get_proof200_response.py
+test/test_get_pix_qrcode404_response.py
 test/test_get_user200_response.py
 test/test_get_user200_response_daily_withdraw_limit.py
 test/test_get_user200_response_service_fee.py
@@ -147,6 +152,7 @@ test/test_post_user_report_request.py
 test/test_post_withdraw_qrcode400_response.py
 test/test_post_withdraw_qrcode_request.py
 test/test_post_withdraw_request.py
+test/test_proof_response.py
 test/test_qr_code_read_response.py
 test/test_report_job.py
 test/test_reports_api.py

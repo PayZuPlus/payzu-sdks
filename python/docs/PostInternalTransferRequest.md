@@ -11,7 +11,7 @@ Name | Type | Description | Notes
 **description** | **str** | Optional transfer description. | [optional] 
 **callback_url** | **str** | URL to receive transaction-update webhooks. | [optional] 
 **client_reference** | **str** | External reference for idempotency / reconciliation. | [optional] 
-**virtual_account** | **str** | Subconta virtual (até 50 caracteres) para correlacionar lojas, filiais, marketplaces. Volta no callback. | [optional] 
+**virtual_account** | **str** | Virtual sub-account (up to 50 characters) to correlate stores, branches, marketplaces. Returned in the callback. | [optional] 
 
 ## Example
 

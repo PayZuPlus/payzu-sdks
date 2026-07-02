@@ -5,7 +5,7 @@ All URIs are relative to *https://api.payzu.processamento.com/v1*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**download_user_report**](ReportsApi.md#download_user_report) | **POST** /user/report/{id}/download | Download report
-[**get_user_report**](ReportsApi.md#get_user_report) | **GET** /user/report/{id} | Consultar status do relatório
+[**get_user_report**](ReportsApi.md#get_user_report) | **GET** /user/report/{id} | Get report job status
 [**get_user_transaction_by_id**](ReportsApi.md#get_user_transaction_by_id) | **GET** /user/transactions/{id} | List transaction details
 [**get_user_transactions**](ReportsApi.md#get_user_transactions) | **GET** /user/transactions | List Transactions
 [**list_user_reports**](ReportsApi.md#list_user_reports) | **GET** /user/report | List report jobs
@@ -13,7 +13,7 @@ Method | HTTP request | Description
 
 
 # **download_user_report**
-> DownloadUserReport200Response download_user_report(content_type, id)
+> DownloadUserReport200Response download_user_report(id)
 
 Download report
 
@@ -49,12 +49,11 @@ configuration = payzu_pix.Configuration(
 with payzu_pix.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = payzu_pix.ReportsApi(api_client)
-    content_type = application/json # str | Obrigatório em toda chamada PayZu. (default to application/json)
     id = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
 
     try:
         # Download report
-        api_response = api_instance.download_user_report(content_type, id)
+        api_response = api_instance.download_user_report(id)
         print("The response of ReportsApi->download_user_report:\n")
         pprint(api_response)
     except Exception as e:
@@ -68,7 +67,6 @@ with payzu_pix.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **content_type** | **str**| Obrigatório em toda chamada PayZu. | [default to application/json]
  **id** | **UUID**|  | 
 
 ### Return type
@@ -96,11 +94,11 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_user_report**
-> ReportJob get_user_report(content_type, id)
+> ReportJob get_user_report(id)
 
-Consultar status do relatório
+Get report job status
 
-Retorna o status e os metadados de um job de relatório específico pelo `id`.
+Returns the status and metadata of a specific report job by `id`.
 
 ### Example
 
@@ -132,12 +130,11 @@ configuration = payzu_pix.Configuration(
 with payzu_pix.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = payzu_pix.ReportsApi(api_client)
-    content_type = application/json # str | Obrigatório em toda chamada PayZu. (default to application/json)
     id = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
 
     try:
-        # Consultar status do relatório
-        api_response = api_instance.get_user_report(content_type, id)
+        # Get report job status
+        api_response = api_instance.get_user_report(id)
         print("The response of ReportsApi->get_user_report:\n")
         pprint(api_response)
     except Exception as e:
@@ -151,7 +148,6 @@ with payzu_pix.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **content_type** | **str**| Obrigatório em toda chamada PayZu. | [default to application/json]
  **id** | **UUID**|  | 
 
 ### Return type
@@ -177,7 +173,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_user_transaction_by_id**
-> GetUserTransactionById200Response get_user_transaction_by_id(content_type, id)
+> GetUserTransactionById200Response get_user_transaction_by_id(id)
 
 List transaction details
 
@@ -213,12 +209,11 @@ configuration = payzu_pix.Configuration(
 with payzu_pix.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = payzu_pix.ReportsApi(api_client)
-    content_type = application/json # str | Obrigatório em toda chamada PayZu. (default to application/json)
     id = 'id_example' # str | 
 
     try:
         # List transaction details
-        api_response = api_instance.get_user_transaction_by_id(content_type, id)
+        api_response = api_instance.get_user_transaction_by_id(id)
         print("The response of ReportsApi->get_user_transaction_by_id:\n")
         pprint(api_response)
     except Exception as e:
@@ -232,7 +227,6 @@ with payzu_pix.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **content_type** | **str**| Obrigatório em toda chamada PayZu. | [default to application/json]
  **id** | **str**|  | 
 
 ### Return type
@@ -258,7 +252,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_user_transactions**
-> GetUserTransactions200Response get_user_transactions(content_type, date_from=date_from, date_to=date_to, limit=limit, page=page, id=id, status=status, type=type, amount=amount, document=document, name=name, end_to_end_id=end_to_end_id, sort_by=sort_by, sort_direction=sort_direction, client_reference=client_reference, virtual_account=virtual_account)
+> GetUserTransactions200Response get_user_transactions(date_from=date_from, date_to=date_to, limit=limit, page=page, id=id, status=status, type=type, amount=amount, document=document, name=name, end_to_end_id=end_to_end_id, sort_by=sort_by, sort_direction=sort_direction, client_reference=client_reference, virtual_account=virtual_account)
 
 List Transactions
 
@@ -294,26 +288,25 @@ configuration = payzu_pix.Configuration(
 with payzu_pix.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = payzu_pix.ReportsApi(api_client)
-    content_type = application/json # str | Obrigatório em toda chamada PayZu. (default to application/json)
     date_from = '2025-08-01' # str | Start date (YYYY-MM-DD). (optional)
     date_to = '2025-08-17' # str | End date (YYYY-MM-DD). (optional)
     limit = 10 # float | Items per page (max 1000). (optional) (default to 10)
     page = 1 # float | Page number (default 1). (optional) (default to 1)
     id = 'PAYZU2025081418333632CYKN8M' # str | Transaction ID. (optional)
-    status = 'COMPLETED' # str | Status da transação. Aceita CSV: PENDING,COMPLETED,etc. (optional)
-    type = 'DEPOSIT' # str | Tipo da transação. Aceita CSV: DEPOSIT,WITHDRAW,COMMISSION. (optional)
-    amount = 15000 # float | Amount filter. Mínimo 0.01. (optional)
-    document = '12345678901' # str | CPF (11 dígitos) ou CNPJ (14 dígitos), apenas números sem formatação. (optional)
+    status = 'COMPLETED' # str | Transaction status. Accepts CSV: PENDING,COMPLETED,etc. (optional)
+    type = 'DEPOSIT' # str | Transaction type. Accepts CSV: DEPOSIT,WITHDRAW,COMMISSION. (optional)
+    amount = 15000 # float | Amount filter. Minimum 0.01. (optional)
+    document = '12345678901' # str | CPF (11 digits) or CNPJ (14 digits), digits only, no punctuation. (optional)
     name = 'Alice' # str | Name filter. (optional)
     end_to_end_id = 'E00360305202508141833bcf1f37b487' # str | Pix end-to-end ID. (optional)
     sort_by = createdAt # str | Field to sort by (optional) (default to createdAt)
     sort_direction = desc # str | Sort direction (optional) (default to desc)
     client_reference = 'client_reference_example' # str | Filter by external reference (optional)
-    virtual_account = 'virtual_account_example' # str | Subconta virtual (até 50 caracteres) usada na criação. Aceito como chave de busca alternativa. (optional)
+    virtual_account = 'virtual_account_example' # str | Virtual sub-account (up to 50 characters) used at creation. Accepted as an alternative lookup key. (optional)
 
     try:
         # List Transactions
-        api_response = api_instance.get_user_transactions(content_type, date_from=date_from, date_to=date_to, limit=limit, page=page, id=id, status=status, type=type, amount=amount, document=document, name=name, end_to_end_id=end_to_end_id, sort_by=sort_by, sort_direction=sort_direction, client_reference=client_reference, virtual_account=virtual_account)
+        api_response = api_instance.get_user_transactions(date_from=date_from, date_to=date_to, limit=limit, page=page, id=id, status=status, type=type, amount=amount, document=document, name=name, end_to_end_id=end_to_end_id, sort_by=sort_by, sort_direction=sort_direction, client_reference=client_reference, virtual_account=virtual_account)
         print("The response of ReportsApi->get_user_transactions:\n")
         pprint(api_response)
     except Exception as e:
@@ -327,22 +320,21 @@ with payzu_pix.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **content_type** | **str**| Obrigatório em toda chamada PayZu. | [default to application/json]
  **date_from** | **str**| Start date (YYYY-MM-DD). | [optional] 
  **date_to** | **str**| End date (YYYY-MM-DD). | [optional] 
  **limit** | **float**| Items per page (max 1000). | [optional] [default to 10]
  **page** | **float**| Page number (default 1). | [optional] [default to 1]
  **id** | **str**| Transaction ID. | [optional] 
- **status** | **str**| Status da transação. Aceita CSV: PENDING,COMPLETED,etc. | [optional] 
- **type** | **str**| Tipo da transação. Aceita CSV: DEPOSIT,WITHDRAW,COMMISSION. | [optional] 
- **amount** | **float**| Amount filter. Mínimo 0.01. | [optional] 
- **document** | **str**| CPF (11 dígitos) ou CNPJ (14 dígitos), apenas números sem formatação. | [optional] 
+ **status** | **str**| Transaction status. Accepts CSV: PENDING,COMPLETED,etc. | [optional] 
+ **type** | **str**| Transaction type. Accepts CSV: DEPOSIT,WITHDRAW,COMMISSION. | [optional] 
+ **amount** | **float**| Amount filter. Minimum 0.01. | [optional] 
+ **document** | **str**| CPF (11 digits) or CNPJ (14 digits), digits only, no punctuation. | [optional] 
  **name** | **str**| Name filter. | [optional] 
  **end_to_end_id** | **str**| Pix end-to-end ID. | [optional] 
  **sort_by** | **str**| Field to sort by | [optional] [default to createdAt]
  **sort_direction** | **str**| Sort direction | [optional] [default to desc]
  **client_reference** | **str**| Filter by external reference | [optional] 
- **virtual_account** | **str**| Subconta virtual (até 50 caracteres) usada na criação. Aceito como chave de busca alternativa. | [optional] 
+ **virtual_account** | **str**| Virtual sub-account (up to 50 characters) used at creation. Accepted as an alternative lookup key. | [optional] 
 
 ### Return type
 
@@ -369,7 +361,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **list_user_reports**
-> ListUserReports200Response list_user_reports(content_type, page=page, limit=limit, status=status, created_at_from=created_at_from, created_at_to=created_at_to, updated_at_from=updated_at_from, updated_at_to=updated_at_to, sort_by=sort_by, sort_direction=sort_direction)
+> ListUserReports200Response list_user_reports(page=page, limit=limit, status=status, created_at_from=created_at_from, created_at_to=created_at_to, updated_at_from=updated_at_from, updated_at_to=updated_at_to, sort_by=sort_by, sort_direction=sort_direction)
 
 List report jobs
 
@@ -405,20 +397,19 @@ configuration = payzu_pix.Configuration(
 with payzu_pix.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = payzu_pix.ReportsApi(api_client)
-    content_type = application/json # str | Obrigatório em toda chamada PayZu. (default to application/json)
     page = 1 # int |  (optional) (default to 1)
     limit = 10 # int |  (optional) (default to 10)
     status = 'status_example' # str |  (optional)
-    created_at_from = '2013-10-20T19:20:30+01:00' # datetime | Filtro: criado a partir de. (optional)
-    created_at_to = '2013-10-20T19:20:30+01:00' # datetime | Filtro: criado até. (optional)
-    updated_at_from = '2013-10-20T19:20:30+01:00' # datetime | Filtro: atualizado a partir de. (optional)
-    updated_at_to = '2013-10-20T19:20:30+01:00' # datetime | Filtro: atualizado até. (optional)
-    sort_by = createdAt # str | Campo de ordenação. (optional) (default to createdAt)
-    sort_direction = desc # str | Direção da ordenação. (optional) (default to desc)
+    created_at_from = '2013-10-20T19:20:30+01:00' # datetime | Filter: created from. (optional)
+    created_at_to = '2013-10-20T19:20:30+01:00' # datetime | Filter: created up to. (optional)
+    updated_at_from = '2013-10-20T19:20:30+01:00' # datetime | Filter: updated from. (optional)
+    updated_at_to = '2013-10-20T19:20:30+01:00' # datetime | Filter: updated up to. (optional)
+    sort_by = createdAt # str | Sort field. (optional) (default to createdAt)
+    sort_direction = desc # str | Sort direction. (optional) (default to desc)
 
     try:
         # List report jobs
-        api_response = api_instance.list_user_reports(content_type, page=page, limit=limit, status=status, created_at_from=created_at_from, created_at_to=created_at_to, updated_at_from=updated_at_from, updated_at_to=updated_at_to, sort_by=sort_by, sort_direction=sort_direction)
+        api_response = api_instance.list_user_reports(page=page, limit=limit, status=status, created_at_from=created_at_from, created_at_to=created_at_to, updated_at_from=updated_at_from, updated_at_to=updated_at_to, sort_by=sort_by, sort_direction=sort_direction)
         print("The response of ReportsApi->list_user_reports:\n")
         pprint(api_response)
     except Exception as e:
@@ -432,16 +423,15 @@ with payzu_pix.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **content_type** | **str**| Obrigatório em toda chamada PayZu. | [default to application/json]
  **page** | **int**|  | [optional] [default to 1]
  **limit** | **int**|  | [optional] [default to 10]
  **status** | **str**|  | [optional] 
- **created_at_from** | **datetime**| Filtro: criado a partir de. | [optional] 
- **created_at_to** | **datetime**| Filtro: criado até. | [optional] 
- **updated_at_from** | **datetime**| Filtro: atualizado a partir de. | [optional] 
- **updated_at_to** | **datetime**| Filtro: atualizado até. | [optional] 
- **sort_by** | **str**| Campo de ordenação. | [optional] [default to createdAt]
- **sort_direction** | **str**| Direção da ordenação. | [optional] [default to desc]
+ **created_at_from** | **datetime**| Filter: created from. | [optional] 
+ **created_at_to** | **datetime**| Filter: created up to. | [optional] 
+ **updated_at_from** | **datetime**| Filter: updated from. | [optional] 
+ **updated_at_to** | **datetime**| Filter: updated up to. | [optional] 
+ **sort_by** | **str**| Sort field. | [optional] [default to createdAt]
+ **sort_direction** | **str**| Sort direction. | [optional] [default to desc]
 
 ### Return type
 

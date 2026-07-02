@@ -11,7 +11,7 @@ Method | HTTP request | Description
 
 
 # **get_user_callback_by_id**
-> CallbackDetail get_user_callback_by_id(content_type, id)
+> CallbackDetail get_user_callback_by_id(id)
 
 Get Callback
 
@@ -47,12 +47,11 @@ configuration = payzu_pix.Configuration(
 with payzu_pix.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = payzu_pix.CallbacksApi(api_client)
-    content_type = application/json # str | Obrigatório em toda chamada PayZu. (default to application/json)
     id = 'id_example' # str | Unique callback ID
 
     try:
         # Get Callback
-        api_response = api_instance.get_user_callback_by_id(content_type, id)
+        api_response = api_instance.get_user_callback_by_id(id)
         print("The response of CallbacksApi->get_user_callback_by_id:\n")
         pprint(api_response)
     except Exception as e:
@@ -66,7 +65,6 @@ with payzu_pix.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **content_type** | **str**| Obrigatório em toda chamada PayZu. | [default to application/json]
  **id** | **str**| Unique callback ID | 
 
 ### Return type
@@ -92,7 +90,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_user_callbacks**
-> CallbackListResponse get_user_callbacks(content_type, page=page, limit=limit, sort_by=sort_by, sort_direction=sort_direction, id=id, url=url, status=status, transaction_id=transaction_id, has_error=has_error, created_at_from=created_at_from, created_at_to=created_at_to)
+> CallbackListResponse get_user_callbacks(page=page, limit=limit, sort_by=sort_by, sort_direction=sort_direction, id=id, url=url, status=status, transaction_id=transaction_id, has_error=has_error, created_at_from=created_at_from, created_at_to=created_at_to)
 
 List Callbacks
 
@@ -128,7 +126,6 @@ configuration = payzu_pix.Configuration(
 with payzu_pix.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = payzu_pix.CallbacksApi(api_client)
-    content_type = application/json # str | Obrigatório em toda chamada PayZu. (default to application/json)
     page = 1 # int |  (optional) (default to 1)
     limit = 10 # int |  (optional) (default to 10)
     sort_by = createdAt # str |  (optional) (default to createdAt)
@@ -143,7 +140,7 @@ with payzu_pix.ApiClient(configuration) as api_client:
 
     try:
         # List Callbacks
-        api_response = api_instance.get_user_callbacks(content_type, page=page, limit=limit, sort_by=sort_by, sort_direction=sort_direction, id=id, url=url, status=status, transaction_id=transaction_id, has_error=has_error, created_at_from=created_at_from, created_at_to=created_at_to)
+        api_response = api_instance.get_user_callbacks(page=page, limit=limit, sort_by=sort_by, sort_direction=sort_direction, id=id, url=url, status=status, transaction_id=transaction_id, has_error=has_error, created_at_from=created_at_from, created_at_to=created_at_to)
         print("The response of CallbacksApi->get_user_callbacks:\n")
         pprint(api_response)
     except Exception as e:
@@ -157,7 +154,6 @@ with payzu_pix.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **content_type** | **str**| Obrigatório em toda chamada PayZu. | [default to application/json]
  **page** | **int**|  | [optional] [default to 1]
  **limit** | **int**|  | [optional] [default to 10]
  **sort_by** | **str**|  | [optional] [default to createdAt]
@@ -195,7 +191,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **resend_user_callback_single**
-> ResendUserCallbackSingle200Response resend_user_callback_single(content_type, transaction_id)
+> ResendUserCallbackSingle200Response resend_user_callback_single(transaction_id)
 
 Re-send callback (single)
 
@@ -231,12 +227,11 @@ configuration = payzu_pix.Configuration(
 with payzu_pix.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = payzu_pix.CallbacksApi(api_client)
-    content_type = application/json # str | Obrigatório em toda chamada PayZu. (default to application/json)
     transaction_id = 'transaction_id_example' # str | 
 
     try:
         # Re-send callback (single)
-        api_response = api_instance.resend_user_callback_single(content_type, transaction_id)
+        api_response = api_instance.resend_user_callback_single(transaction_id)
         print("The response of CallbacksApi->resend_user_callback_single:\n")
         pprint(api_response)
     except Exception as e:
@@ -250,7 +245,6 @@ with payzu_pix.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **content_type** | **str**| Obrigatório em toda chamada PayZu. | [default to application/json]
  **transaction_id** | **str**|  | 
 
 ### Return type

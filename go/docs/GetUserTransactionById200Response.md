@@ -39,9 +39,9 @@ Name | Type | Description | Notes
 **RefundDescription** | Pointer to **string** | Description of the refund | [optional] 
 **RefundedAt** | Pointer to **string** | Date and time when the refund was processed | [optional] 
 **CancellationReason** | Pointer to **string** | Reason for cancellation (if cancelled) | [optional] 
-**VirtualAccount** | Pointer to **string** | Subconta virtual informada na criação. | [optional] 
-**Method** | Pointer to **string** | Método/rail da transação. | [optional] 
-**Infraction** | Pointer to [**[]GetUserTransactionById200ResponseAllOfInfractionInner**](GetUserTransactionById200ResponseAllOfInfractionInner.md) | Histórico completo de infrações desta transação. | [optional] 
+**VirtualAccount** | Pointer to **string** | Virtual sub-account provided at creation. | [optional] 
+**Method** | Pointer to **string** | Transaction method/rail. | [optional] 
+**Infraction** | Pointer to [**[]GetUserTransactionById200ResponseAllOfInfractionInner**](GetUserTransactionById200ResponseAllOfInfractionInner.md) | Complete infraction history for this transaction. | [optional] 
 **CallbackLog** | Pointer to [**[]GetUserTransactionById200ResponseAllOfCallbackLogInner**](GetUserTransactionById200ResponseAllOfCallbackLogInner.md) | Webhook delivery attempts for this transaction (most recent first) | [optional] 
 
 ## Methods

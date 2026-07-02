@@ -4,7 +4,7 @@ import type {
   GetInfractionsRequest,
   GetInternalTransferRequest,
   GetPixRequest,
-  GetProof200Response,
+  ProofResponse,
   GetProofRequest,
   GetUser200Response,
   GetUserBalance200Response,
@@ -29,7 +29,7 @@ import type {
 
 export type Account = GetUser200Response;
 export type Balance = GetUserBalance200Response;
-export type Proof = GetProof200Response;
+export type Proof = ProofResponse;
 export type TransactionList = GetUserTransactions200Response;
 export type TransactionDetail = GetUserTransactionById200Response;
 export type ReportList = ListUserReports200Response;

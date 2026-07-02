@@ -11,7 +11,7 @@ Method | HTTP request | Description
 
 ## GetUser
 
-> GetUser200Response GetUser(ctx).ContentType(contentType).Execute()
+> GetUser200Response GetUser(ctx).Execute()
 
 Account Info
 
@@ -26,15 +26,14 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/PayZuPlus/payzu-sdks/payzupix"
+	openapiclient "github.com/PayZuPlus/payzu-sdks/go"
 )
 
 func main() {
-	contentType := "contentType_example" // string | Obrigatório em toda chamada PayZu. (default to "application/json")
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.AccountAPI.GetUser(context.Background()).ContentType(contentType).Execute()
+	resp, r, err := apiClient.AccountAPI.GetUser(context.Background()).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AccountAPI.GetUser``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -46,16 +45,12 @@ func main() {
 
 ### Path Parameters
 
-
+This endpoint does not need any parameter.
 
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiGetUserRequest struct via the builder pattern
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **contentType** | **string** | Obrigatório em toda chamada PayZu. | [default to &quot;application/json&quot;]
 
 ### Return type
 
@@ -77,7 +72,7 @@ Name | Type | Description  | Notes
 
 ## GetUserBalance
 
-> GetUserBalance200Response GetUserBalance(ctx).ContentType(contentType).Execute()
+> GetUserBalance200Response GetUserBalance(ctx).Execute()
 
 Account Balance
 
@@ -92,15 +87,14 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/PayZuPlus/payzu-sdks/payzupix"
+	openapiclient "github.com/PayZuPlus/payzu-sdks/go"
 )
 
 func main() {
-	contentType := "contentType_example" // string | Obrigatório em toda chamada PayZu. (default to "application/json")
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.AccountAPI.GetUserBalance(context.Background()).ContentType(contentType).Execute()
+	resp, r, err := apiClient.AccountAPI.GetUserBalance(context.Background()).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AccountAPI.GetUserBalance``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -112,16 +106,12 @@ func main() {
 
 ### Path Parameters
 
-
+This endpoint does not need any parameter.
 
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiGetUserBalanceRequest struct via the builder pattern
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **contentType** | **string** | Obrigatório em toda chamada PayZu. | [default to &quot;application/json&quot;]
 
 ### Return type
 

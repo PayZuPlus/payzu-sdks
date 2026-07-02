@@ -17,7 +17,7 @@ All URIs are relative to https://api.payzu.processamento.com/v1, except if the o
 ## `getPixKey()`
 
 ```php
-getPixKey($content_type, $pix_key): \OpenAPI\Client\Model\PixKeyInfo
+getPixKey($pix_key): \OpenAPI\Client\Model\PixKeyInfo
 ```
 
 Dict Pix Key Lookup
@@ -41,11 +41,10 @@ $apiInstance = new OpenAPI\Client\Api\WithdrawalsApi(
     new GuzzleHttp\Client(),
     $config
 );
-$content_type = 'application/json'; // string | Obrigatório em toda chamada PayZu.
 $pix_key = example@payzu.com.br; // string | The Pix key to lookup (CPF, CNPJ, email, phone, or EVP).
 
 try {
-    $result = $apiInstance->getPixKey($content_type, $pix_key);
+    $result = $apiInstance->getPixKey($pix_key);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling WithdrawalsApi->getPixKey: ', $e->getMessage(), PHP_EOL;
@@ -56,7 +55,6 @@ try {
 
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
-| **content_type** | **string**| Obrigatório em toda chamada PayZu. | [default to &#39;application/json&#39;] |
 | **pix_key** | **string**| The Pix key to lookup (CPF, CNPJ, email, phone, or EVP). | |
 
 ### Return type
@@ -79,12 +77,12 @@ try {
 ## `getWithdraw()`
 
 ```php
-getWithdraw($content_type, $id, $client_reference, $end_to_end_id, $virtual_account): \OpenAPI\Client\Model\Transaction
+getWithdraw($id, $client_reference, $end_to_end_id, $virtual_account): \OpenAPI\Client\Model\Transaction
 ```
 
 Retrieve Withdrawal
 
-Retorna o status e os detalhes atuais de um saque. Informe pelo menos um destes parâmetros: `id`, `clientReference` ou `endToEndId`. Se informar mais de um, todos são aplicados como filtro (AND), o que pode não retornar registro caso não apontem para a mesma transação.
+Get the latest status and details for a withdrawal. Provide at least one of `id`, `clientReference`, or `endToEndId`. If more than one is provided, all are applied as filters (AND), which may return no record if they do not point to the same transaction.
 
 ### Example
 
@@ -103,14 +101,13 @@ $apiInstance = new OpenAPI\Client\Api\WithdrawalsApi(
     new GuzzleHttp\Client(),
     $config
 );
-$content_type = 'application/json'; // string | Obrigatório em toda chamada PayZu.
 $id = PAYZU2025081721512946OOLK75; // string | Transaction ID.
 $client_reference = 'client_reference_example'; // string | External reference provided when creating the withdrawal.
 $end_to_end_id = 'end_to_end_id_example'; // string | Pix end-to-end ID.
-$virtual_account = 'virtual_account_example'; // string | Subconta virtual (até 50 caracteres) usada na criação. Aceito como chave de busca alternativa.
+$virtual_account = 'virtual_account_example'; // string | Virtual sub-account (up to 50 characters) used at creation. Accepted as an alternative lookup key.
 
 try {
-    $result = $apiInstance->getWithdraw($content_type, $id, $client_reference, $end_to_end_id, $virtual_account);
+    $result = $apiInstance->getWithdraw($id, $client_reference, $end_to_end_id, $virtual_account);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling WithdrawalsApi->getWithdraw: ', $e->getMessage(), PHP_EOL;
@@ -121,11 +118,10 @@ try {
 
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
-| **content_type** | **string**| Obrigatório em toda chamada PayZu. | [default to &#39;application/json&#39;] |
 | **id** | **string**| Transaction ID. | [optional] |
 | **client_reference** | **string**| External reference provided when creating the withdrawal. | [optional] |
 | **end_to_end_id** | **string**| Pix end-to-end ID. | [optional] |
-| **virtual_account** | **string**| Subconta virtual (até 50 caracteres) usada na criação. Aceito como chave de busca alternativa. | [optional] |
+| **virtual_account** | **string**| Virtual sub-account (up to 50 characters) used at creation. Accepted as an alternative lookup key. | [optional] |
 
 ### Return type
 
@@ -147,12 +143,12 @@ try {
 ## `getWithdrawProof()`
 
 ```php
-getWithdrawProof($content_type, $id, $type): \OpenAPI\Client\Model\GetProof200Response
+getWithdrawProof($id, $type): \OpenAPI\Client\Model\ProofResponse
 ```
 
 Get Withdrawal Receipt
 
-Retorna o comprovante da transação como JSON com o campo `base64` (PDF codificado). Decodifique pra exibir ou salvar como `.pdf`.
+Returns the transaction receipt as JSON with a `base64` field (encoded PDF). Decode it to display or save as `.pdf`.
 
 ### Example
 
@@ -171,12 +167,11 @@ $apiInstance = new OpenAPI\Client\Api\WithdrawalsApi(
     new GuzzleHttp\Client(),
     $config
 );
-$content_type = 'application/json'; // string | Obrigatório em toda chamada PayZu.
 $id = PAYZU2025081721512946OOLK75; // string | Transaction ID.
 $type = pdf; // string | Return format.
 
 try {
-    $result = $apiInstance->getWithdrawProof($content_type, $id, $type);
+    $result = $apiInstance->getWithdrawProof($id, $type);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling WithdrawalsApi->getWithdrawProof: ', $e->getMessage(), PHP_EOL;
@@ -187,13 +182,12 @@ try {
 
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
-| **content_type** | **string**| Obrigatório em toda chamada PayZu. | [default to &#39;application/json&#39;] |
 | **id** | **string**| Transaction ID. | |
 | **type** | **string**| Return format. | [optional] [default to &#39;pdf&#39;] |
 
 ### Return type
 
-[**\OpenAPI\Client\Model\GetProof200Response**](../Model/GetProof200Response.md)
+[**\OpenAPI\Client\Model\ProofResponse**](../Model/ProofResponse.md)
 
 ### Authorization
 
@@ -216,7 +210,7 @@ postPixQrcodeRead($post_pix_qrcode_read_request): \OpenAPI\Client\Model\QRCodeRe
 
 Read QR Code
 
-Decode and extract information from a Pix QR Code (EMV format) before making a payment. Returns the parsed data including receiver details, amount (if present), and other QR Code metadata. No momento a PayZu só suporta QR Code dinâmico. QR estático ainda não é processado.
+Decode and extract information from a Pix QR Code (EMV format) before making a payment. Returns the parsed data including receiver details, amount (if present), and other QR Code metadata. Currently PayZu only supports dynamic QR Codes. Static QR Codes are not processed yet.
 
 ### Example
 
@@ -336,7 +330,7 @@ postWithdrawQrcode($post_withdraw_qrcode_request): \OpenAPI\Client\Model\Transac
 
 Create Withdrawal using QR Code
 
-Cash out using a **Pix QR Code** (static/dynamic). If `amount` is not provided, the QR Code's embedded value will be used. No momento a PayZu só suporta QR Code dinâmico. QR estático ainda não é processado.
+Cash out using a **Pix QR Code** (static/dynamic). If `amount` is not provided, the QR Code's embedded value will be used. Currently PayZu only supports dynamic QR Codes. Static QR Codes are not processed yet.
 
 ### Example
 

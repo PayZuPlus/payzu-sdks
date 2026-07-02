@@ -13,7 +13,7 @@ Method | HTTP request | Description
 
 
 # **get_pix_key**
-> PixKeyInfo get_pix_key(content_type, pix_key)
+> PixKeyInfo get_pix_key(pix_key)
 
 Dict Pix Key Lookup
 
@@ -49,12 +49,11 @@ configuration = payzu_pix.Configuration(
 with payzu_pix.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = payzu_pix.WithdrawalsApi(api_client)
-    content_type = application/json # str | Obrigatório em toda chamada PayZu. (default to application/json)
     pix_key = 'example@payzu.com.br' # str | The Pix key to lookup (CPF, CNPJ, email, phone, or EVP).
 
     try:
         # Dict Pix Key Lookup
-        api_response = api_instance.get_pix_key(content_type, pix_key)
+        api_response = api_instance.get_pix_key(pix_key)
         print("The response of WithdrawalsApi->get_pix_key:\n")
         pprint(api_response)
     except Exception as e:
@@ -68,7 +67,6 @@ with payzu_pix.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **content_type** | **str**| Obrigatório em toda chamada PayZu. | [default to application/json]
  **pix_key** | **str**| The Pix key to lookup (CPF, CNPJ, email, phone, or EVP). | 
 
 ### Return type
@@ -95,11 +93,11 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_withdraw**
-> Transaction get_withdraw(content_type, id=id, client_reference=client_reference, end_to_end_id=end_to_end_id, virtual_account=virtual_account)
+> Transaction get_withdraw(id=id, client_reference=client_reference, end_to_end_id=end_to_end_id, virtual_account=virtual_account)
 
 Retrieve Withdrawal
 
-Retorna o status e os detalhes atuais de um saque. Informe pelo menos um destes parâmetros: `id`, `clientReference` ou `endToEndId`. Se informar mais de um, todos são aplicados como filtro (AND), o que pode não retornar registro caso não apontem para a mesma transação.
+Get the latest status and details for a withdrawal. Provide at least one of `id`, `clientReference`, or `endToEndId`. If more than one is provided, all are applied as filters (AND), which may return no record if they do not point to the same transaction.
 
 ### Example
 
@@ -131,15 +129,14 @@ configuration = payzu_pix.Configuration(
 with payzu_pix.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = payzu_pix.WithdrawalsApi(api_client)
-    content_type = application/json # str | Obrigatório em toda chamada PayZu. (default to application/json)
     id = 'PAYZU2025081721512946OOLK75' # str | Transaction ID. (optional)
     client_reference = 'client_reference_example' # str | External reference provided when creating the withdrawal. (optional)
     end_to_end_id = 'end_to_end_id_example' # str | Pix end-to-end ID. (optional)
-    virtual_account = 'virtual_account_example' # str | Subconta virtual (até 50 caracteres) usada na criação. Aceito como chave de busca alternativa. (optional)
+    virtual_account = 'virtual_account_example' # str | Virtual sub-account (up to 50 characters) used at creation. Accepted as an alternative lookup key. (optional)
 
     try:
         # Retrieve Withdrawal
-        api_response = api_instance.get_withdraw(content_type, id=id, client_reference=client_reference, end_to_end_id=end_to_end_id, virtual_account=virtual_account)
+        api_response = api_instance.get_withdraw(id=id, client_reference=client_reference, end_to_end_id=end_to_end_id, virtual_account=virtual_account)
         print("The response of WithdrawalsApi->get_withdraw:\n")
         pprint(api_response)
     except Exception as e:
@@ -153,11 +150,10 @@ with payzu_pix.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **content_type** | **str**| Obrigatório em toda chamada PayZu. | [default to application/json]
  **id** | **str**| Transaction ID. | [optional] 
  **client_reference** | **str**| External reference provided when creating the withdrawal. | [optional] 
  **end_to_end_id** | **str**| Pix end-to-end ID. | [optional] 
- **virtual_account** | **str**| Subconta virtual (até 50 caracteres) usada na criação. Aceito como chave de busca alternativa. | [optional] 
+ **virtual_account** | **str**| Virtual sub-account (up to 50 characters) used at creation. Accepted as an alternative lookup key. | [optional] 
 
 ### Return type
 
@@ -184,11 +180,11 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_withdraw_proof**
-> GetProof200Response get_withdraw_proof(content_type, id, type=type)
+> ProofResponse get_withdraw_proof(id, type=type)
 
 Get Withdrawal Receipt
 
-Retorna o comprovante da transação como JSON com o campo `base64` (PDF codificado). Decodifique pra exibir ou salvar como `.pdf`.
+Returns the transaction receipt as JSON with a `base64` field (encoded PDF). Decode it to display or save as `.pdf`.
 
 ### Example
 
@@ -196,7 +192,7 @@ Retorna o comprovante da transação como JSON com o campo `base64` (PDF codific
 
 ```python
 import payzu_pix
-from payzu_pix.models.get_proof200_response import GetProof200Response
+from payzu_pix.models.proof_response import ProofResponse
 from payzu_pix.rest import ApiException
 from pprint import pprint
 
@@ -220,13 +216,12 @@ configuration = payzu_pix.Configuration(
 with payzu_pix.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = payzu_pix.WithdrawalsApi(api_client)
-    content_type = application/json # str | Obrigatório em toda chamada PayZu. (default to application/json)
     id = 'PAYZU2025081721512946OOLK75' # str | Transaction ID.
     type = pdf # str | Return format. (optional) (default to pdf)
 
     try:
         # Get Withdrawal Receipt
-        api_response = api_instance.get_withdraw_proof(content_type, id, type=type)
+        api_response = api_instance.get_withdraw_proof(id, type=type)
         print("The response of WithdrawalsApi->get_withdraw_proof:\n")
         pprint(api_response)
     except Exception as e:
@@ -240,13 +235,12 @@ with payzu_pix.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **content_type** | **str**| Obrigatório em toda chamada PayZu. | [default to application/json]
  **id** | **str**| Transaction ID. | 
  **type** | **str**| Return format. | [optional] [default to pdf]
 
 ### Return type
 
-[**GetProof200Response**](GetProof200Response.md)
+[**ProofResponse**](ProofResponse.md)
 
 ### Authorization
 
@@ -273,7 +267,7 @@ Name | Type | Description  | Notes
 
 Read QR Code
 
-Decode and extract information from a Pix QR Code (EMV format) before making a payment. Returns the parsed data including receiver details, amount (if present), and other QR Code metadata. No momento a PayZu só suporta QR Code dinâmico. QR estático ainda não é processado.
+Decode and extract information from a Pix QR Code (EMV format) before making a payment. Returns the parsed data including receiver details, amount (if present), and other QR Code metadata. Currently PayZu only supports dynamic QR Codes. Static QR Codes are not processed yet.
 
 ### Example
 
@@ -434,7 +428,7 @@ Name | Type | Description  | Notes
 
 Create Withdrawal using QR Code
 
-Cash out using a **Pix QR Code** (static/dynamic). If `amount` is not provided, the QR Code's embedded value will be used. No momento a PayZu só suporta QR Code dinâmico. QR estático ainda não é processado.
+Cash out using a **Pix QR Code** (static/dynamic). If `amount` is not provided, the QR Code's embedded value will be used. Currently PayZu only supports dynamic QR Codes. Static QR Codes are not processed yet.
 
 ### Example
 

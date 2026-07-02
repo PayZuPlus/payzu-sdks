@@ -16,7 +16,7 @@ All URIs are relative to https://api.payzu.processamento.com/v1, except if the o
 ## `getInfractions()`
 
 ```php
-getInfractions($content_type, $page, $limit, $status, $type, $end_to_end_id, $transaction_id, $amount_min, $amount_max, $analysis_result, $reported_by, $participant_document, $participant_name, $sort_by, $sort_direction, $reported_at_from, $reported_at_to, $created_at_from, $created_at_to, $expires_at_from, $expires_at_to, $updated_at_from, $updated_at_to, $needs_manual_review, $id, $protocol): \OpenAPI\Client\Model\InfractionListResponse
+getInfractions($page, $limit, $status, $type, $end_to_end_id, $transaction_id, $amount_min, $amount_max, $analysis_result, $reported_by, $participant_document, $participant_name, $sort_by, $sort_direction, $reported_at_from, $reported_at_to, $created_at_from, $created_at_to, $expires_at_from, $expires_at_to, $updated_at_from, $updated_at_to, $needs_manual_review, $id, $protocol): \OpenAPI\Client\Model\InfractionListResponse
 ```
 
 List Infractions
@@ -40,7 +40,6 @@ $apiInstance = new OpenAPI\Client\Api\InfractionsApi(
     new GuzzleHttp\Client(),
     $config
 );
-$content_type = 'application/json'; // string | Obrigatório em toda chamada PayZu.
 $page = 1; // int
 $limit = 10; // int
 $status = 'status_example'; // string | Comma-separated InfractionStatus (WAITING_PSP,CLOSED,OPEN,CANCELLED,ACKNOWLEDGED,DEFENDED,ANSWERED,WAITING_ADJUSTMENTS)
@@ -53,22 +52,22 @@ $analysis_result = 'analysis_result_example'; // string | Comma-separated Analys
 $reported_by = 'reported_by_example'; // string | Comma-separated ReportedType (DEBITED_PARTICIPANT,CREDITED_PARTICIPANT)
 $participant_document = 'participant_document_example'; // string
 $participant_name = 'participant_name_example'; // string
-$sort_by = 'sort_by_example'; // string | Campo de ordenação.
-$sort_direction = 'sort_direction_example'; // string | Direção da ordenação.
-$reported_at_from = new \DateTime('2013-10-20T19:20:30+01:00'); // \DateTime | Filtro: reportedAt a partir de.
-$reported_at_to = new \DateTime('2013-10-20T19:20:30+01:00'); // \DateTime | Filtro: reportedAt até.
-$created_at_from = new \DateTime('2013-10-20T19:20:30+01:00'); // \DateTime | Filtro: createdAt a partir de.
-$created_at_to = new \DateTime('2013-10-20T19:20:30+01:00'); // \DateTime | Filtro: createdAt até.
-$expires_at_from = new \DateTime('2013-10-20T19:20:30+01:00'); // \DateTime | Filtro: expiresAt a partir de.
-$expires_at_to = new \DateTime('2013-10-20T19:20:30+01:00'); // \DateTime | Filtro: expiresAt até.
-$updated_at_from = new \DateTime('2013-10-20T19:20:30+01:00'); // \DateTime | Filtro: updatedAt a partir de.
-$updated_at_to = new \DateTime('2013-10-20T19:20:30+01:00'); // \DateTime | Filtro: updatedAt até.
-$needs_manual_review = True; // bool | Filtro: precisa de revisão manual.
-$id = 'id_example'; // string | Filtro por ID da infração.
-$protocol = 'protocol_example'; // string | Filtro por protocolo.
+$sort_by = 'sort_by_example'; // string | Sort field.
+$sort_direction = 'sort_direction_example'; // string | Sort direction.
+$reported_at_from = new \DateTime('2013-10-20T19:20:30+01:00'); // \DateTime | Filter: reportedAt from.
+$reported_at_to = new \DateTime('2013-10-20T19:20:30+01:00'); // \DateTime | Filter: reportedAt up to.
+$created_at_from = new \DateTime('2013-10-20T19:20:30+01:00'); // \DateTime | Filter: createdAt from.
+$created_at_to = new \DateTime('2013-10-20T19:20:30+01:00'); // \DateTime | Filter: createdAt up to.
+$expires_at_from = new \DateTime('2013-10-20T19:20:30+01:00'); // \DateTime | Filter: expiresAt from.
+$expires_at_to = new \DateTime('2013-10-20T19:20:30+01:00'); // \DateTime | Filter: expiresAt up to.
+$updated_at_from = new \DateTime('2013-10-20T19:20:30+01:00'); // \DateTime | Filter: updatedAt from.
+$updated_at_to = new \DateTime('2013-10-20T19:20:30+01:00'); // \DateTime | Filter: updatedAt up to.
+$needs_manual_review = True; // bool | Filter: needs manual review.
+$id = 'id_example'; // string | Filter by infraction ID.
+$protocol = 'protocol_example'; // string | Filter by protocol.
 
 try {
-    $result = $apiInstance->getInfractions($content_type, $page, $limit, $status, $type, $end_to_end_id, $transaction_id, $amount_min, $amount_max, $analysis_result, $reported_by, $participant_document, $participant_name, $sort_by, $sort_direction, $reported_at_from, $reported_at_to, $created_at_from, $created_at_to, $expires_at_from, $expires_at_to, $updated_at_from, $updated_at_to, $needs_manual_review, $id, $protocol);
+    $result = $apiInstance->getInfractions($page, $limit, $status, $type, $end_to_end_id, $transaction_id, $amount_min, $amount_max, $analysis_result, $reported_by, $participant_document, $participant_name, $sort_by, $sort_direction, $reported_at_from, $reported_at_to, $created_at_from, $created_at_to, $expires_at_from, $expires_at_to, $updated_at_from, $updated_at_to, $needs_manual_review, $id, $protocol);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling InfractionsApi->getInfractions: ', $e->getMessage(), PHP_EOL;
@@ -79,7 +78,6 @@ try {
 
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
-| **content_type** | **string**| Obrigatório em toda chamada PayZu. | [default to &#39;application/json&#39;] |
 | **page** | **int**|  | [optional] [default to 1] |
 | **limit** | **int**|  | [optional] [default to 10] |
 | **status** | **string**| Comma-separated InfractionStatus (WAITING_PSP,CLOSED,OPEN,CANCELLED,ACKNOWLEDGED,DEFENDED,ANSWERED,WAITING_ADJUSTMENTS) | [optional] |
@@ -92,19 +90,19 @@ try {
 | **reported_by** | **string**| Comma-separated ReportedType (DEBITED_PARTICIPANT,CREDITED_PARTICIPANT) | [optional] |
 | **participant_document** | **string**|  | [optional] |
 | **participant_name** | **string**|  | [optional] |
-| **sort_by** | **string**| Campo de ordenação. | [optional] |
-| **sort_direction** | **string**| Direção da ordenação. | [optional] |
-| **reported_at_from** | **\DateTime**| Filtro: reportedAt a partir de. | [optional] |
-| **reported_at_to** | **\DateTime**| Filtro: reportedAt até. | [optional] |
-| **created_at_from** | **\DateTime**| Filtro: createdAt a partir de. | [optional] |
-| **created_at_to** | **\DateTime**| Filtro: createdAt até. | [optional] |
-| **expires_at_from** | **\DateTime**| Filtro: expiresAt a partir de. | [optional] |
-| **expires_at_to** | **\DateTime**| Filtro: expiresAt até. | [optional] |
-| **updated_at_from** | **\DateTime**| Filtro: updatedAt a partir de. | [optional] |
-| **updated_at_to** | **\DateTime**| Filtro: updatedAt até. | [optional] |
-| **needs_manual_review** | **bool**| Filtro: precisa de revisão manual. | [optional] |
-| **id** | **string**| Filtro por ID da infração. | [optional] |
-| **protocol** | **string**| Filtro por protocolo. | [optional] |
+| **sort_by** | **string**| Sort field. | [optional] |
+| **sort_direction** | **string**| Sort direction. | [optional] |
+| **reported_at_from** | **\DateTime**| Filter: reportedAt from. | [optional] |
+| **reported_at_to** | **\DateTime**| Filter: reportedAt up to. | [optional] |
+| **created_at_from** | **\DateTime**| Filter: createdAt from. | [optional] |
+| **created_at_to** | **\DateTime**| Filter: createdAt up to. | [optional] |
+| **expires_at_from** | **\DateTime**| Filter: expiresAt from. | [optional] |
+| **expires_at_to** | **\DateTime**| Filter: expiresAt up to. | [optional] |
+| **updated_at_from** | **\DateTime**| Filter: updatedAt from. | [optional] |
+| **updated_at_to** | **\DateTime**| Filter: updatedAt up to. | [optional] |
+| **needs_manual_review** | **bool**| Filter: needs manual review. | [optional] |
+| **id** | **string**| Filter by infraction ID. | [optional] |
+| **protocol** | **string**| Filter by protocol. | [optional] |
 
 ### Return type
 
@@ -126,7 +124,7 @@ try {
 ## `getInfractionsById()`
 
 ```php
-getInfractionsById($content_type, $id): \OpenAPI\Client\Model\InfractionDetail
+getInfractionsById($id): \OpenAPI\Client\Model\InfractionDetail
 ```
 
 Get Infraction
@@ -150,11 +148,10 @@ $apiInstance = new OpenAPI\Client\Api\InfractionsApi(
     new GuzzleHttp\Client(),
     $config
 );
-$content_type = 'application/json'; // string | Obrigatório em toda chamada PayZu.
 $id = 'id_example'; // string | Infraction ID
 
 try {
-    $result = $apiInstance->getInfractionsById($content_type, $id);
+    $result = $apiInstance->getInfractionsById($id);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling InfractionsApi->getInfractionsById: ', $e->getMessage(), PHP_EOL;
@@ -165,7 +162,6 @@ try {
 
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
-| **content_type** | **string**| Obrigatório em toda chamada PayZu. | [default to &#39;application/json&#39;] |
 | **id** | **string**| Infraction ID | |
 
 ### Return type
@@ -188,7 +184,7 @@ try {
 ## `getInfractionsDefenseById()`
 
 ```php
-getInfractionsDefenseById($content_type, $infraction_id, $defense_id): \OpenAPI\Client\Model\Defense
+getInfractionsDefenseById($infraction_id, $defense_id): \OpenAPI\Client\Model\Defense
 ```
 
 Get Defense
@@ -212,12 +208,11 @@ $apiInstance = new OpenAPI\Client\Api\InfractionsApi(
     new GuzzleHttp\Client(),
     $config
 );
-$content_type = 'application/json'; // string | Obrigatório em toda chamada PayZu.
 $infraction_id = 'infraction_id_example'; // string | Infraction ID
 $defense_id = 'defense_id_example'; // string | Defense ID
 
 try {
-    $result = $apiInstance->getInfractionsDefenseById($content_type, $infraction_id, $defense_id);
+    $result = $apiInstance->getInfractionsDefenseById($infraction_id, $defense_id);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling InfractionsApi->getInfractionsDefenseById: ', $e->getMessage(), PHP_EOL;
@@ -228,7 +223,6 @@ try {
 
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
-| **content_type** | **string**| Obrigatório em toda chamada PayZu. | [default to &#39;application/json&#39;] |
 | **infraction_id** | **string**| Infraction ID | |
 | **defense_id** | **string**| Defense ID | |
 
@@ -252,7 +246,7 @@ try {
 ## `getInfractionsDefenses()`
 
 ```php
-getInfractionsDefenses($content_type, $id): \OpenAPI\Client\Model\Defense[]
+getInfractionsDefenses($id): \OpenAPI\Client\Model\Defense[]
 ```
 
 List Defenses
@@ -276,11 +270,10 @@ $apiInstance = new OpenAPI\Client\Api\InfractionsApi(
     new GuzzleHttp\Client(),
     $config
 );
-$content_type = 'application/json'; // string | Obrigatório em toda chamada PayZu.
 $id = 'id_example'; // string | Infraction ID
 
 try {
-    $result = $apiInstance->getInfractionsDefenses($content_type, $id);
+    $result = $apiInstance->getInfractionsDefenses($id);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling InfractionsApi->getInfractionsDefenses: ', $e->getMessage(), PHP_EOL;
@@ -291,7 +284,6 @@ try {
 
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
-| **content_type** | **string**| Obrigatório em toda chamada PayZu. | [default to &#39;application/json&#39;] |
 | **id** | **string**| Infraction ID | |
 
 ### Return type

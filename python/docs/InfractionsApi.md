@@ -12,7 +12,7 @@ Method | HTTP request | Description
 
 
 # **get_infractions**
-> InfractionListResponse get_infractions(content_type, page=page, limit=limit, status=status, type=type, end_to_end_id=end_to_end_id, transaction_id=transaction_id, amount_min=amount_min, amount_max=amount_max, analysis_result=analysis_result, reported_by=reported_by, participant_document=participant_document, participant_name=participant_name, sort_by=sort_by, sort_direction=sort_direction, reported_at_from=reported_at_from, reported_at_to=reported_at_to, created_at_from=created_at_from, created_at_to=created_at_to, expires_at_from=expires_at_from, expires_at_to=expires_at_to, updated_at_from=updated_at_from, updated_at_to=updated_at_to, needs_manual_review=needs_manual_review, id=id, protocol=protocol)
+> InfractionListResponse get_infractions(page=page, limit=limit, status=status, type=type, end_to_end_id=end_to_end_id, transaction_id=transaction_id, amount_min=amount_min, amount_max=amount_max, analysis_result=analysis_result, reported_by=reported_by, participant_document=participant_document, participant_name=participant_name, sort_by=sort_by, sort_direction=sort_direction, reported_at_from=reported_at_from, reported_at_to=reported_at_to, created_at_from=created_at_from, created_at_to=created_at_to, expires_at_from=expires_at_from, expires_at_to=expires_at_to, updated_at_from=updated_at_from, updated_at_to=updated_at_to, needs_manual_review=needs_manual_review, id=id, protocol=protocol)
 
 List Infractions
 
@@ -48,7 +48,6 @@ configuration = payzu_pix.Configuration(
 with payzu_pix.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = payzu_pix.InfractionsApi(api_client)
-    content_type = application/json # str | Obrigatório em toda chamada PayZu. (default to application/json)
     page = 1 # int |  (optional) (default to 1)
     limit = 10 # int |  (optional) (default to 10)
     status = 'status_example' # str | Comma-separated InfractionStatus (WAITING_PSP,CLOSED,OPEN,CANCELLED,ACKNOWLEDGED,DEFENDED,ANSWERED,WAITING_ADJUSTMENTS) (optional)
@@ -61,23 +60,23 @@ with payzu_pix.ApiClient(configuration) as api_client:
     reported_by = 'reported_by_example' # str | Comma-separated ReportedType (DEBITED_PARTICIPANT,CREDITED_PARTICIPANT) (optional)
     participant_document = 'participant_document_example' # str |  (optional)
     participant_name = 'participant_name_example' # str |  (optional)
-    sort_by = 'sort_by_example' # str | Campo de ordenação. (optional)
-    sort_direction = 'sort_direction_example' # str | Direção da ordenação. (optional)
-    reported_at_from = '2013-10-20T19:20:30+01:00' # datetime | Filtro: reportedAt a partir de. (optional)
-    reported_at_to = '2013-10-20T19:20:30+01:00' # datetime | Filtro: reportedAt até. (optional)
-    created_at_from = '2013-10-20T19:20:30+01:00' # datetime | Filtro: createdAt a partir de. (optional)
-    created_at_to = '2013-10-20T19:20:30+01:00' # datetime | Filtro: createdAt até. (optional)
-    expires_at_from = '2013-10-20T19:20:30+01:00' # datetime | Filtro: expiresAt a partir de. (optional)
-    expires_at_to = '2013-10-20T19:20:30+01:00' # datetime | Filtro: expiresAt até. (optional)
-    updated_at_from = '2013-10-20T19:20:30+01:00' # datetime | Filtro: updatedAt a partir de. (optional)
-    updated_at_to = '2013-10-20T19:20:30+01:00' # datetime | Filtro: updatedAt até. (optional)
-    needs_manual_review = True # bool | Filtro: precisa de revisão manual. (optional)
-    id = 'id_example' # str | Filtro por ID da infração. (optional)
-    protocol = 'protocol_example' # str | Filtro por protocolo. (optional)
+    sort_by = 'sort_by_example' # str | Sort field. (optional)
+    sort_direction = 'sort_direction_example' # str | Sort direction. (optional)
+    reported_at_from = '2013-10-20T19:20:30+01:00' # datetime | Filter: reportedAt from. (optional)
+    reported_at_to = '2013-10-20T19:20:30+01:00' # datetime | Filter: reportedAt up to. (optional)
+    created_at_from = '2013-10-20T19:20:30+01:00' # datetime | Filter: createdAt from. (optional)
+    created_at_to = '2013-10-20T19:20:30+01:00' # datetime | Filter: createdAt up to. (optional)
+    expires_at_from = '2013-10-20T19:20:30+01:00' # datetime | Filter: expiresAt from. (optional)
+    expires_at_to = '2013-10-20T19:20:30+01:00' # datetime | Filter: expiresAt up to. (optional)
+    updated_at_from = '2013-10-20T19:20:30+01:00' # datetime | Filter: updatedAt from. (optional)
+    updated_at_to = '2013-10-20T19:20:30+01:00' # datetime | Filter: updatedAt up to. (optional)
+    needs_manual_review = True # bool | Filter: needs manual review. (optional)
+    id = 'id_example' # str | Filter by infraction ID. (optional)
+    protocol = 'protocol_example' # str | Filter by protocol. (optional)
 
     try:
         # List Infractions
-        api_response = api_instance.get_infractions(content_type, page=page, limit=limit, status=status, type=type, end_to_end_id=end_to_end_id, transaction_id=transaction_id, amount_min=amount_min, amount_max=amount_max, analysis_result=analysis_result, reported_by=reported_by, participant_document=participant_document, participant_name=participant_name, sort_by=sort_by, sort_direction=sort_direction, reported_at_from=reported_at_from, reported_at_to=reported_at_to, created_at_from=created_at_from, created_at_to=created_at_to, expires_at_from=expires_at_from, expires_at_to=expires_at_to, updated_at_from=updated_at_from, updated_at_to=updated_at_to, needs_manual_review=needs_manual_review, id=id, protocol=protocol)
+        api_response = api_instance.get_infractions(page=page, limit=limit, status=status, type=type, end_to_end_id=end_to_end_id, transaction_id=transaction_id, amount_min=amount_min, amount_max=amount_max, analysis_result=analysis_result, reported_by=reported_by, participant_document=participant_document, participant_name=participant_name, sort_by=sort_by, sort_direction=sort_direction, reported_at_from=reported_at_from, reported_at_to=reported_at_to, created_at_from=created_at_from, created_at_to=created_at_to, expires_at_from=expires_at_from, expires_at_to=expires_at_to, updated_at_from=updated_at_from, updated_at_to=updated_at_to, needs_manual_review=needs_manual_review, id=id, protocol=protocol)
         print("The response of InfractionsApi->get_infractions:\n")
         pprint(api_response)
     except Exception as e:
@@ -91,7 +90,6 @@ with payzu_pix.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **content_type** | **str**| Obrigatório em toda chamada PayZu. | [default to application/json]
  **page** | **int**|  | [optional] [default to 1]
  **limit** | **int**|  | [optional] [default to 10]
  **status** | **str**| Comma-separated InfractionStatus (WAITING_PSP,CLOSED,OPEN,CANCELLED,ACKNOWLEDGED,DEFENDED,ANSWERED,WAITING_ADJUSTMENTS) | [optional] 
@@ -104,19 +102,19 @@ Name | Type | Description  | Notes
  **reported_by** | **str**| Comma-separated ReportedType (DEBITED_PARTICIPANT,CREDITED_PARTICIPANT) | [optional] 
  **participant_document** | **str**|  | [optional] 
  **participant_name** | **str**|  | [optional] 
- **sort_by** | **str**| Campo de ordenação. | [optional] 
- **sort_direction** | **str**| Direção da ordenação. | [optional] 
- **reported_at_from** | **datetime**| Filtro: reportedAt a partir de. | [optional] 
- **reported_at_to** | **datetime**| Filtro: reportedAt até. | [optional] 
- **created_at_from** | **datetime**| Filtro: createdAt a partir de. | [optional] 
- **created_at_to** | **datetime**| Filtro: createdAt até. | [optional] 
- **expires_at_from** | **datetime**| Filtro: expiresAt a partir de. | [optional] 
- **expires_at_to** | **datetime**| Filtro: expiresAt até. | [optional] 
- **updated_at_from** | **datetime**| Filtro: updatedAt a partir de. | [optional] 
- **updated_at_to** | **datetime**| Filtro: updatedAt até. | [optional] 
- **needs_manual_review** | **bool**| Filtro: precisa de revisão manual. | [optional] 
- **id** | **str**| Filtro por ID da infração. | [optional] 
- **protocol** | **str**| Filtro por protocolo. | [optional] 
+ **sort_by** | **str**| Sort field. | [optional] 
+ **sort_direction** | **str**| Sort direction. | [optional] 
+ **reported_at_from** | **datetime**| Filter: reportedAt from. | [optional] 
+ **reported_at_to** | **datetime**| Filter: reportedAt up to. | [optional] 
+ **created_at_from** | **datetime**| Filter: createdAt from. | [optional] 
+ **created_at_to** | **datetime**| Filter: createdAt up to. | [optional] 
+ **expires_at_from** | **datetime**| Filter: expiresAt from. | [optional] 
+ **expires_at_to** | **datetime**| Filter: expiresAt up to. | [optional] 
+ **updated_at_from** | **datetime**| Filter: updatedAt from. | [optional] 
+ **updated_at_to** | **datetime**| Filter: updatedAt up to. | [optional] 
+ **needs_manual_review** | **bool**| Filter: needs manual review. | [optional] 
+ **id** | **str**| Filter by infraction ID. | [optional] 
+ **protocol** | **str**| Filter by protocol. | [optional] 
 
 ### Return type
 
@@ -143,7 +141,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_infractions_by_id**
-> InfractionDetail get_infractions_by_id(content_type, id)
+> InfractionDetail get_infractions_by_id(id)
 
 Get Infraction
 
@@ -179,12 +177,11 @@ configuration = payzu_pix.Configuration(
 with payzu_pix.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = payzu_pix.InfractionsApi(api_client)
-    content_type = application/json # str | Obrigatório em toda chamada PayZu. (default to application/json)
     id = 'id_example' # str | Infraction ID
 
     try:
         # Get Infraction
-        api_response = api_instance.get_infractions_by_id(content_type, id)
+        api_response = api_instance.get_infractions_by_id(id)
         print("The response of InfractionsApi->get_infractions_by_id:\n")
         pprint(api_response)
     except Exception as e:
@@ -198,7 +195,6 @@ with payzu_pix.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **content_type** | **str**| Obrigatório em toda chamada PayZu. | [default to application/json]
  **id** | **str**| Infraction ID | 
 
 ### Return type
@@ -224,7 +220,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_infractions_defense_by_id**
-> Defense get_infractions_defense_by_id(content_type, infraction_id, defense_id)
+> Defense get_infractions_defense_by_id(infraction_id, defense_id)
 
 Get Defense
 
@@ -260,13 +256,12 @@ configuration = payzu_pix.Configuration(
 with payzu_pix.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = payzu_pix.InfractionsApi(api_client)
-    content_type = application/json # str | Obrigatório em toda chamada PayZu. (default to application/json)
     infraction_id = 'infraction_id_example' # str | Infraction ID
     defense_id = 'defense_id_example' # str | Defense ID
 
     try:
         # Get Defense
-        api_response = api_instance.get_infractions_defense_by_id(content_type, infraction_id, defense_id)
+        api_response = api_instance.get_infractions_defense_by_id(infraction_id, defense_id)
         print("The response of InfractionsApi->get_infractions_defense_by_id:\n")
         pprint(api_response)
     except Exception as e:
@@ -280,7 +275,6 @@ with payzu_pix.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **content_type** | **str**| Obrigatório em toda chamada PayZu. | [default to application/json]
  **infraction_id** | **str**| Infraction ID | 
  **defense_id** | **str**| Defense ID | 
 
@@ -307,7 +301,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_infractions_defenses**
-> List[Defense] get_infractions_defenses(content_type, id)
+> List[Defense] get_infractions_defenses(id)
 
 List Defenses
 
@@ -343,12 +337,11 @@ configuration = payzu_pix.Configuration(
 with payzu_pix.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = payzu_pix.InfractionsApi(api_client)
-    content_type = application/json # str | Obrigatório em toda chamada PayZu. (default to application/json)
     id = 'id_example' # str | Infraction ID
 
     try:
         # List Defenses
-        api_response = api_instance.get_infractions_defenses(content_type, id)
+        api_response = api_instance.get_infractions_defenses(id)
         print("The response of InfractionsApi->get_infractions_defenses:\n")
         pprint(api_response)
     except Exception as e:
@@ -362,7 +355,6 @@ with payzu_pix.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **content_type** | **str**| Obrigatório em toda chamada PayZu. | [default to application/json]
  **id** | **str**| Infraction ID | 
 
 ### Return type
